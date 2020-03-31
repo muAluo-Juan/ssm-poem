@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.HandleDao">
+	<!-- 注册一个用户 ，#{uname}为model.MyUser的属性值-->
+	<insert id="register" parameterType="MyUser">
+		insert into myusertable (id,uname,upwd) values(null,#{uname},#{upwd})
+	</insert>
+	
+	<select id="login" parameterType="MyUser" resultType="MyUserTable">
+		select * from myusertable where uname=#{uname} and upwd=#{upwd}
+	</select>
+	
+	<select id="selectAll"  resultType="map">
+		select * from myusertable 
+	</select>
+	
+	<select id="selectAllUserByPage"  resultType="map">
+		select * from myusertable  limit #{startIndex}, #{perPageSize} 
+	</select>
+</mapper>
