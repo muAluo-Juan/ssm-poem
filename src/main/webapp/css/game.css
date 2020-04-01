@@ -1,0 +1,7 @@
+.game{
+  width: 100vw;
+  height: 500px;
+}
+.game .content{
+  background-image: url(../images/v2.jpg);
+}

@@ -1,0 +1,7 @@
+.poem{
+  width: 100vw;
+  height: 500px;
+}
+.poem .content{
+  background-image: url(../images/v1.jpg);
+}

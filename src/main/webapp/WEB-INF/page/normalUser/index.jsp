@@ -13,15 +13,14 @@
 	<div class="header">
     	<nav class="nav navbar fixed-top ">
       		<div class="container">
-      			<span>欢迎你，游客&nbsp;请</span>
-        		<a class="navbar-brand" href="${pageContext.request.contextPath}/index/login">登录&nbsp;&nbsp;&nbsp;&nbsp;|</a>
-        		<a class="navbar-brand" href="${pageContext.request.contextPath}/index/register">注册</a>
+      			<span>欢迎登录，用户${sessionScope.normalUser.penName}</span>
+        		<a class="navbar-brand" href="${pageContext.request.contextPath}/login/loginOut">退出登录</a>
         		<div id="navbarResponsive" class="collapse navbar-collapse">
           			<ul id="menu-nav-menu" class="navbar-nav ml-auto">
             			<a title="首页" href="#" class="nav-link" aria-current="page">首页</a>
             			<a title="个人原创" href="#" class="nav-link">诗词鉴赏</a>
             			<a title="语文百科" href="#" class="nav-link">游戏诗词</a>
-            			<a title="转载文摘" href="${pageContext.request.contextPath}/index/user/community" class="nav-link">社区雅韵</a>
+            			<a title="社区雅韵" href="${pageContext.request.contextPath}/index/user/community" class="nav-link">社区雅韵</a>
             			<a title="关于本站" href="#" class="nav-link">个人主页</a>
           			</ul>
         		</div>
@@ -40,7 +39,7 @@
   <div class="poem">
     <div class="content">
       <div class="title animated fadeInUp">
-        <a href="./poem.html" class="text">诗词鉴赏</a>
+        <a href="./poem.html" class="text">诗歌鉴赏</a>
       </div>
     </div>
   </div>

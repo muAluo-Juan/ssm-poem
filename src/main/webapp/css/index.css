@@ -1,0 +1,206 @@
+body{
+  overflow-x: hidden;
+    background: #f5f5f5;
+    font-weight: 350;
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,opensans,Optima,"Microsoft Yahei",sans-serif;
+    line-height: 1.8;
+}
+body::-webkit-scrollbar {
+  display:none
+}
+/* 瀵艰埅鏍� */
+.nav {
+  position: absolute;
+  /* background-color: rgba(66,64,64,.2); */
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+.navbar{
+  padding: 20px 100px;
+}
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* width: 100%; */
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+a.navbar-brand{
+  padding: 10px 20px;
+  color: #333;
+  /* font-weight: 600; */
+  font-size: 28px;
+}
+.navbar-collapse {
+  flex: 1;
+  
+}
+ul.navbar-nav{
+  float: right;
+}
+a.nav-link{
+  margin-left: 50px;
+  font-size: 24px;
+  color: #444;
+}
+.navbar-nav{
+  font-display: row;
+}
+/* banner鑳屾櫙鍥� */
+.banner{
+  position: relative;
+  height: 450px;
+  margin-bottom: 20px;
+}
+.banner .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background: rgba(66,64,64,.2);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.banner .content {
+  position: relative;
+  height: 450px;
+  background-position: center center;
+  background-size: cover;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.text-center {
+  text-align: center!important;
+}
+.banner .content .introduce {
+  position: absolute;
+  top: 37%;
+  z-index: 10;
+  /* font-size: 30px; */
+  width: 100%;
+  color: #fff;
+  text-shadow: 2px 2px 2px #666;
+  cursor: default;
+}
+.introduce .title {
+  margin-bottom: 5px;
+  font-size: 50px;
+}
+.introduce .mate {
+  font-size: 35px;
+}
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.fadeInUp {
+  animation-name: fadeInUp;
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0,100%,0);
+    transform: translate3d(0,100%,0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+
+.poem,
+.game,
+.community{
+  position: relative;
+  box-sizing: border-box;
+  padding: 25px 80px;
+  /* margin: 10px 50px; */
+  /* border-radius: 20px; */
+}
+.poem .content,
+.game .content,
+.community .content{
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: 100% 200%;
+  /* overflow: hidden; */
+  background-size: cover;
+  border-radius:20px;
+}
+.poem .content .title,
+.game .content .title,
+.community .content .title{
+  position: absolute;
+  top: 47%;
+  left: 42%;
+  z-index: 10;
+  /* font-size: 30px; */
+  width: 100%;
+  color: #666;
+  text-shadow: 2px 2px 2px #666;
+  cursor: pointer;
+}
+.poem .content .title .text,
+.game .content .title .text,
+.community .content .title .text {
+  font-size: 65px;
+  /* font-weight: 700; */
+}
+/* poem */
+.poem{
+  width: 100vw;
+  height: 500px;
+}
+.poem .content{
+  background-image: url(../images/w5.jpg);
+}
+
+/* game */
+.game{
+  width: 100vw;
+  height: 500px;
+}
+.game .content{
+  background-image: url(../images/w2.jpg);
+}
+
+/* community */
+.community{
+  width: 100vw;
+  height: 500px;
+}
+.community .content{
+  background-image: url(../images/w3.jpg);
+}
+
+.footer{
+  width: 100vw;
+  background-color: #333;
+  height: 180px;
+  margin-top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.footer p{
+  text-align: center;
+  color: #aaa;
+  font-size: 20px;
+  line-height: 180px;
+}

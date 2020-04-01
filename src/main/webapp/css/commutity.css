@@ -1,0 +1,7 @@
+.community{
+  width: 100vw;
+  height: 500px;
+}
+.community .content{
+  background-image: url(../images/v3.jpg);
+}

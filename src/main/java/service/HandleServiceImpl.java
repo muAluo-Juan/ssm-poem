@@ -53,7 +53,4 @@ public class HandleServiceImpl implements  HandleService{
 	    model.addAttribute("currentPage", currentPage);
 		return "main";
 	}
-
-
-	
 }
