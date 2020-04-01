@@ -36,7 +36,7 @@
                 	<div class="verify">
                     	<span></span>
                     	<input id="verifyCode" type="text" placeholder="验证码" name="verifyCode" value="${user.verifyCode}">
-                    	<img src="/poemManage/loadIcode" id="changeImg">
+                    	<img src="${pageContext.request.contextPath }/loadIcode" id="changeImg">
                 	</div>
                 	<!-- 登录角色 -->
                 	<div class="login_role">
@@ -67,7 +67,7 @@
 		*/
 		document.getElementById("changeImg").onclick = function() {
 			var obj = document.getElementById("changeImg");
-			obj.src = "/poemManage/loadIcode?"+ new Date().getTime();
+			obj.src = "${pageContext.request.contextPath }/loadIcode?"+ new Date().getTime();
 		}
 		/*
 		*判断用户名格式

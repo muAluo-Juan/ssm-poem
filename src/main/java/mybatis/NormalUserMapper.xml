@@ -4,16 +4,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.NormalUserDao">
 	<select id="getByUserNameAndPwd" resultType="NormalUser">
-		select * from normalUser where userName=#{userName} and password=#{password}
+		select * from t_normaluser where userName=#{userName} and password=#{password}
+	</select>
+	
+	<select id="getByUserName" resultType="NormalUser">
+		select * from t_normaluser where userName=#{userName}
 	</select>
 
 	<insert id="add" parameterType="NormalUser">
-		insert into normalUser(userId,userName,penName,password,headPicPath,personalizedSig,sex,birth,disableTime,rewardPoints)
+		insert into t_normaluser(userId,userName,penName,password,headPicPath,personalizedSig,sex,birth,disableTime,rewardPoints)
 		values(null,#{userName},#{penName},#{password},#{headPicPath},#{personalizedSig},#{sex},#{birth},#{disableTime},#{rewardPoints})
 	</insert>
 	
 	<update id="update" parameterType="NormalUser">
-		update normalUser
+		update t_normaluser
 		set penName=#{penName},password=#{password},headPicPath=#{headPicPath},personalizedSig=#{personalizedSig},sex=#{sex},birth=#{birth},disableTime=#{disableTime},rewardPoints=${rewardPoints}
 		where userId=#{userId}
 	</update>

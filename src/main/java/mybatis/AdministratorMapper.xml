@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdministratorDao">
+	<select id="getByUserNameAndPwd" resultType="Admin">
+		select * from t_administrator where userName=#{userName} and password=#{password}
+	</select>
+	
+	<select id="getByUserName" resultType="Admin">
+		select * from t_administrator where userName=#{userName}
+	</select>
+
+	<update id="update" parameterType="Admin">
+		update t_administrator
+		set password=#{password}
+		where administratorId=#{administratorId}
+	</update>
+</mapper>
