@@ -7,12 +7,15 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<!-- 输出日志配置 -->
 		<setting name="logImpl" value="LOG4J" />  
 	</settings>
+	<!-- 别名 -->
 	<typeAliases>
-		<typeAlias type="model.MyUser" alias="MyUser" />
-		<typeAlias type="po.MyUserTable" alias="MyUserTable" />
+		<typeAlias type="po.NormalUser" alias="NormalUser"/>
+		<typeAlias type="po.Administrator" alias="Admin"/>
 	</typeAliases>
+
     <!-- 告诉 MyBatis到哪里去找映射文件 -->
 	 <mappers>
-        <mapper resource="mybatis/MyUserTableMapper.xml"/>
+        <mapper resource="mybatis/NormalUserMapper.xml"/>
+        <mapper resource="mybatis/AdministratorMapper.xml"/>
  	</mappers>
 </configuration>

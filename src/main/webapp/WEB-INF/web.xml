@@ -24,10 +24,27 @@ id="WebApp_ID" version="3.1">
     <!-- 表示容器在启动时立即加载servlet -->
     <load-on-startup>1</load-on-startup>
 </servlet> 
+<!-- 生产验证码的servlet -->
 <servlet-mapping>
 	<servlet-name>springmvc</servlet-name>
     <url-pattern>/</url-pattern>
 </servlet-mapping>
+<servlet>
+    <servlet-name>IamgeServ</servlet-name>
+    <servlet-class>utils.ImageServ</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IamgeServ</servlet-name>
+    <url-pattern>/loadIcode</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PhoneCodeServ</servlet-name>
+    <servlet-class>utils.PhoneCodeServ</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PhoneCodeServ</servlet-name>
+    <url-pattern>/getPhoneCode</url-pattern>
+  </servlet-mapping>
 
  <!-- 字符编码 -->
  <!-- 避免中文乱码 -->
