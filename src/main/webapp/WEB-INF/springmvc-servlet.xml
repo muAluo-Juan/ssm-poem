@@ -27,5 +27,15 @@
        <!-- 后缀 -->
        <property name="suffix" value=".jsp" />
   </bean>
-  	
+  <!-- 配置返回json数据 -->
+<!--配置handlerAdaptor-->
+  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" 
+		p:ignoreDefaultModelOnRedirect="true">
+    <property name="messageConverters">
+      <list>
+        <!--配置转换器-->
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+      </list>
+    </property>
+  </bean>
 </beans>
