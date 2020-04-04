@@ -11,11 +11,23 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<typeAlias type="po.NormalUser" alias="NormalUser"/>
 		<typeAlias type="po.Administrator" alias="Admin"/>
+		<typeAlias type="po.Work" alias="Work"/>
+		<typeAlias type="po.Draft" alias="Draft"/>
+		<typeAlias type="po.Like" alias="Like"/>
+		<typeAlias type="po.Attention" alias="Attention"/>
+		<typeAlias type="po.ReportInfo" alias="ReportInfo"/>
+		<typeAlias type="po.Comment" alias="Comment"/>
 	</typeAliases>
 
     <!-- 告诉 MyBatis到哪里去找映射文件 -->
 	 <mappers>
         <mapper resource="mybatis/NormalUserMapper.xml"/>
         <mapper resource="mybatis/AdministratorMapper.xml"/>
+        <mapper resource="mybatis/WorkMapper.xml"/>
+        <mapper resource="mybatis/DraftMapper.xml"/>
+        <mapper resource="mybatis/LikeMapper.xml"/>
+        <mapper resource="mybatis/AttentionMapper.xml"/>
+        <mapper resource="mybatis/ReportInfoMapper.xml"/>
+        <mapper resource="mybatis/CommentMapper.xml"/>
  	</mappers>
 </configuration>

@@ -54,7 +54,7 @@ public class LoginController {
 			normalUser.setHeadPicPath("girl.jpg");
 		else
 			normalUser.setHeadPicPath("boy.jpg");
-		normalUser.setPersonalizedSig("这个家伙很懒，没有留下签名?");
+		normalUser.setPersonalizedSig("这个家伙很懒，没有留下签名");
 		normalUser.setSex(user.getSex());
 		Date date = new Date();
 		normalUser.setBirth(new java.sql.Date(date.getDate()));
@@ -79,8 +79,8 @@ public class LoginController {
 			model.addAttribute(user);
 			return "login";
 		}
-		//验证用户名和密码正确�?
-		//普�?�用�?
+		//验证用户名和密码正确性
+		//普通用户
 		if(user.getRole().equals("normalUser"))
 		{
 			if(normalUserService.getNormalUserByUserNameAndPwd(user.getUserName(), user.getPassword())!=null) {
@@ -98,7 +98,7 @@ public class LoginController {
 				return "login";
 			}
 		}
-		//管理�?
+		//管理员
 		else {
 			if(administratorService.getAdministratorByUserNameAndPwd(user.getUserName(), user.getPassword())!=null) {
 				Administrator admin = administratorService.getAdministratorByUserNameAndPwd(user.getUserName(), user.getPassword());
@@ -132,7 +132,7 @@ public class LoginController {
 		{
 			e.printStackTrace();
 		}
-		//查询用户名是否已存在（一个手机号只能注册�?个账号，要么管理员要么普通用户）
+		//查询用户名是否已存在（一个手机号只能注册一个账号，要么管理员要么普通用户）
 		if(normalUserService.getNormalUserByUserName(userName)==null && administratorService.getAdministratorByUserName(userName) == null)
 		{
 			JSONObject obj = new JSONObject(new Result(2,"手机号未注册","",""));
@@ -160,7 +160,7 @@ public class LoginController {
 		{
 			e.printStackTrace();
 		}
-		//判断验证码正确�??
+		//判断验证码正确性
 		String realCode = (String)session.getAttribute("phoneCode");
 		if(!phoneCode.equals(realCode))
 		{
@@ -177,7 +177,7 @@ public class LoginController {
 				admin.setPassword(password);
 				administratorService.modifyAdministratorInfo(admin);
 				//验证码正确，重置密码
-				JSONObject obj = new JSONObject(new Result(5,"密码重置成功?","",""));
+				JSONObject obj = new JSONObject(new Result(5,"密码重置成功","",""));
 				out.print(obj);
 			}
 			else {

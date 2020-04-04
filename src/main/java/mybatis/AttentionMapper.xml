@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AttentionDao">
+	<insert id="add">
+		insert into t_attention(attentionId,userId,beAttentedId)
+		values(null,#{userId},#{beAttentedId})
+	</insert>
+	
+	<delete id="delete">
+		delete from t_attention where attentionId=#{attentionId}
+	</delete>
+	
+	<select id="getByUserId" resultType="Attention">
+		select * from t_attention where userId=#{userId}
+	</select>
+	
+	<select id="getByBeAttentedId" resultType="Attention">
+		select * from t_attention where beAttentedId=#{beAttentedId}
+	</select>
+</mapper>

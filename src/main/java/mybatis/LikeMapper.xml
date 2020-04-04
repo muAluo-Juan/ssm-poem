@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.LikeDao">
+	<insert	id="add" parameterType="Like">
+		insert into t_ike(likeId,userId,workId,inputTime)
+		values(null,#{userId},#{workId},#{inputTime})
+	</insert>
+	
+	<delete id="delete">
+		delete from t_like where userId=#{userId} and workId=#{workId}
+	</delete>
+	
+	<select id="get" resultType="Like">
+		select * from t_like where userId=#{userId} and workId=#{workId}
+	</select>
+</mapper>

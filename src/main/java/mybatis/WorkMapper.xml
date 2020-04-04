@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.WorkDao">
+	<insert id="add" parameterType="Work">
+		insert into t_work(workId,title,userId,text,imgPath,likeNum,isEssay,inputTime)
+		values(null,#{title},#{userId},#{text},#{imgPath},#{likeNum},#{isEssay},#{inputTime})
+	</insert>
+	<delete id="delete">
+		delete from t_work where workId=#{workId}
+	</delete>
+	<select id="getAll" resultType="Work">
+		select * from t_work
+	</select>
+	<select id="getByUserId" resultType="Work">
+		select * from t_work where userId=#{userId}
+	</select>
+	<select id="getByWorkId" resultType="Work">
+		select * from t_work where workId=#{workId}
+	</select>
+	<update id="update" parameterType="Work">
+		update t_work
+		set title=#{title},text=#{text},imgPath=#{imgPath}
+		where workId=#{workId}
+	</update>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DraftDao">
+	<select id="getAll" resultType="Draft">
+		select * from t_draft where userId=#{userId}
+	</select>
+	
+	<select	id="getById" resultType="Draft">
+		select * from t_draft where draftId=#{draftId}
+	</select>
+	
+	<insert id="add" parameterType="Draft">
+		insert into t_draft(draftId,title,userId,text,imgPath,isEssay)
+		values(null,#{title},#{userId},#{text},#{imgPath},#{isEssay})
+	</insert>
+	
+	<delete id="delete">
+		delete from t_draft where draftId=#{draftId}
+	</delete>
+	
+	<update id="update" parameterType="Draft">
+		update t_draft
+		set title=#{title},text=#{text},imgPath=#{imgPath},isEssay=#{isEssay}
+		where draftId=#{draftId}
+	</update>
+</mapper>

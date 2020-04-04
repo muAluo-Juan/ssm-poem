@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CommentDao">
+	<delete id="delete">
+		delete from t_comment where commentId=#{commentId}
+	</delete>
+	<insert id="add" parameterType="Comment">
+		insert into t_comment(commentId,commentText,inputTime,userId,workId)
+		values(null,#{commentText},#{inputTime},#{userId},#{workId})
+	</insert>
+	<select id="getByWorkId" resultType="Comment">
+		select * from t_comment where workId=#{workId}
+	</select>
+	<select id="getByCommentId" resultType="Comment">
+		select * from t_comment where commentId=#{commentId}
+	</select>
+</mapper>
