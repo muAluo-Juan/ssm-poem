@@ -2,7 +2,7 @@ package utils;
 
 import java.util.Random;
 
-//用于产生手机验证�?
+//用于产生手机验证码
 public class PhoneCode {
 	public String codes ="0123456789";
 	public int codeLength = 5;

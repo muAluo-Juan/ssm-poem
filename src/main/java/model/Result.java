@@ -2,10 +2,10 @@ package model;
 
 //封装ajax返回结果
 public class Result {
-	private int code;
-	private String description;
-	private Object data;
-	private String nextAction;
+	private int code;//状态码
+	private String description;//描述信息
+	private Object data;//返回的数据
+	private String nextAction;//下一步要跳转的链接
 	
 	public Result(int code, String description,Object data,String nextAction){
 		this.code = code;

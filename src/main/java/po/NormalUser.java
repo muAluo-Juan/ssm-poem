@@ -78,5 +78,8 @@ public class NormalUser {
 		this.rewardPoints = rewardPoints;
 	}
 	
-	
+	public String get() {
+		return this.userId+" "+this.userName + " "+this.penName+" "+this.password + this.personalizedSig+
+				" "+this.headPicPath+" "+this.rewardPoints+this.sex+" "+this.disableTime + this.birth;
+	}
 }

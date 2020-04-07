@@ -31,7 +31,7 @@
        <property name="suffix" value=".jsp" />
   </bean>
   <!-- 配置返回json数据 -->
-<!--配置handlerAdaptor-->
+  <!--配置handlerAdaptor-->
   <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" 
 		p:ignoreDefaultModelOnRedirect="true">
     <property name="messageConverters">
@@ -41,4 +41,13 @@
       </list>
     </property>
   </bean>
+  <!--配置拦截器, 多个拦截器,顺序执行 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->
+            <mvc:mapping path="/**"/>
+            <bean class="interceptor.Interceptor"></bean>
+        </mvc:interceptor>
+        <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->
+    </mvc:interceptors>
 </beans>
