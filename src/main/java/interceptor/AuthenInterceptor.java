@@ -39,8 +39,10 @@ public class AuthenInterceptor implements HandlerInterceptor {
         //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(NormalToken.class)) {
         	String username;
+        	String author;
         	try {
             username = JWTUtil.getUsername(token);
+            author=JWTUtil.getAuthor(token);
         	}
         	catch (Exception e) {
         		return false;
@@ -56,17 +58,23 @@ public class AuthenInterceptor implements HandlerInterceptor {
         }
       //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(AdminToken.class)) {
-        	System.out.println("deal 2");
         	String username;
+        	String author;
         	try {
             username = JWTUtil.getUsername(token);
+            author=JWTUtil.getAuthor(token);
+            
         	}
         	catch (Exception e) {
         		return false;
         	}
             
         	if(JWTUtil.validateToken(token, username)) {
-            	return true;
+        		if(author!=null&&author.equals("admin"))
+        			return true;
+        		else {
+        			return false;
+        		}
             }
         	else {
         		return false;
