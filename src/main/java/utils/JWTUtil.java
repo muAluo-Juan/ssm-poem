@@ -15,7 +15,9 @@ import po.NormalUser;
 public class JWTUtil {
 	private static final long EXPIRE_TIME = 24 * 60 * 30 * 1000;
 	private static final String secret="adfdsfjewafiojdsakfjsd";
-	public static String generateToken(String username) {
+	
+	//author 是权限{admin,normal}
+	public static String generateToken(String username,String author) {
 		 try {
 	            // 指定过期时间
 	            Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
@@ -24,6 +26,7 @@ public class JWTUtil {
 
 	            return JWT.create()
 	                    .withClaim("username", username)
+	                    .withClaim("author", author)
 	                    .withExpiresAt(date)
 	                    .sign(algorithm);
 	        } catch (UnsupportedEncodingException e) {
@@ -44,6 +47,9 @@ public class JWTUtil {
         }
     }
     public static String getUsername(String token) {
-    	return JWT.decode(token).getAudience().get(0);
+    	return JWT.decode(token).getClaim("username").asString();
+    }
+    public static String getAuthor(String token) {
+    	return JWT.decode(token).getClaim("author").asString();
     }
 }
