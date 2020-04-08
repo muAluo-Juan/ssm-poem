@@ -16,13 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import model.FindPasswordForm;
@@ -34,10 +37,11 @@ import po.NormalUser;
 import service.AdministratorService;
 import service.NormalUserService;
 import utils.CodeImage;
+import utils.JWTUtil;
 import utils.PhoneCode;
 
-@Controller
-@RequestMapping("/login")
+//登录模块controller
+@RestController
 public class LoginController {
 	@Autowired
 	private AdministratorService administratorService;
@@ -47,20 +51,17 @@ public class LoginController {
 	 * 注册
 	 */
 	@CrossOrigin
-	@PostMapping("/register")
-	@ResponseBody
+	@PostMapping("/login/register")
 	public Result register(HttpServletRequest request,@RequestBody RegisterForm requestRegisterUser) {
 		//先验证用户输入的手机验证
 		HttpSession session = request.getSession();
 		String phoneCode = (String)session.getAttribute("phoneCode");
-		if(phoneCode == null)
-			return new Result(404,"未获取验证码",null,"");
 		if(!phoneCode.equals(requestRegisterUser.getVerifyCode()))
 		{
-			return new Result(404,"验证码错误",null,"");
+			return new Result(14,"验证码错误",null,null);
 		}
 		if(normalUserService.getNormalUserByUserName(requestRegisterUser.getUserName())!=null || administratorService.getAdministratorByUserName(requestRegisterUser.getUserName()) != null)
-			return new Result(404,"用户已存在，注册失败",null,"");
+			return new Result(15,"用户已存在，注册失败",null,null);
 		//构建新对象添加用户
 		NormalUser normalUser = new NormalUser();
 		normalUser.setUserName(requestRegisterUser.getUserName());
@@ -72,33 +73,32 @@ public class LoginController {
 			normalUser.setHeadPicPath("boy.jpg");
 		normalUser.setPersonalizedSig("这个家伙很懒，没有留下签名");
 		normalUser.setSex(requestRegisterUser.getSex());
-		Date date = new Date();
-		normalUser.setBirth(new java.sql.Date(date.getDate()));
+		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+		normalUser.setBirth(date);
 		normalUser.setDisableTime(0);
 		normalUser.setRewardPoints(0);
 		normalUserService.addNormalUser(normalUser);
 		session.removeAttribute("phoneCode");
-		return new Result(200,"欢迎成为夜雨时的一员！",normalUser,"");
+		return new Result(2,"欢迎成为夜雨时的一员！",null,null);
 	}
 	
 	/*
 	 * 产生手机验证码
 	 */
 	@CrossOrigin
-	@PostMapping("/loadPhoneCode")
-	@ResponseBody
+	@PostMapping("/login/load_phonecode")
 	public Result loadPhoneCode(HttpServletRequest request) {
 		PhoneCode phoneCode = new PhoneCode();
 		String code = phoneCode.getPhoneCode();
 		request.getSession().setAttribute("phoneCode", code);
-		return new Result(200,"验证码",code,"");
+		return new Result(1,"验证码",code,null);
 	}
 	
 	/*
 	 * 产生登录验证码
 	 */
 	@CrossOrigin
-	@PostMapping(value="/loadICode")
+	@PostMapping("/login/load_icode")
 	public void loadICode(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		CodeImage cImage = new CodeImage();
 		BufferedImage image = cImage.getImage();
@@ -117,15 +117,14 @@ public class LoginController {
 	 * 登录
 	 */
 	@CrossOrigin
-	@PostMapping(value="/login")
-	@ResponseBody
+	@PostMapping(value="/login/login")
 	public Result login(HttpServletRequest request,@RequestBody LoginForm requestLoginUser) {
 		//检验登录验证码的正确性
         HttpSession session = request.getSession();
 		String realCode = (String) session.getAttribute("loginCode");
 		if(!realCode.equals(requestLoginUser.getVerifyCode()))
 		{
-			return new Result(404,"验证码错误",null,"");
+			return new Result(5,"验证码错误",null,null);
 		}
 		//验证用户名和密码正确性
 		//普通用户
@@ -133,24 +132,28 @@ public class LoginController {
 		{
 			if(normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
 				NormalUser normalUser = normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
-				session.setAttribute("normalUser", normalUser);
+				//给用户token
+				String token = JWTUtil.generateToken(normalUser.getUserName(), "normal");
+				System.out.println("用户token为"+token);
 				session.removeAttribute("loginCode");
-				return new Result(200,"登录成功",normalUser,"");
+				return new Result(6,"登录成功",token,null);
 			}
 			else {
-				return new Result(404,"用户名或密码错误",requestLoginUser,"");
+				return new Result(7,"用户名或密码错误",requestLoginUser,null);
 			}
 		}
 		//管理员
 		else {
 			if(administratorService.getAdministratorByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
 				Administrator admin = administratorService.getAdministratorByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
-				session.setAttribute("admin", admin);
+				//给管理员token
+				String token = JWTUtil.generateToken(admin.getUserName(), "admin");
+				System.out.println("管理员token为"+token);
 				session.removeAttribute("loginCode");
-				return new Result(200,"登录成功",admin,"");
+				return new Result(8,"登录成功",token,null);
 			}
 			else {
-				return new Result(404,"用户名或密码错误",requestLoginUser,"");
+				return new Result(7,"用户名或密码错误",requestLoginUser,null);
 			} 
 		}
 	}
@@ -159,16 +162,15 @@ public class LoginController {
 	 * 判断用户是否存在
 	 */
 	@CrossOrigin
-	@RequestMapping(value="/judgeUserExist",method=RequestMethod.GET)
-	@ResponseBody
-	public Result judgeUserExist(@RequestParam("userName") String userName,HttpServletResponse response) {
+	@GetMapping("/login/judge_user_exist/{userName}")
+	public Result judgeUserExist(@PathVariable("userName") String userName,HttpServletResponse response) {
 		//查询用户名是否已存在（一个手机号只能注册一个账号，要么管理员要么普通用户）
 		if(normalUserService.getNormalUserByUserName(userName)==null && administratorService.getAdministratorByUserName(userName) == null)
 		{
-			return new Result(200,"手机号未注册",null,"");
+			return new Result(3,"手机号未注册",null,null);
 		}
 		else{
-			return new Result(404,"该手机号已注册",null,"");
+			return new Result(4,"该手机号已注册",null,null);
 		}
 	}
 	
@@ -177,17 +179,16 @@ public class LoginController {
 	 * 找回密码
 	 */
 	@CrossOrigin
-	@RequestMapping(value="/findPassword",method=RequestMethod.POST)
-	@ResponseBody
+	@PostMapping("/login/findpassword")
 	public Result findPassword(HttpServletRequest request,@RequestBody FindPasswordForm findPasswordUser) {
 		//判断验证码正确性
 		HttpSession session = request.getSession();
 		String realCode = (String)session.getAttribute("phoneCode");
 		if(realCode == null)
-			return new Result(404,"未获取验证码",null,"");
+			return new Result(9,"未获取验证码",null,"");
 		if(!(findPasswordUser.getPhoneCode()).equals(realCode))
 		{
-			return new Result(404,"验证码错误",null,"");
+			return new Result(10,"验证码错误",null,null);
 		}
 		else
 		{
@@ -200,7 +201,7 @@ public class LoginController {
 				administratorService.modifyAdministratorInfo(admin);
 				session.removeAttribute("phoneCode");
 				//验证码正确，重置密码
-				return new Result(200,"密码重置成功",null,"");
+				return new Result(11,"密码重置成功",null,null);
 			}
 			else {
 				if(normal != null)
@@ -209,9 +210,9 @@ public class LoginController {
 					normalUserService.modifyNormalUserInfo(normal);
 					session.removeAttribute("phoneCode");
 					//验证码正确，重置密码
-					return new Result(200,"密码重置成功",null,"");
+					return new Result(11,"密码重置成功",null,null);
 				}else {
-					return new Result(404,"密码重置失败",null,"");
+					return new Result(12,"密码重置失败",null,null);
 				}
 			}
 		}
@@ -221,10 +222,11 @@ public class LoginController {
 	 * 退出登录
 	 */
 	@CrossOrigin
-	@RequestMapping(value="/loginOut",method=RequestMethod.POST)
-	@ResponseBody
+	@PostMapping("/login/loginout")
 	public Result loginOut(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return new Result(200,"退出登录成功",null,"");
+		//token失效
+		
+		return new Result(13,"退出登录成功",null,null);
 	}
 }

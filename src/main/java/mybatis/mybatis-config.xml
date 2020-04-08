@@ -12,7 +12,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.NormalUser" alias="NormalUser"/>
 		<typeAlias type="po.Administrator" alias="Admin"/>
 		<typeAlias type="po.Work" alias="Work"/>
-		<typeAlias type="po.Poem" alias="Poem"/>
 		<typeAlias type="po.Draft" alias="Draft"/>
 		<typeAlias type="po.Like" alias="Like"/>
 		<typeAlias type="po.Attention" alias="Attention"/>
@@ -27,7 +26,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mybatis/WorkMapper.xml"/>
         <mapper resource="mybatis/DraftMapper.xml"/>
         <mapper resource="mybatis/LikeMapper.xml"/>
-        <mapper resource="mybatis/PoemMapper.xml"/>
         <mapper resource="mybatis/AttentionMapper.xml"/>
         <mapper resource="mybatis/ReportInfoMapper.xml"/>
         <mapper resource="mybatis/CommentMapper.xml"/>

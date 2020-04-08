@@ -33,7 +33,7 @@ public class WorkImpl implements WorkService{
 	}
 
 	@Override
-	public List<Work> getWorkByUserId(int userId) {
+	public List<Work> getWorksByUserId(int userId) {
 		return workDao.getByUserId(userId);
 	}
 

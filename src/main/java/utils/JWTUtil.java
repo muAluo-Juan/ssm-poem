@@ -46,9 +46,11 @@ public class JWTUtil {
             return false;
         }
     }
+    
     public static String getUsername(String token) {
     	return JWT.decode(token).getClaim("username").asString();
     }
+    
     public static String getAuthor(String token) {
     	return JWT.decode(token).getClaim("author").asString();
     }

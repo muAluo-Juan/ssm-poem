@@ -26,7 +26,6 @@ public class AuthenInterceptor implements HandlerInterceptor {
 	@Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
         String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
-       
         System.out.println("处理");
         if(!(object instanceof HandlerMethod)){
             return true;
@@ -34,8 +33,6 @@ public class AuthenInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Method method=handlerMethod.getMethod();
         
-        
-
         //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(NormalToken.class)) {
         	String username;
@@ -45,6 +42,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
             author=JWTUtil.getAuthor(token);
         	}
         	catch (Exception e) {
+        		e.printStackTrace();
         		return false;
         	}
             
@@ -58,14 +56,17 @@ public class AuthenInterceptor implements HandlerInterceptor {
         }
       //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(AdminToken.class)) {
+        	
         	String username;
         	String author;
         	try {
             username = JWTUtil.getUsername(token);
             author=JWTUtil.getAuthor(token);
-            
+            System.out.println(username+" "+author);
         	}
         	catch (Exception e) {
+        		e.printStackTrace();
+        		System.out.println("未携带token返回登录");
         		return false;
         	}
             
@@ -77,6 +78,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
         		}
             }
         	else {
+        		
         		return false;
         	}
             
