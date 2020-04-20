@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PoemDao">
+	<select id="getAll" resultType="Poem">
+		select * from t_poems_poem
+	</select>
+	<select id="getByPoemId" resultType="Poem">
+		select * from t_poems_poem where id=#{id}
+	</select>
+	<select id="getByName" resultType="Poem">
+		select * from t_poems_poem where name like concat('%',#{name},'%')
+	</select>
+	<select id="getByAuthorUId" resultType="Poem">
+		select * from t_poems_poem where authoruid=#{authoruid}
+	</select>
+	<select id="getByTypeId" resultType="Poem">
+		select * from t_poems_poem where typeid=#{typeid}
+	</select>
+	<update id="update" parameterType="Poem">
+		update t_poems_poem
+		set name=#{name},dynastyid=#{dynastyid},typeid=#{typeid},authoruid=#{authoruid},content=#{content},annotation=#{annotation},translation=#{translation},workintro=#{workintro},richtext=#{richtext},memo=#{memo}
+		where id=#{id} 
+	</update>
+	<insert id="add" parameterType="Poem" useGeneratedKeys="true" keyProperty="id">
+		insert into t_poems_poem(id,uid,name,dynastyid,typeid,authoruid,content,annotation,translation,workintro,richtext,memo)
+		values(null,null,#{name},#{dynastyid},#{typeid},#{authoruid},#{content},#{annotation},#{translation},#{workintro},#{richtext},#{memo})
+	</insert>
+	<delete id="delete">
+		delete from t_poems_poem where id=#{id}
+	</delete>
+</mapper>

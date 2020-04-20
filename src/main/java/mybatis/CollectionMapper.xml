@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CollectionDao">
+	<select id="getAllByUserId" resultType="po.Collection">
+		select * from t_collection where userId=#{userId}
+	</select>
+	<select id="getById" resultType="po.Collection">
+		select * from t_collection where collectionId=#{collectionId}
+	</select>
+	<select id="getByPoemId" resultType="po.Collection">
+		select * from t_collection where poemId=#{poemId}
+	</select>
+	<insert id="add" parameterType="po.Collection">
+		insert into t_collection(collectionId,userId,poemId)
+		values(null,#{userId},#{poemId})
+	</insert>
+	<delete id="delete">
+		delete from t_collection
+		where collectionId=#{collectionId}
+	</delete>
+</mapper>

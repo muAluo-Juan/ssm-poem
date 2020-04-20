@@ -77,7 +77,7 @@ public class CommunityController {
 	@PostMapping("/community/user_uploadpic")
 	public Result uploadPic(@RequestBody MultipartFile picture, HttpServletRequest request) {
 		//获取文件在服务器的存储位置
-		String path = request.getServletContext().getRealPath("/upload");
+		String path = request.getServletContext().getRealPath("/upload/community_pic");
 		File filePath = new File(path);
 		System.out.println("文件的保存路径"+path);
 		if(!filePath.exists() && !filePath.isDirectory())
@@ -108,7 +108,7 @@ public class CommunityController {
 			picture.transferTo(targetFile);
 			System.out.println("上传成功");
 			//返回文件在服务器中的存储位置
-			return new Result(1,"上传成功","/upload/"+fileName,"");
+			return new Result(1,"上传成功","/upload/community_pic"+fileName,"");
 		}catch(IOException e) {
 			e.printStackTrace();
 			return new Result(2,"上传失败",null,"");

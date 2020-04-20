@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ErrorInfoDao">
+	<select id="getById" resultType="ErrorInfo">
+		select * from t_errorInfo
+		where errorId=#{errorId}
+	</select>
+	<select id="getAll" resultType="ErrorInfo">
+		select * from t_errorInfo
+	</select>
+	<delete id="delete">
+		delete from t_errorInfo where errorId=#{errorId}
+	</delete>
+	<insert id="add" parameterType="ErrorInfo">
+		insert into t_errorInfo(errorId,errorText,inputTime,state,verifyAdministratorId,userId,poemId)
+		values(null,#{errorText},#{inputTime},#{state},#{verifyAdministratorId},#{userId},#{poemId})
+	</insert>
+	<update id="update" parameterType="ErrorInfo">
+		update t_errorInfo
+		set state=#{state},verifyAdministratorId=#{verifyAdministratorId}
+		where errorId=#{errorId}
+	</update>
+</mapper>

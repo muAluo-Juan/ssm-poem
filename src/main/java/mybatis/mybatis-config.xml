@@ -17,6 +17,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.Attention" alias="Attention"/>
 		<typeAlias type="po.ReportInfo" alias="ReportInfo"/>
 		<typeAlias type="po.Comment" alias="Comment"/>
+		<typeAlias type="po.Dynasty" alias="Dynasty"/>
+		<typeAlias type="po.Type" alias="Type"/>
+		<typeAlias type="po.Theme" alias="Theme"/>
+		<typeAlias type="po.Poem_Type" alias="Poem_Type"/>
+		<typeAlias type="po.Author" alias="Author"/>
+		<typeAlias type="po.Poem" alias="Poem"/>
+		<typeAlias type="po.ErrorInfo" alias="ErrorInfo"/>
+		<typeAlias type="po.Poem_Ext" alias="Poem_Ext"/>
 	</typeAliases>
 
     <!-- 告诉 MyBatis到哪里去找映射文件 -->
@@ -29,5 +37,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mybatis/AttentionMapper.xml"/>
         <mapper resource="mybatis/ReportInfoMapper.xml"/>
         <mapper resource="mybatis/CommentMapper.xml"/>
+        <mapper resource="mybatis/DynastyMapper.xml"/>
+        <mapper resource="mybatis/TypeMapper.xml"/>
+       	<mapper resource="mybatis/ThemeMapper.xml"/>
+        <mapper resource="mybatis/Poem_TypeMapper.xml"/>  
+        <mapper resource="mybatis/AuthorMapper.xml"/>
+        <mapper resource="mybatis/PoemMapper.xml"/>
+        <mapper resource="mybatis/ErrorInfoMapper.xml"/>
+        <mapper resource="mybatis/CollectionMapper.xml"/>
+        <mapper resource="mybatis/Poem_ExtMapper.xml"/>
  	</mappers>
 </configuration>

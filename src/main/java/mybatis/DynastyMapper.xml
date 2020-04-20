@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DynastyDao">
+	<insert	id="add" parameterType="Dynasty">
+		insert into t_poems_dynasty(id,name,start,end,intro) 
+		values(null,#{name},#{start},#{end},#{intro});
+	</insert>
+	<delete id="delete">
+		delete from t_poems_dynasty where id=#{id}
+	</delete>
+	<select	id="getById" resultType="Dynasty">
+		select * from t_poems_dynasty where id=#{id}
+	</select>
+	<select id="getAll" resultType="Dynasty">
+		select * from t_poems_dynasty
+	</select>
+	<update id="update" parameterType="Dynasty">
+		update t_poems_dynasty
+		set name=#{name},start=#{start},end=#{end},intro=#{intro}
+		where id=#{id}
+	</update>
+</mapper>
