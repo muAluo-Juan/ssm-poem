@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -14,4 +16,8 @@ public interface NormalUserDao {
 	public NormalUser getByUserName(@Param("userName") String userName);
 	public Integer add(NormalUser user);
 	public Integer update(NormalUser user);
+	
+	public Integer delete(@Param("userName") String userName);
+	public List<NormalUser>  getall();
+    
 }
