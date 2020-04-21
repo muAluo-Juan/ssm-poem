@@ -245,8 +245,8 @@ public class PoemManageController {
 			Author author = authorService.getAuthorByAuthorId(authorId);
 			if(author == null)
 				return new Result(15,"该诗人不存在",null,null);
-			if(poemService.getPoemsByAuthorUId(author.getUid())!=null)
-				return new Result(16,"删除失败，该诗人已被引用！",null,null);
+			if(poemService.getPoemsByAuthorUId(author.getUid()).size() > 0)
+				return new Result(16,"删除失败，该诗人已被引用！",poemService.getPoemsByAuthorUId(author.getUid()),null);
 			authorService.deleteAuthor(authorId);
 			return new Result(17,"删除成功",authorService.getAllAuthors(),null);
 		}catch(Exception e) {
@@ -280,7 +280,7 @@ public class PoemManageController {
 	public Result doAddDynasty(@RequestBody Dynasty dynasty) {
 		try {
 			dynastyService.addDynasty(dynasty);
-			return new Result(20,"朝代添加成功！",null,null);
+			return new Result(20,"朝代添加成功！",dynastyService.getAllDynastys(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -299,10 +299,10 @@ public class PoemManageController {
 			Dynasty dynasty = dynastyService.getDynastyById(dynastyId);
 			if(dynasty == null)
 				return new Result(21,"该朝代不存在，删除失败",null,null);
-			if(authorService.getAuthorsByDynastyId(dynastyId)!=null)
+			if((authorService.getAuthorsByDynastyId(dynastyId)).size() > 0)
 				return new Result(22,"删除失败，该朝代已被引用",null,null);
 			dynastyService.deleteDynasty(dynastyId);
-			return new Result(23,"朝代删除成功",null,null);
+			return new Result(23,"朝代删除成功",dynastyService.getAllDynastys(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -318,7 +318,7 @@ public class PoemManageController {
 	public Result doUpdateDynasty(@PathVariable("dynastyId") int dynastyId,@RequestBody Dynasty dynasty) {
 		try {
 			dynastyService.updateDynasty(dynasty);
-			return new Result(24,"朝代更新成功！",null,null);
+			return new Result(24,"朝代更新成功！",dynastyService.getDynastyById(dynastyId),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -367,7 +367,7 @@ public class PoemManageController {
 	public Result doAddType(@RequestBody Type type) {
 		try {
 			typeService.addType(type);
-			return new Result(28,"诗歌类型添加成功",null,null);
+			return new Result(28,"诗歌类型添加成功",typeService.getAllTypes(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -386,10 +386,10 @@ public class PoemManageController {
 			Type type = typeService.getTypeById(typeId);
 			if(type == null)
 				return new Result(29,"该诗歌类型不存在",null,null);
-			if(poemService.getPoemsByTypeId(typeId)!=null)
-				return new Result(30,"删除失败，该诗歌类型已被引用！",null,null);
+			if((poemService.getPoemsByTypeId(typeId)).size() > 0)
+				return new Result(30,"删除失败，该诗歌类型已被引用！",typeService.getAllTypes(),null);
 			typeService.deleteType(typeId);
-			return new Result(31,"删除成功",null,null);
+			return new Result(31,"删除成功",typeService.getAllTypes(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -405,7 +405,7 @@ public class PoemManageController {
 	public Result doUpdateType(@PathVariable("typeId") int typeId,@RequestBody Type type) {
 		try {
 			typeService.update(type);
-			return new Result(32,"类型更新成功！",null,null);
+			return new Result(32,"类型更新成功！",typeService.getTypeById(typeId),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
