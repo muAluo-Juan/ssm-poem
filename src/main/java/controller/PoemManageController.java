@@ -226,7 +226,7 @@ public class PoemManageController {
 	public Result doAddAuthor(@RequestBody Author author) {
 		try {
 			authorService.addAuthor(author);
-			return new Result(14,"添加成功",null,null);
+			return new Result(14,"添加成功",authorService.getAllAuthors(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -248,7 +248,7 @@ public class PoemManageController {
 			if(poemService.getPoemsByAuthorUId(author.getUid())!=null)
 				return new Result(16,"删除失败，该诗人已被引用！",null,null);
 			authorService.deleteAuthor(authorId);
-			return new Result(17,"删除成功",null,null);
+			return new Result(17,"删除成功",authorService.getAllAuthors(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -264,7 +264,7 @@ public class PoemManageController {
 	public Result doUpdateAuthor(@PathVariable("authorId") int authorId,@RequestBody Author author) {
 		try {
 			authorService.updateAuthor(author);
-			return new Result(18,"诗人信息更新成功！",null,null);
+			return new Result(18,"诗人信息更新成功！",authorService.getAuthorByAuthorId(authorId),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
