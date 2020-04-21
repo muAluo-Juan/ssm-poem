@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.KeyDao">
+	<insert id="addKey">
+		insert into t_key(kId,keyName,keyText,inputUserName)
+		values(null,#{keyName},#{keyText},#{inputUserName})
+	</insert>
+	
+	<delete id="deleteKey">
+		delete from t_key where kId=#{kId}
+	</delete>
+	
+	<select id="getKeyById" resultType="Key">
+		select * from t_key where userId=#{kId}
+	</select>
+	
+	<select id="getAllKeys" resultType="Key">
+		select * from t_key 
+	</select>
+</mapper>

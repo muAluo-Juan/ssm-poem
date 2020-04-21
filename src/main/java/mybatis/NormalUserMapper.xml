@@ -21,4 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set penName=#{penName},password=#{password},headPicPath=#{headPicPath},personalizedSig=#{personalizedSig},sex=#{sex},birth=#{birth},disableTime=#{disableTime},rewardPoints=${rewardPoints}
 		where userId=#{userId}
 	</update>
+	<delete id="delete">
+	  delete from t_normaluser where userName=#{userName}
+	</delete>
+	<select id="getall">
+	    select * from t_normaluser 
+	</select>
 </mapper>
