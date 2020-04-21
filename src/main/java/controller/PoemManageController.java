@@ -38,7 +38,6 @@ import service.ErrorInfoService;
 import service.PoemService;
 import service.Poem_ExtService;
 import service.Poem_TypeService;
-import service.ThemeService;
 import service.TypeService;
 import utils.JWTUtil;
 
@@ -264,7 +263,7 @@ public class PoemManageController {
 	@PutMapping("/poem/admin_updateauthor/{authorId}")
 	public Result doUpdateAuthor(@PathVariable("authorId") int authorId,@RequestBody Author author) {
 		try {
-			authorService.addAuthor(author);
+			authorService.updateAuthor(author);
 			return new Result(18,"诗人信息更新成功！",null,null);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -8,8 +8,8 @@ public class Author {
 	private String name_zi;
 	private String name_hao;
 	private int gender;
-	private String birthday;
-	private String deathday;
+	private String birthday="0000-00-00";
+	private String deathday="0000-00-00";
 	private int dynastyid;
 	private String intro;
 	private String masterwork;

@@ -10,21 +10,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_poems_poet where id=#{id}
 	</select>
 	<select id="getByAuthorName" resultType="Author">
-		select * from t_poems_poet where name=#{name}
+		select * from t_poems_poet where name like concat('%',#{name},'%')
 	</select>
 	<select id="getByDynastyId" resultType="Author">
-		select * from t_poems_poet where dynastyId=#{dynastyId}
+		select * from t_poems_poet where dynastyid=#{dynastyid}
 	</select>
 
 	<insert id="add" parameterType="Author">
 		insert into t_poems_poet(id,uid,name,name_zi,name_hao,gender,birthday,deathday,dynastyid,intro,masterwork)
-		values(null,null,${name},${name_zi},${name_hao},${gender},${birthday},${deathday},${dynastyid},${intro},${masterwork})
+		values(null,null,#{name},#{name_zi},#{name_hao},#{gender},#{birthday},#{deathday},#{dynastyid},#{intro},#{masterwork})
 	</insert>
 	<delete id="delete"> 
 		delete from t_poems_poet where id=#{id}
 	</delete>
 	<update id="update">
-		update t_poems_poem 
-		set name=${name},name_zi=${name_zi},name_hao=${name_hao},gender=${gender},birthday=${birthday},deathday=${deathday},dynastyid=${dynastyid},intro=${intro},masterwork=${masterwork}
+		update t_poems_poet
+		set name=#{name},name_zi=#{name_zi},name_hao=#{name_hao},gender=#{gender},birthday=#{birthday},deathday=#{deathday},dynastyid=#{dynastyid},intro=#{intro},masterwork=#{masterwork}
+		where id=#{id}
 	</update>
 </mapper>
