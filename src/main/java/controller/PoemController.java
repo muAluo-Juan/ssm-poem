@@ -64,6 +64,7 @@ public class PoemController {
 	}
 	
 	
+	
 	/*
 	 * 查看诗歌列表（前往PoemManageController的查看诗歌列表方法，该方法未设置管理员权限，只要是游客即可查看）
 	 */
