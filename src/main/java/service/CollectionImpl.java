@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dao.CollectionDao;
 import po.Collection;
+import utils.DynamicDataSourceHolder;
 
 @Service
 @Transactional()
@@ -18,34 +19,41 @@ public class CollectionImpl implements CollectionService{
 	
 	@Override
 	public List<Collection> getCollectionsAllByUserId(int userId) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return collectionDao.getAllByUserId(userId);
 	}
 
 	@Override
 	public Collection getCollectionById(int collectionId) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return collectionDao.getById(collectionId);
 	}
 
 	//获取诗歌收藏数量
 	@Override
 	public Integer getNumberOfPoemCollection(long poemId) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		List<Collection> collections = collectionDao.getByPoemId(poemId);
 		return collections.size();
 	}
 
 	@Override
 	public void addCollection(Collection collection) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		collectionDao.add(collection);
 	}
 
 	@Override
 	public void deleteCollection(int collectionId) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		collectionDao.delete(collectionId);
+	}
+
+	@Override
+	public void deleteReferCollection(int userId, long poemId) {
+		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
+		collectionDao.deleteRefer(userId,poemId);
 	}
 	
 }

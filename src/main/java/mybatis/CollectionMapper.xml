@@ -20,4 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_collection
 		where collectionId=#{collectionId}
 	</delete>
+	<delete id="deleteRefer">
+		delete from t_collection
+		where userId=#{userId} and poemId=#{poemId}
+	</delete>
 </mapper>

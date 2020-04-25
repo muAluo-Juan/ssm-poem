@@ -21,4 +21,6 @@ public interface CollectionDao {
 	public Integer add(Collection collection);
 	//删除收藏
 	public Integer delete(@Param("collectionId") int collectionId);
+	//删除某个用户的某个收藏
+	public Integer deleteRefer(@Param("userId") int userId,@Param("poemId") long poemId);
 }

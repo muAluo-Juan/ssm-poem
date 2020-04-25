@@ -450,8 +450,7 @@ public class PoemManageController {
 	 * 查看诗歌列表
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/poem/admin_getpoemlist")
+	@GetMapping("/poem/getpoemlist")
 	public Result doGetPoemList() {
 		try {
 			List<Poem> poemList = poemService.getAllPoems();
@@ -488,8 +487,7 @@ public class PoemManageController {
 	 * 查看某一首诗歌
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/poem/admin_getpoem/{poemId}")
+	@GetMapping("/poem/getpoem/{poemId}")
 	public Result doGetPoem(@PathVariable("poemId") long poemId) {
 		try {
 			Poem poem = poemService.getPoemByPoemId(poemId);
