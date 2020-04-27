@@ -51,15 +51,15 @@ public class LoginController {
 	 * 注册
 	 */
 	@CrossOrigin
-	@PostMapping("/login/register")
+	@PostMapping("/register")
 	public Result register(HttpServletRequest request,@RequestBody RegisterForm requestRegisterUser) {
 		//先验证用户输入的手机验证
-		HttpSession session = request.getSession();
-		String phoneCode = (String)session.getAttribute("phoneCode");
-		if(!phoneCode.equals(requestRegisterUser.getVerifyCode()))
+		/*HttpSession session = request.getSession();
+		String phoneCode = (String)session.getAttribute("phoneCode");*/
+		/*if(!phoneCode.equals(requestRegisterUser.getVerifyCode()))
 		{
 			return new Result(14,"验证码错误",null,null);
-		}
+		}*/
 		if(normalUserService.getNormalUserByUserName(requestRegisterUser.getUserName())!=null || administratorService.getAdministratorByUserName(requestRegisterUser.getUserName()) != null)
 			return new Result(15,"用户已存在，注册失败",null,null);
 		//构建新对象添加用户
@@ -78,7 +78,7 @@ public class LoginController {
 		normalUser.setDisableTime(0);
 		normalUser.setRewardPoints(0);
 		normalUserService.addNormalUser(normalUser);
-		session.removeAttribute("phoneCode");
+		/*session.removeAttribute("phoneCode");*/
 		return new Result(2,"欢迎成为夜雨时的一员！",null,null);
 	}
 	
@@ -98,10 +98,10 @@ public class LoginController {
 	 * 产生登录验证码
 	 */
 	@CrossOrigin
-	@PostMapping("/login/load_icode")
-	public void loadICode(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@GetMapping("/login/load_icode")
+	public void loadICode(String code,HttpServletRequest request,HttpServletResponse response) throws IOException {
 		CodeImage cImage = new CodeImage();
-		BufferedImage image = cImage.getImage();
+		BufferedImage image = cImage.getImage(code);
 		String codeString = cImage.getTextCode();
 		request.getSession().setAttribute("loginCode", codeString);
 		System.out.println("验证码为："+request.getSession().getAttribute("loginCode"));
@@ -110,6 +110,7 @@ public class LoginController {
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
+        
 		cImage.out(image,response.getOutputStream());
 	}
 	
@@ -117,11 +118,12 @@ public class LoginController {
 	 * 登录
 	 */
 	@CrossOrigin
-	@PostMapping(value="/login/login")
+	@PostMapping(value="/login")
 	public Result login(HttpServletRequest request,@RequestBody LoginForm requestLoginUser) {
 		//检验登录验证码的正确性
         HttpSession session = request.getSession();
-		String realCode = (String) session.getAttribute("loginCode");
+		String realCode = requestLoginUser.getCode();
+		System.out.println(realCode);
 		if(!realCode.equals(requestLoginUser.getVerifyCode()))
 		{
 			return new Result(5,"验证码错误",null,null);
