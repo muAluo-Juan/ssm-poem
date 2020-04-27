@@ -6,6 +6,13 @@ public class LoginForm implements Serializable{
 	private String userName;
 	private String password;
 	private String verifyCode;
+	private String code;
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	private String role;
 	public String getUserName() {
 		return userName;
