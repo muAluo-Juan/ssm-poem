@@ -50,13 +50,13 @@ public class CodeImage {
 			g2.fillRect(0, 0, w ,h);
 			return image;
 		}
-		public BufferedImage getImage() {
+		public BufferedImage getImage(String code) {
 			BufferedImage image = createImage();
 			Graphics2D g2 = (Graphics2D) image.getGraphics();
 			StringBuilder sBuilder = new StringBuilder();
 			for (int i = 0; i < 4; i++) {
 				float x = (float) (i*1.0*w/4);
-				char c = randomChar();
+				char c = code.charAt(i);
 				String string = c+"";
 				sBuilder.append(c);
 				g2.setColor(randomColor());
