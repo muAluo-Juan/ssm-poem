@@ -3,13 +3,13 @@ package model;
 //封装ajax返回结果
 public class Result {
 	private int code;//状态码
-	private String description;//描述信息
+	private String message;//描述信息
 	private Object data;//返回的数据
 	private String nextAction;//下一步要跳转的链接
 	
-	public Result(int code, String description,Object data,String nextAction){
+	public Result(int code, String message,Object data,String nextAction){
 		this.code = code;
-		this.description = description;
+		this.message = message;
 		this.data = data;
 		this.nextAction = nextAction;
 	}
@@ -22,12 +22,12 @@ public class Result {
 		this.code = code;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public String getNextAction() {
