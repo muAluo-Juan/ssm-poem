@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<delete id="delete">
-		delete from t_attention where attentionId=#{attentionId}
+		delete from t_attention where userId=#{userId} and beAttentedId=#{beAttentedId}
 	</delete>
 	
 	<select id="getByUserId" resultType="Attention">

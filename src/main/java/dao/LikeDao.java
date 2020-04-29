@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -12,4 +14,5 @@ public interface LikeDao {
 	public Integer add(Like like);
 	public Integer delete(@Param("userId") int userId,@Param("workId") int workId);
 	public Like get(@Param("userId") int userId,@Param("workId") int workId);
+	public List<Like> getByUserId(@Param("userId") int userId);
 }

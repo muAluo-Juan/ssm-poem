@@ -98,11 +98,11 @@ public class PoemController {
 	 */
 	
 	/*
-	 * 用户提交勘误信息
+	 * 用户提交勘误信息（记住必须要传入用户当前看的poem的id，否则不知道提交的勘误信息是哪一首诗歌的）
 	 */
 	@CrossOrigin
 	@NormalToken
-	@PostMapping("/poem/user_adderrorinfo")  //记住必须要传入用户当前看的poem的id，否则不知道提交的勘误信息是哪一首诗歌的
+	@PostMapping("/poem/user_adderrorinfo")  
 	public Result doAddErrorInfo(@RequestBody ErrorInfo errorInfo,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");

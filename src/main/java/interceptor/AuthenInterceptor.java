@@ -5,8 +5,6 @@ import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,15 +23,15 @@ public class AuthenInterceptor implements HandlerInterceptor {
 	 
 	@Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-        String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
-        System.out.println("处理");
+        String token = httpServletRequest.getHeader("token");// 浠� http 璇锋眰澶翠腑鍙栧嚭 token
+        System.out.println("澶勭悊");
         if(!(object instanceof HandlerMethod)){
             return true;
         }
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Method method=handlerMethod.getMethod();
         
-        //检查有没有需要用户权限的注解
+        //妫�鏌ユ湁娌℃湁闇�瑕佺敤鎴锋潈闄愮殑娉ㄨВ
         if (method.isAnnotationPresent(NormalToken.class)) {
         	String username;
         	String author;
@@ -54,7 +52,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	}
             
         }
-      //检查有没有需要用户权限的注解
+      //妫�鏌ユ湁娌℃湁闇�瑕佺敤鎴锋潈闄愮殑娉ㄨВ
         if (method.isAnnotationPresent(AdminToken.class)) {
         	
         	String username;
@@ -66,7 +64,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	}
         	catch (Exception e) {
         		e.printStackTrace();
-        		System.out.println("未携带token返回登录");
+        		System.out.println("鏈惡甯oken杩斿洖鐧诲綍");
         		return false;
         	}
             

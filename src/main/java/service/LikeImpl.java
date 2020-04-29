@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,12 @@ public class LikeImpl implements LikeService{
 	public Like getLike(int userId, int workId) {
 		// TODO Auto-generated method stub
 		return likeDao.get(userId, workId);
+	}
+
+	@Override
+	public List<Like> getLikesByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return likeDao.getByUserId(userId);
 	}
 	
 }

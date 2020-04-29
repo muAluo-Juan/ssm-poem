@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +24,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import annotation.NormalToken;
 import model.Result;
+import po.Comment;
+import po.Draft;
+import po.Like;
 import po.NormalUser;
+import po.ReportInfo;
 import po.Work;
+import service.AttentionService;
+import service.CommentService;
+import service.DraftService;
+import service.LikeService;
 import service.NormalUserService;
+import service.ReportService;
 import service.WorkService;
 import utils.JWTUtil;
 
@@ -33,9 +44,18 @@ import utils.JWTUtil;
 public class CommunityController {
 	@Autowired
 	private WorkService workService;
-	
 	@Autowired
 	private NormalUserService normalUserService;
+	@Autowired
+	private DraftService draftService;
+	@Autowired
+	private LikeService likeService;
+	@Autowired
+	private AttentionService attentionService;
+	@Autowired
+	private ReportService reportService;
+	@Autowired
+	private CommentService commentService;
 	
 	/*
 	 * 发布作品
@@ -63,14 +83,14 @@ public class CommunityController {
 				return new Result(3,"发表成功！",null,null);
 			}catch(Exception e) {
 				e.printStackTrace();
-				return new Result(4,"发生未知错误",null,"");
+				return new Result(0,"发生未知错误",null,"");
 			}
 		}
-		return new Result(4,"发生未知错误",null,"");
+		return new Result(0,"发生未知错误",null,"");
 	}
 	
 	/*
-	 * 图片上传（问题：重启服务器后图片就不见了）
+	 * 图片上传
 	 */
 	@CrossOrigin
 	@NormalToken
@@ -122,48 +142,163 @@ public class CommunityController {
 	@CrossOrigin
 	@NormalToken
 	@PostMapping("/community/user_adddraft")
-	public Result addDraft() {
-		
-		return null;
+	public Result addDraft(@RequestBody Draft draft,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			draft.setUserId(user.getUserId());
+			draftService.addDraft(draft);
+			return new Result(4,"添加成功",draftService.getAllDraftByUserId(user.getUserId()),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
 	}
 	
 	/*
 	 * 点赞
 	 */
-	@RequestMapping(value="/community/user_addlike")
-	public String addLike() {
-		return "community";
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/community/user_addlike/{workId}")
+	public Result addLike(@PathVariable("workId") int workId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			Like like = new Like();
+			like.setUserId(user.getUserId());
+			like.setWorkId(workId);
+			java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+			like.setInputTime(inputTime);
+			likeService.addLike(like);
+			return new Result(5,"点赞成功",likeService.getLike(user.getUserId(), workId),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
 	}
 	
 	/*
 	 * 取消点赞
 	 */
-	@RequestMapping(value="/community/user_deletelike")
-	public String deleteLike() {
-		return "community";
+	@CrossOrigin
+	@NormalToken
+	@DeleteMapping(value="/community/user_deletelike/{workId}")
+	public Result deleteLike(@PathVariable("workId") int workId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			likeService.deleteLike(user.getUserId(), workId);
+			return new Result(6,"删除成功",likeService.getLikesByUserId(user.getUserId()),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
 	}
 	
 	/*
 	 * 关注用户
 	 */
-	
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/community/user_addattention/{beAttentedId}")
+	public Result addAttention(@PathVariable("beAttentedId") int beAttentedId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			attentionService.addAttention(user.getUserId(),beAttentedId);
+			return new Result(7,"关注成功",attentionService.getAttentions(user.getUserId()),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
 	
 	/*
 	 * 取消关注
 	 */
-	
+	@CrossOrigin
+	@NormalToken
+	@DeleteMapping(value="/community/user_deleteattention/{beAttentedId}")
+	public Result deleteAttention(@PathVariable("beAttentedId") int beAttentedId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			attentionService.deleteAttention(user.getUserId(), beAttentedId);
+			return new Result(8,"已取消关注",attentionService.getAttentions(user.getUserId()),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
 	
 	/*
 	 * 举报用户
 	 */
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/community/user_report/{beReportedUserId}")
+	public Result report(@PathVariable("beReportedUserId") int beReportedUserId,@RequestBody ReportInfo reportInfo,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			reportInfo.setUserId(user.getUserId());
+			java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+			reportInfo.setInputTime(inputTime);
+			reportInfo.setBeReportedUserId(beReportedUserId);
+			reportService.addReportInfo(reportInfo);
+			return new Result(9,"已发送举报信息至管理员",reportService.getAllReportInfo(),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
 	
 	
 	/*
 	 * 发表评论
 	 */
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/community/user_comment/{workId}")
+	public Result comment(@PathVariable("workId") int workId,@RequestBody Comment comment,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			comment.setUserId(user.getUserId());
+			comment.setWorkId(workId);
+			java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+			comment.setInputTime(inputTime);
+			commentService.addComment(comment);
+			return new Result(10,"发表成功",commentService.getCommentByWorkId(workId),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
 	
 	
 	/*
 	 * 删除评论（自己的）
 	 */
+	@CrossOrigin
+	@NormalToken
+	@DeleteMapping(value="/community/user_deletecomment/{commentId}")
+	public Result comment(@PathVariable("commentId") int commentId,HttpServletRequest request) {
+		try {
+			commentService.deleteComment(commentId);
+			return new Result(11,"删除成功",null,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
+	
 }

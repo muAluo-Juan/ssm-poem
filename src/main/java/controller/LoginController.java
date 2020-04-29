@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,7 +129,7 @@ public class LoginController {
 		}
 		//验证用户名和密码正确性
 		//普通用户
-		if(requestLoginUser.getRole().equals("normalUser"))
+		if(requestLoginUser.getRole().equals("普通用户"))
 		{
 			if(normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
 				NormalUser normalUser = normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());

@@ -1,5 +1,7 @@
 package po;
 
+import java.sql.Date;
+
 //举报信息
 public class ReportInfo {
 	private int reportId;
@@ -7,6 +9,7 @@ public class ReportInfo {
 	private int beReportedUserId;
 	private String reportReason;
 	private int state;
+	private Date inputTime;
 	public int getReportId() {
 		return reportId;
 	}
@@ -37,4 +40,11 @@ public class ReportInfo {
 	public void setState(int state) {
 		this.state = state;
 	}
+	public Date getInputTime() {
+		return inputTime;
+	}
+	public void setInputTime(Date inputTime) {
+		this.inputTime = inputTime;
+	}
+	
 }
