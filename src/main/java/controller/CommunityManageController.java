@@ -28,8 +28,7 @@ public class CommunityManageController {
 	 * 查看作品列表
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/community/admin_getworklist")
+	@GetMapping("/community/getworklist")
 	public Result doGetWorkList() {
 		try {
 			List<Work> workList = workService.getAllWorks();
@@ -61,8 +60,7 @@ public class CommunityManageController {
 	 * 查询某个作品
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/community/admin_getwork/{workId}")
+	@GetMapping("/community/getwork/{workId}")
 	public Result doGetWork(@PathVariable("workId") int workId) {
 		try {
 			Work work = workService.getWorkByWrokId(workId);
@@ -93,7 +91,6 @@ public class CommunityManageController {
 	 * 获取作品的评论列表
 	 */
 	@CrossOrigin
-	@AdminToken
 	@GetMapping("/community/admin_getworkcomments/{workId}")
 	public Result doGetWorkComments(@PathVariable("workId") int workId) {
 		try {

@@ -233,6 +233,4 @@ public class PoemController {
 			return new Result(0,"出现未知错误",null,null);
 		}
 	}
-	
-
 }

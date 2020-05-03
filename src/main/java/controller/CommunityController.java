@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import annotation.NormalToken;
 import model.Result;
+import po.Attention;
 import po.Comment;
 import po.Draft;
 import po.Like;
@@ -56,6 +59,14 @@ public class CommunityController {
 	private ReportService reportService;
 	@Autowired
 	private CommentService commentService;
+	
+	/*
+	 * 查看作品列表（访问CommunityManageController（是游客即可查看））
+	 */
+	
+	/*
+	 * 获取某个作品的详细信息（访问CommunityManageController（是游客即可查看））
+	 */
 	
 	/*
 	 * 发布作品
@@ -157,6 +168,26 @@ public class CommunityController {
 	}
 	
 	/*
+	 * 获取用户所有点赞的列表（进入社区可以看到哪些作品是用户点赞了的）
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping(value="/community/user_getalllikes")
+	public Result getAllLikes(HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			List<Like> likes = likeService.getLikesByUserId(user.getUserId());
+			return new Result(12,"所有该用户点赞的信息",likes,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
+	
+	
+	/*
 	 * 点赞
 	 */
 	@CrossOrigin
@@ -193,6 +224,25 @@ public class CommunityController {
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			likeService.deleteLike(user.getUserId(), workId);
 			return new Result(6,"删除成功",likeService.getLikesByUserId(user.getUserId()),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
+	
+	/*
+	 * 获取关注对象的列表（一进入社区模块就知道哪些人被自己关注了）
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping(value="/community/user_getattentions")
+	public Result getAttentions(HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			List<Attention> attentions = attentionService.getAttentions(user.getUserId());
+			return new Result(13,"该用户关注的人有",attentions,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");
@@ -260,6 +310,9 @@ public class CommunityController {
 		}
 	}
 	
+	/*
+	 * 查看某个作品的所有评论（前往CommunityManageController,是游客即可查看）
+	 */
 	
 	/*
 	 * 发表评论
