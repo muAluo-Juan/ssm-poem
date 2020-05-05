@@ -141,6 +141,7 @@ public class LoginController {
 				ArrayList<Object> list=new ArrayList<>();
 				list.add(normalUser.getUserName());
 				list.add(token);
+				list.add(normalUser.getPenName());
 				return new Result(6,"登录成功",list,null);
 			}
 			else {
