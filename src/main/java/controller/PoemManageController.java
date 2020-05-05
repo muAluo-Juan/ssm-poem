@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import annotation.AdminToken;
+import annotation.NormalToken;
 import model.PoemForm;
 import model.Result;
 import po.Administrator;
@@ -151,8 +152,7 @@ public class PoemManageController {
 	 * 查看诗人列表
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/poem/admin_getauthorlist")
+	@GetMapping("/poets")
 	public Result doGetAuthorList() {
 		try {
 			List<Author> authorList = authorService.getAllAuthors();
@@ -416,8 +416,7 @@ public class PoemManageController {
 	 * 查看所有类型
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/poem/admin_gettypelist")
+	@GetMapping("/poem/gettypelist")
 	public Result doGetTypeList() {
 		try {
 			List<Type> typies = typeService.getAllTypes();

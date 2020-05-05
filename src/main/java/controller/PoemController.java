@@ -50,6 +50,11 @@ public class PoemController {
 	private Poem_ExtService poem_extService;
 	
 	/*
+	 * 获取诗歌类型列表（访问PoemManageController,游客即可，无权限控制）
+	 */
+	
+	
+	/*
 	 * ！！！根据诗歌的uid去poem_ext表中查找诗歌的附加信息（如诗歌赏析信息、诗歌音频文件路径）
 	 */
 	@CrossOrigin
@@ -208,7 +213,7 @@ public class PoemController {
 	 * 分类搜索：按诗人UID搜索
 	 */
 	@CrossOrigin
-	@GetMapping("/poem/searchbyauthor/{authorUId}")
+	@GetMapping("/poems/{authorUId}")
 	public Result doGetPoemsByAuthor(@PathVariable("authorUId") String authorUId) {
 		try {
 			List<Poem> poems = poemService.getPoemsByAuthorUId(authorUId);
@@ -218,7 +223,21 @@ public class PoemController {
 			return new Result(0,"出现未知错误",null,null);
 		}
 	}
-	
+	/*
+	 * 按诗人名搜索诗人
+	 */
+	@CrossOrigin
+	@GetMapping("poets/{name}")
+	public Result doGetPoetByName(@PathVariable String name) {
+		try {
+			 List<Author> poets = authorService.getAuthorsByAuthorName(name);
+			 System.out.println(poets.size());
+			return new Result(6,"success",poets,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
 	/*
 	 * 分类搜索：按朝代搜索诗人（诗人按照朝代排列好，用户点击某个诗人后可查看到该诗人的所有诗）
 	 */

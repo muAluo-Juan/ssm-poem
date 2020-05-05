@@ -3,6 +3,7 @@ package controller;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -137,7 +138,10 @@ public class LoginController {
 				String token = JWTUtil.generateToken(normalUser.getUserName(), "normal");
 				System.out.println("用户token为"+token);
 				session.removeAttribute("loginCode");
-				return new Result(6,"登录成功",token,null);
+				ArrayList<Object> list=new ArrayList<>();
+				list.add(normalUser.getUserName());
+				list.add(token);
+				return new Result(6,"登录成功",list,null);
 			}
 			else {
 				return new Result(7,"用户名或密码错误",requestLoginUser,null);
