@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dao.WorkDao;
 import po.Work;
+import utils.DynamicDataSourceHolder;
 
 @Service
 @Transactional()
@@ -17,33 +18,37 @@ public class WorkImpl implements WorkService{
 	
 	@Override
 	public void addWork(Work work) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		workDao.add(work);
 	}
 
 	@Override
 	public void deleteWork(int workId) {
-		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		workDao.delete(workId);
 	}
 
 	@Override
 	public List<Work> getAllWorks() {
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return workDao.getAll();
 	}
 
 	@Override
 	public List<Work> getWorksByUserId(int userId) {
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return workDao.getByUserId(userId);
 	}
 
 	@Override
 	public Work getWorkByWrokId(int workId) {
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return workDao.getByWorkId(workId);
 	}
 
 	@Override
 	public void updateWork(Work work) {
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		// TODO Auto-generated method stub
 		workDao.update(work);
 	}

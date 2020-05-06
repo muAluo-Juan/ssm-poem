@@ -33,6 +33,10 @@ public class AuthenInterceptor implements HandlerInterceptor {
         
         //妫�鏌ユ湁娌℃湁闇�瑕佺敤鎴锋潈闄愮殑娉ㄨВ
         if (method.isAnnotationPresent(NormalToken.class)) {
+        	if(token==null) {
+        		httpServletResponse.setStatus(401);
+        		return false;
+        	}
         	String username;
         	String author;
         	try {
@@ -41,6 +45,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	}
         	catch (Exception e) {
         		e.printStackTrace();
+        		httpServletResponse.setStatus(401);
         		return false;
         	}
             
@@ -48,13 +53,17 @@ public class AuthenInterceptor implements HandlerInterceptor {
             	return true;
             }
         	else {
+        		httpServletResponse.setStatus(401);
         		return false;
         	}
             
         }
       //妫�鏌ユ湁娌℃湁闇�瑕佺敤鎴锋潈闄愮殑娉ㄨВ
         if (method.isAnnotationPresent(AdminToken.class)) {
-        	
+        	if(token==null) {
+        		httpServletResponse.setStatus(401);
+        		return false;
+        	}
         	String username;
         	String author;
         	try {
@@ -65,6 +74,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	catch (Exception e) {
         		e.printStackTrace();
         		System.out.println("鏈惡甯oken杩斿洖鐧诲綍");
+        		httpServletResponse.setStatus(401);
         		return false;
         	}
             
@@ -72,11 +82,13 @@ public class AuthenInterceptor implements HandlerInterceptor {
         		if(author!=null&&author.equals("admin"))
         			return true;
         		else {
+            		httpServletResponse.setStatus(401);
+
         			return false;
         		}
             }
         	else {
-        		
+        		httpServletResponse.setStatus(401);
         		return false;
         	}
             

@@ -345,8 +345,7 @@ public class PoemManageController {
 	 * 查看某个朝代的具体信息（根据朝代id）
 	 */
 	@CrossOrigin
-	@AdminToken
-	@GetMapping("/poem/admin_getdynasty/{dynastyId}")
+	@GetMapping("/poem/getdynasty/{dynastyId}")
 	public Result doGetDynasty(@PathVariable("dynastyId") int dynastyId)
 	{
 		try {

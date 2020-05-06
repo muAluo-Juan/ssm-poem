@@ -139,7 +139,8 @@ public class LoginController {
 				System.out.println("用户token为"+token);
 				session.removeAttribute("loginCode");
 				ArrayList<Object> list=new ArrayList<>();
-				list.add(normalUser.getUserName());
+				normalUser.setPassword(null);
+				list.add(normalUser);
 				list.add(token);
 				list.add(normalUser.getPenName());
 				return new Result(6,"登录成功",list,null);

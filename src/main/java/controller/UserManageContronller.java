@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import annotation.AdminToken;
+import annotation.NormalToken;
 import model.Result;
 import po.NormalUser;
 import service.NormalUserService;
@@ -22,6 +23,24 @@ import service.NormalUserService;
 public class UserManageContronller {
    @Autowired
    private NormalUserService normalUserService;
+   
+   /*
+	 * 通过用户名获取用户
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping("/user/{userName}")
+	public Result getUserByUserName(@PathVariable("userName") String username) {
+		try {
+			NormalUser user= normalUserService.getNormalUserByUserName(username);
+			user.setPassword(null);
+			return new Result(200, "用户信息",user, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new Result(-1,"error",e,null);
+		}
+	}
+
  
 	/*
 	 * 注解@CrossOrigin 跨域  @AdminToken 管理员权限   

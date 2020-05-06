@@ -10,10 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_work where workId=#{workId}
 	</delete>
 	<select id="getAll" resultType="Work">
-		select * from t_work
+		select * from t_work order by inputTime desc
 	</select>
 	<select id="getByUserId" resultType="Work">
-		select * from t_work where userId=#{userId}
+		select * from t_work where userId=#{userId} order by inputTime desc
 	</select>
 	<select id="getByWorkId" resultType="Work">
 		select * from t_work where workId=#{workId}
