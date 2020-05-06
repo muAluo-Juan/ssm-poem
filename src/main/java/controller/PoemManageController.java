@@ -204,7 +204,6 @@ public class PoemManageController {
 	 * 根据朝代查找诗人
 	 */
 	@CrossOrigin
-	@AdminToken
 	@GetMapping("/poem/admin_getauthorbydynasty/{dynastyId}")
 	public Result doGetAuthorByDynasty(@PathVariable("dynastyId") int dynastyId)
 	{
@@ -329,7 +328,6 @@ public class PoemManageController {
 	 * 查看所有朝代
 	 */
 	@CrossOrigin
-	@AdminToken
 	@GetMapping("/poem/admin_getdyanstylist")
 	public Result doGetDynastyList() {
 		try {
