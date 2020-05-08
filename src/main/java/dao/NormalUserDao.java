@@ -17,7 +17,16 @@ public interface NormalUserDao {
 	public Integer add(NormalUser user);
 	public Integer update(NormalUser user);
 	
+  
+	
+	
+	/*
+	 * 管理用户时需要添加的
+	 */	
 	public Integer delete(@Param("userName") String userName);
 	public List<NormalUser>  getall();
-    
+	/*
+	 * 用户个人模块
+	 */
+	public NormalUser getByUid(@Param("userId") long userId);
 }

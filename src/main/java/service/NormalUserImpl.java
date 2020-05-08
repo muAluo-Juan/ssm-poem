@@ -12,7 +12,7 @@ import po.NormalUser;
 
 @Service
 @Transactional()
-public class NormalUserImpl implements NormalUserService{
+public  class NormalUserImpl implements NormalUserService{
 	@Autowired
 	private NormalUserDao normalUserDao;
 
@@ -20,6 +20,9 @@ public class NormalUserImpl implements NormalUserService{
 	public NormalUser getNormalUserByUserNameAndPwd(String userName, String pwd) {
 		return normalUserDao.getByUserNameAndPwd(userName, pwd);
 	}
+	
+
+	
 
 	@Override
 	public NormalUser getNormalUserByUserName(String userName) {
@@ -37,17 +40,29 @@ public class NormalUserImpl implements NormalUserService{
 		// TODO Auto-generated method stub
 		normalUserDao.update(user);
 	}
-
+    
+	
+	//用户管理模块
 	@Override
 	public void deleteNormalUser(String userName) {
 		// TODO Auto-generated method stub
-		
+		normalUserDao.delete(userName);
 	}
 
 	@Override
 	public List<NormalUser> getAllNormalUser() {
 		// TODO Auto-generated method stub
-		return null;
+		return normalUserDao.getall();
 	}
+    
+	//用户个人
+	public NormalUser getNormalUserByUid(long userId) {
+		// TODO Auto-generated method stub
+		System.out.println("impl");
+		return normalUserDao.getByUid(userId);
+	}
+	
+
+	
 	
 }

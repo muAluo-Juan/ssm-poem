@@ -10,6 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByUserName" resultType="NormalUser">
 		select * from t_normaluser where userName=#{userName}
 	</select>
+	
+	
+	
+	
 
 	<insert id="add" parameterType="NormalUser">
 		insert into t_normaluser(userId,userName,penName,password,headPicPath,personalizedSig,sex,birth,disableTime,rewardPoints)
@@ -21,10 +25,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set penName=#{penName},password=#{password},headPicPath=#{headPicPath},personalizedSig=#{personalizedSig},sex=#{sex},birth=#{birth},disableTime=#{disableTime},rewardPoints=${rewardPoints}
 		where userId=#{userId}
 	</update>
+	
+	
 	<delete id="delete">
 	  delete from t_normaluser where userName=#{userName}
 	</delete>
-	<select id="getall">
+	<select id="getall" resultType="NormalUser">
 	    select * from t_normaluser 
+	</select>
+	
+	<select id="getByUid" resultType="NormalUser">
+	     select * from t_normaluser where userId=#{userId}
 	</select>
 </mapper>
