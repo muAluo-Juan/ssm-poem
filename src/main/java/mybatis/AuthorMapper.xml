@@ -9,13 +9,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByAuthorId" resultType="Author">
 		select * from t_poems_poet where id=#{id}
 	</select>
+	
 	<select id="getByAuthorName" resultType="Author">
 		select * from t_poems_poet where name like concat('%',#{name},'%')
 	</select>
 	<select id="getByDynastyId" resultType="Author">
 		select * from t_poems_poet where dynastyid=#{dynastyid}
 	</select>
-
+	<select id="getByUid" resultType="Author">
+		select * from t_poems_poet where uid=#{uid}
+	</select>
 	<insert id="add" parameterType="Author">
 		insert into t_poems_poet(id,uid,name,name_zi,name_hao,gender,birthday,deathday,dynastyid,intro,masterwork)
 		values(null,null,#{name},#{name_zi},#{name_hao},#{gender},#{birthday},#{deathday},#{dynastyid},#{intro},#{masterwork})

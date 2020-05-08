@@ -26,4 +26,6 @@ public interface AuthorDao {
 	public Integer delete(@Param("id") int id);
 	//更新诗人
 	public Integer update(Author author);
-}
+	//根据uid获取诗人
+	public Author getByUid(@Param("uid") String uid);
+} 

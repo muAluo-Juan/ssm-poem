@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import po.Author;
 
 public interface AuthorService {
@@ -20,4 +22,6 @@ public interface AuthorService {
 	public void deleteAuthor(int id);
 	//更新诗人
 	public void updateAuthor(Author author);
+	//获取诗人根据uid
+	public Author getAuthorByUid(String uid);
 }

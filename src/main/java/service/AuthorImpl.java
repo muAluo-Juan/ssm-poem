@@ -58,4 +58,11 @@ public class AuthorImpl implements AuthorService{
 		DynamicDataSourceHolder.setDataSource("seconddataSource");
 		return authorDao.getAll();
 	}
+
+	@Override
+	public Author getAuthorByUid(String uid) {
+		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		return authorDao.getByUid(uid);
+	}
 }
