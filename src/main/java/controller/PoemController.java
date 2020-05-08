@@ -115,7 +115,7 @@ public class PoemController {
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			if(errorInfo != null && user != null) {
 				java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-				errorInfo.setInputTime(inputTime);//勘误提交时间
+				//errorInfo.setInputTime(inputTime);//勘误提交时间
 				errorInfo.setUserId(user.getUserId());//勘误提交人
 				errorInfoService.addErrorInfo(errorInfo);
 				return new Result(1,"已提交管理员审核，感谢您的意见",errorInfo,null);
@@ -180,14 +180,15 @@ public class PoemController {
 	}
 	
 	/*
-	 * 分类搜索：按诗歌类型搜索诗歌（返回poem_type的数组，再根据其中的诗歌id查询诗歌）
+	 * 分类搜索：按诗歌类型搜索诗歌
 	 */
 	@CrossOrigin
-	@GetMapping("/poem/searchbytype/{typeId}")
-	public Result doGetPoemsByType(@PathVariable("typeId") int typeId) {
+	@GetMapping("/poem/poemsearchbytype/{id}")
+	public Result doGetPoemsByType(@PathVariable("id") int typeId) {
 		try {
-			List<Poem_Type> poem_types = poem_typeService.getPoem_ThemeByThemeId(typeId);
-			return new Result(4,"对应的诗歌类型关系List",poem_types,null);
+			System.out.println("要查找的诗歌的诗歌类型是"+typeId);
+			List<Poem> poems = poemService.getPoemsByTypeId(typeId);
+			return new Result(4,"对应的诗歌List",poems,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -227,7 +228,7 @@ public class PoemController {
 	 * 按诗人名搜索诗人
 	 */
 	@CrossOrigin
-	@GetMapping("poets/{name}")
+	@GetMapping("/poets/{name}")
 	public Result doGetPoetByName(@PathVariable String name) {
 		try {
 			 List<Author> poets = authorService.getAuthorsByAuthorName(name);
@@ -238,6 +239,21 @@ public class PoemController {
 			return new Result(0,"出现未知错误",null,null);
 		}
 	}
+	/*
+	 * 通过诗人uid获取诗人
+	 */
+	@CrossOrigin
+	@GetMapping("/getpoetbyuid/{uid}")
+	public Result doGetPoetByUid(@PathVariable String uid) {
+		try {
+			 Author poet = authorService.getAuthorByUid(uid);
+			return new Result(14,"success",poet,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
 	/*
 	 * 分类搜索：按朝代搜索诗人（诗人按照朝代排列好，用户点击某个诗人后可查看到该诗人的所有诗）
 	 */
