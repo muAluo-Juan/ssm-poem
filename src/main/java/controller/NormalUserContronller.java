@@ -316,9 +316,13 @@ public class NormalUserContronller {
 	@CrossOrigin
 	@NormalToken
 	@DeleteMapping("/user/deleteattention/{aId}")
-	public Result deleteAttention(@PathVariable("aId") int aId) {
+	public Result deleteAttention(@PathVariable("aId") int aId,HttpServletRequest request) {
 		try {
-			attentionService.deleteAttention(aId);
+			//获取token
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			attentionService.deleteAttention(user.getUserId(), aId);
 			return new Result(14, "删除关注成功", null, null);
 		} catch (Exception e) {
 			// TODO: handle exception

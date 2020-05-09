@@ -121,13 +121,13 @@ public class LoginController {
 	@PostMapping(value="/login")
 	public Result login(HttpServletRequest request,@RequestBody LoginForm requestLoginUser) {
 		//检验登录验证码的正确性
-        HttpSession session = request.getSession();
+       /* HttpSession session = request.getSession();
 		String realCode = requestLoginUser.getCode();
 		System.out.println(realCode);
 		if(!realCode.equals(requestLoginUser.getVerifyCode()))
 		{
 			return new Result(5,"验证码错误",null,null);
-		}
+		}*/
 		//验证用户名和密码正确性
 		//普通用户
 		if(requestLoginUser.getRole().equals("普通用户"))
@@ -137,7 +137,7 @@ public class LoginController {
 				//给用户token
 				String token = JWTUtil.generateToken(normalUser.getUserName(), "normal");
 				System.out.println("用户token为"+token);
-				session.removeAttribute("loginCode");
+				//session.removeAttribute("loginCode");
 				ArrayList<Object> list=new ArrayList<>();
 				normalUser.setPassword(null);
 				list.add(normalUser);
@@ -156,7 +156,7 @@ public class LoginController {
 				//给管理员token
 				String token = JWTUtil.generateToken(admin.getUserName(), "admin");
 				System.out.println("管理员token为"+token);
-				session.removeAttribute("loginCode");
+				//session.removeAttribute("loginCode");
 				return new Result(8,"登录成功",token,null);
 			}
 			else {
