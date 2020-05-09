@@ -183,7 +183,7 @@ public class PoemController {
 	 * 分类搜索：按诗歌类型搜索诗歌
 	 */
 	@CrossOrigin
-	@GetMapping("/poem/poemsearchbytype/{id}")
+	@GetMapping("/poem/searchbytype/{id}")
 	public Result doGetPoemsByType(@PathVariable("id") int typeId) {
 		try {
 			System.out.println("要查找的诗歌的诗歌类型是"+typeId);

@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<insert id="add" parameterType="ErrorInfo">
 		insert into t_errorInfo(errorId,errorText,inputTime,state,verifyAdministratorId,userId,poemId)
-		values(null,#{errorText},#{inputTime},0,null,#{userId},#{poemId})
+		values(null,#{errorText},null,0,null,#{userId},#{poemId})
 	</insert>
 	<update id="update" parameterType="ErrorInfo">
 		update t_errorInfo

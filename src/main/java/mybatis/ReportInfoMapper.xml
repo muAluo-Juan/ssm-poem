@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="add" parameterType="ReportInfo">
 		insert into t_reportinfo(reportId,userId,beReportedUserId,reportReason,state,inputTime)
-		values(null,#{userId},#{beReportedUserId},#{reportReason},0,inputTime)
+		values(null,#{userId},#{beReportedUserId},#{reportReason},0,null)
 	</insert>
 	
 	<update id="update" parameterType="ReportInfo">

@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dao.WorkDao">
 	<insert id="add" parameterType="Work">
 		insert into t_work(workId,title,userId,text,imgPath,likeNum,isEssay,inputTime)
-		values(null,#{title},#{userId},#{text},#{imgPath},#{likeNum},#{isEssay},#{inputTime})
+		values(null,#{title},#{userId},#{text},#{imgPath},#{likeNum},#{isEssay},null)
 	</insert>
 	<delete id="delete">
 		delete from t_work where workId=#{workId}

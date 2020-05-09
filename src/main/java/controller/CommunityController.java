@@ -83,8 +83,8 @@ public class CommunityController {
 			try {
 				work.setUserId(user.getUserId());
 				work.setLikeNum(0);
-				java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-				work.setInputTime(inputTime);
+				//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+				//work.setInputTime(inputTime);
 				workService.addWork(work);
 				//增加用户积分
 				long points = user.getRewardPoints();
@@ -299,8 +299,8 @@ public class CommunityController {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			reportInfo.setUserId(user.getUserId());
-			java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-			reportInfo.setInputTime(inputTime);
+			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+			//reportInfo.setInputTime(inputTime);
 			reportInfo.setBeReportedUserId(beReportedUserId);
 			reportService.addReportInfo(reportInfo);
 			return new Result(9,"已发送举报信息至管理员",reportService.getAllReportInfo(),null);
@@ -327,8 +327,8 @@ public class CommunityController {
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			comment.setUserId(user.getUserId());
 			comment.setWorkId(workId);
-			java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-			comment.setInputTime(inputTime);
+			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+			//comment.setInputTime(inputTime);
 			commentService.addComment(comment);
 			return new Result(10,"发表成功",commentService.getCommentByWorkId(workId),null);
 		}catch(Exception e) {

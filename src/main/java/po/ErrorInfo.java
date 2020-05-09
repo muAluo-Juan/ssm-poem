@@ -1,12 +1,12 @@
 package po;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 //诗歌勘误信息
 public class ErrorInfo {
 	private int errorId;
 	private String errorText;//勘误内容
-	private Date inputTime;//勘误提交时间
+	private Timestamp inputTime;//勘误提交时间
 	private int state;  //审核状态
 	private int verifyAdministratorId;//审核勘误的管理员
 	private int userId;//提交勘误的用户
@@ -23,10 +23,11 @@ public class ErrorInfo {
 	public void setErrorText(String errorText) {
 		this.errorText = errorText;
 	}
-	public Date getInputTime() {
+	
+	public Timestamp getInputTime() {
 		return inputTime;
 	}
-	public void setInputTime(Date inputTime) {
+	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
 	}
 	public int getState() {

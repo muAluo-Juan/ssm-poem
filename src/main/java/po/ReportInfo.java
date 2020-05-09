@@ -1,6 +1,6 @@
 package po;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 //举报信息
 public class ReportInfo {
@@ -9,7 +9,7 @@ public class ReportInfo {
 	private int beReportedUserId;
 	private String reportReason;
 	private int state;
-	private Date inputTime;
+	private Timestamp inputTime;
 	public int getReportId() {
 		return reportId;
 	}
@@ -40,11 +40,10 @@ public class ReportInfo {
 	public void setState(int state) {
 		this.state = state;
 	}
-	public Date getInputTime() {
+	public Timestamp getInputTime() {
 		return inputTime;
 	}
-	public void setInputTime(Date inputTime) {
+	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
 	}
-	
 }

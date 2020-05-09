@@ -1,6 +1,6 @@
 package po;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Work {
 	private int workId;
@@ -10,7 +10,7 @@ public class Work {
 	private String imgPath;
 	private int likeNum;
 	private int isEssay;
-	private Date inputTime;
+	private Timestamp inputTime;
 	public int getWorkId() {
 		return workId;
 	}
@@ -53,11 +53,10 @@ public class Work {
 	public void setIsEssay(int isEssay) {
 		this.isEssay = isEssay;
 	}
-	public Date getInputTime() {
+	public Timestamp getInputTime() {
 		return inputTime;
 	}
-	public void setInputTime(Date inputTime) {
+	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
 	}
-	
 }

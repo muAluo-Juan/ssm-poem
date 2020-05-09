@@ -1,11 +1,11 @@
 package po;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Comment {
 	private int commentId;
 	private String commentText;
-	private Date inputTime;
+	private Timestamp inputTime;
 	private int userId;
 	private int workId;
 	public int getCommentId() {
@@ -20,10 +20,11 @@ public class Comment {
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
 	}
-	public Date getInputTime() {
+	
+	public Timestamp getInputTime() {
 		return inputTime;
 	}
-	public void setInputTime(Date inputTime) {
+	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
 	}
 	public int getUserId() {
