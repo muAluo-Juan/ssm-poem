@@ -18,31 +18,31 @@ public class TypeImpl implements TypeService{
 	
 	@Override
 	public void addType(Type type) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		typeDao.add(type);
 	}
 
 	@Override
 	public void deleteType(int id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		typeDao.delete(id);
 	}
 
 	@Override
 	public Type getTypeById(int id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return typeDao.getById(id);
 	}
 
 	@Override
 	public List<Type> getAllTypes() {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return typeDao.getAll();
 	}
 
 	@Override
 	public void update(Type type) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		typeDao.update(type);
 	}
 	

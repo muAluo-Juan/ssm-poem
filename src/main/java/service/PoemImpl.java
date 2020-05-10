@@ -19,49 +19,49 @@ public class PoemImpl implements PoemService{
 
 	@Override
 	public List<Poem> getAllPoems() {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getAll();
 	}
 
 	@Override
 	public Poem getPoemByPoemId(long id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getByPoemId(id);
 	}
 
 	@Override
 	public List<Poem> getPoemsByName(String name) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getByName(name);
 	}
 
 	@Override
 	public List<Poem> getPoemsByAuthorUId(String authoruid) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getByAuthorUId(authoruid);
 	}
 
 	@Override
 	public List<Poem> getPoemsByTypeId(int typeid) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getByTypeId(typeid);
 	}
 
 	@Override
 	public void updatePoem(Poem poem) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		poemDao.update(poem);
 	}
 
 	@Override
 	public void addPoem(Poem poem) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");	
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		poemDao.add(poem);
 	}
 
 	@Override
 	public void deletePoem(long id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		poemDao.delete(id);
 	}
 	

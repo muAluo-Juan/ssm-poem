@@ -19,32 +19,32 @@ public class DynastyImpl implements DynastyService{
 	
 	@Override
 	public void addDynasty(Dynasty dynasty) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		dynastyDao.add(dynasty);
 	}
 
 	@Override
 	public void deleteDynasty(int id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		dynastyDao.delete(id);
 	}
 
 	@Override
 	public Dynasty getDynastyById(int id) {
 		// TODO Auto-generated method stub
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return dynastyDao.getById(id);
 	}
 
 	@Override
 	public List<Dynasty> getAllDynastys() {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return dynastyDao.getAll();
 	}
 
 	@Override
 	public void updateDynasty(Dynasty dynasty) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		dynastyDao.update(dynasty);
 	}
 	

@@ -17,25 +17,25 @@ public class Poem_ExtImpl implements Poem_ExtService{
 	
 	@Override
 	public Poem_Ext getPoem_ExtByPoemuid(String poemuid) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poem_ExtDao.getByPoemuid(poemuid);
 	}
 
 	@Override
 	public void updatePoem_Ext(Poem_Ext poem_ext) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		poem_ExtDao.update(poem_ext);
 	}
 
 	@Override
 	public void deletePoem_Ext(String poemuid) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		poem_ExtDao.delete(poemuid);
 	}
 
 	@Override
 	public void addPoem_Ext(Poem_Ext poem_ext) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		poem_ExtDao.add(poem_ext);
 	}
 	

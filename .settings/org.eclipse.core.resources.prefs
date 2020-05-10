@@ -5,7 +5,6 @@ encoding//src/main/java/dao/AuthorDao.java=UTF-8
 encoding//src/main/java/interceptor/AuthenInterceptor.java=UTF-8
 encoding//src/main/java/model/RegisterForm.java=UTF-8
 encoding//src/main/java/model/Result.java=UTF-8
-encoding//src/main/java/po/Theme.java=UTF-8
 encoding//src/main/java/service/CollectionService.java=UTF-8
 encoding//src/main/java/utils/CodeImage.java=UTF-8
 encoding//src/main/java/utils/JWTUtil.java=UTF-8

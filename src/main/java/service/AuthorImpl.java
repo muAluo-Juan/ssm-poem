@@ -19,50 +19,50 @@ public class AuthorImpl implements AuthorService{
 	
 	@Override
 	public Author getAuthorByAuthorId(int id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return authorDao.getByAuthorId(id);
 	}
 
 	@Override
 	public List<Author> getAuthorsByAuthorName(String name) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return authorDao.getByAuthorName(name);
 	}
 
 	@Override
 	public List<Author> getAuthorsByDynastyId(int dynastyId) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return authorDao.getByDynastyId(dynastyId);
 	}
 
 	@Override
 	public void addAuthor(Author author) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		authorDao.add(author);
 	}
 
 	@Override
 	public void deleteAuthor(int id) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		authorDao.delete(id);
 	}
 
 	@Override
 	public void updateAuthor(Author author) {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		authorDao.update(author);
 	}
 
 	@Override
 	public List<Author> getAllAuthors() {
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return authorDao.getAll();
 	}
 
 	@Override
 	public Author getAuthorByUid(String uid) {
 		// TODO Auto-generated method stub
-		DynamicDataSourceHolder.setDataSource("seconddataSource");
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return authorDao.getByUid(uid);
 	}
 }
