@@ -19,7 +19,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.Comment" alias="Comment"/>
 		<typeAlias type="po.Dynasty" alias="Dynasty"/>
 		<typeAlias type="po.Type" alias="Type"/>
-		<typeAlias type="po.Poem_Type" alias="Poem_Type"/>
 		<typeAlias type="po.Author" alias="Author"/>
 		<typeAlias type="po.Poem" alias="Poem"/>
 		<typeAlias type="po.ErrorInfo" alias="ErrorInfo"/>
@@ -38,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mybatis/CommentMapper.xml"/>
         <mapper resource="mybatis/DynastyMapper.xml"/>
         <mapper resource="mybatis/TypeMapper.xml"/>
-        <mapper resource="mybatis/Poem_TypeMapper.xml"/>  
         <mapper resource="mybatis/AuthorMapper.xml"/>
         <mapper resource="mybatis/PoemMapper.xml"/>
         <mapper resource="mybatis/ErrorInfoMapper.xml"/>

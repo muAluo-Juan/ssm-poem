@@ -30,7 +30,6 @@ import po.Dynasty;
 import po.ErrorInfo;
 import po.Poem;
 import po.Poem_Ext;
-import po.Poem_Type;
 import po.Type;
 import service.AdministratorService;
 import service.AuthorService;
@@ -38,7 +37,6 @@ import service.DynastyService;
 import service.ErrorInfoService;
 import service.PoemService;
 import service.Poem_ExtService;
-import service.Poem_TypeService;
 import service.TypeService;
 import utils.JWTUtil;
 
@@ -59,8 +57,6 @@ public class PoemManageController {
 	private TypeService typeService;
 	@Autowired
 	private Poem_ExtService poem_extService;
-	@Autowired
-	private Poem_TypeService poem_typeService;
 	//-----------------------------------勘误管理-----------------------------------
 	/*
 	 * 查看勘误信息列表
@@ -450,29 +446,7 @@ public class PoemManageController {
 	public Result doGetPoemList() {
 		try {
 			List<Poem> poemList = poemService.getAllPoems();
-			List<PoemForm> poemForms = new ArrayList<PoemForm>();//包含了诗歌的基本信息和附加信息
-			for(int i = 0 ; i < poemList.size() ; i ++)
-			{
-				Poem poem = poemList.get(i);
-				List<Poem_Type> types = poem_typeService.getPoem_ThemeByPoemId(poem.getId());
-				List<Integer> typeids = new ArrayList<Integer>();
-				for(int j = 0 ; j < typeids.size() ; j ++)
-				{
-					int temp = (int) types.get(j).getPtId();
-					typeids.add(temp);
-				}
-				
-				Poem_Ext poem_ext = poem_extService.getPoem_ExtByPoemuid(poem.getUid());
-				PoemForm poemform = null;
-				if(poem_ext!=null)
-					poemform = new PoemForm(poem.getName(),poem.getDynastyid(),typeids,poem.getAuthoruid(),poem.getContent(),poem.getAnnotation(),poem.getTranslation(),poem.getWorkintro(),poem.getRichtext(),
-							poem_ext.getEngContent(),poem_ext.getEngIntro(),poem_ext.getAudio(),poem_ext.getVedio(),poem_ext.getYiwen_audio(),poem_ext.getPic(),poem_ext.getAppreciation(),
-							poem_ext.getBackground(),poem_ext.getVersion(),poem_ext.getAnalyse(),poem_ext.getStory());
-				else
-					poemform = new PoemForm(poem.getName(),poem.getDynastyid(),typeids,poem.getAuthoruid(),poem.getContent(),poem.getAnnotation(),poem.getTranslation(),poem.getWorkintro(),poem.getRichtext());
-				poemForms.add(poemform);
-			}
-			return new Result(35,"诗歌列表",poemForms,null);
+			return new Result(35,"诗歌列表",poemList,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -487,15 +461,7 @@ public class PoemManageController {
 	public Result doGetPoem(@PathVariable("poemId") long poemId) {
 		try {
 			Poem poem = poemService.getPoemByPoemId(poemId);
-			List<Poem_Type> types = poem_typeService.getPoem_ThemeByPoemId(poem.getId());
-			List<Integer> typeids = new ArrayList<Integer>();
-			for(int j = 0 ; j < typeids.size() ; j ++)
-			{
-				int temp = (int) types.get(j).getPtId();
-				typeids.add(temp);
-			}
-			PoemForm poemForm = new PoemForm(poem.getName(),poem.getDynastyid(),typeids,poem.getAuthoruid(),poem.getContent(),poem.getAnnotation(),poem.getTranslation(),poem.getWorkintro(),poem.getRichtext()); 
-			return new Result(36,"该诗歌内容",poemForm,null);
+			return new Result(36,"该诗歌内容",poem,null);
 		}catch(Exception e) { 
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -503,14 +469,15 @@ public class PoemManageController {
 	}
 	
 	/*
-	 * 添加诗歌（同时传入json和MultipartFile）
+	 * 添加诗歌
 	 */
 	@CrossOrigin
 	@AdminToken
 	@PostMapping("/poem/admin_addpoem")
-	public Result doAddPoem(PoemForm poemForm,@RequestPart("file") MultipartFile file,HttpServletRequest request) {
+	public Result doAddPoem(Poem poem) {
 		try{
-			Poem poem = new Poem(poemForm.getName(),poemForm.getDynastyid(),poemForm.getAuthoruid(),poemForm.getContent(),poemForm.getAnnotation(),poemForm.getTranslation(),poemForm.getWorkintro(),poemForm.getRichtext());
+			poemService.addPoem(poem);
+			/*Poem poem = new Poem(poemForm.getName(),poemForm.getDynastyid(),poemForm.getAuthoruid(),poemForm.getContent(),poemForm.getAnnotation(),poemForm.getTranslation(),poemForm.getWorkintro(),poemForm.getRichtext());
 			poemService.addPoem(poem);
 			long poemId = poem.getId();//自动注入
 			System.out.println(poemId);
@@ -566,7 +533,7 @@ public class PoemManageController {
 				type.setThemeId(poem_types.get(i));
 				types.add(type);
 			}
-			poem_typeService.addManyPoem_Type(types);//批量添加诗歌和类型的对应关系
+			poem_typeService.addManyPoem_Type(types);//批量添加诗歌和类型的对应关系*/
 			
 			return new Result(37,"添加成功",null,null);
 		}catch(Exception e) {
@@ -589,8 +556,6 @@ public class PoemManageController {
 			//删除诗歌的附加信息
 			if(poem_extService.getPoem_ExtByPoemuid(poem.getUid())!=null)
 				poem_extService.deletePoem_Ext(poem.getUid());
-			//删除诗歌_类型信息
-			poem_typeService.deleteAllPoem_Type(poemId);
 			//删除诗歌
 			poemService.deletePoem(poemId);
 			return new Result(39,"删除成功！",null,null);
@@ -606,22 +571,10 @@ public class PoemManageController {
 	@CrossOrigin
 	@AdminToken
 	@PostMapping("/poem/admin_updatepoem/{poemId}")
-	public Result doUpdatePoem(@PathVariable("poemId") long poemId,PoemForm poemForm,@RequestPart("file") MultipartFile file,HttpServletRequest request) {
+	public Result doUpdatePoem(@PathVariable("poemId") long poemId,Poem poem) {
 		try {
-			Poem poem = poemService.getPoemByPoemId(poemId);
-			if(poem==null)
-				return new Result(40,"该诗歌不存在",null,null);
-			//更新诗歌t_poems_poem表
-			poem.setAnnotation(poemForm.getAnnotation());
-			poem.setAuthoruid(poemForm.getAuthoruid());
-			poem.setContent(poemForm.getContent());
-			poem.setDynastyid(poemForm.getDynastyid());
-			poem.setName(poemForm.getName());
-			poem.setRichtext(poemForm.getRichtext());
-			poem.setTranslation(poemForm.getTranslation());
-			poem.setWorkintro(poemForm.getWorkintro());
 			poemService.updatePoem(poem);
-			//更新诗歌附加表t_poems_poem_ext
+			/*//更新诗歌附加表t_poems_poem_ext
 			Poem_Ext poem_ext = poem_extService.getPoem_ExtByPoemuid(poem.getUid());
 			poem_ext.setAnalyse(poemForm.getAnalyse());
 			poem_ext.setAppreciation(poemForm.getAppreciation());
@@ -690,7 +643,7 @@ public class PoemManageController {
 				type.setThemeId(poem_types.get(i));
 				types.add(type);
 			}
-			poem_typeService.addManyPoem_Type(types);//批量添加诗歌和类型的对应关系
+			poem_typeService.addManyPoem_Type(types);//批量添加诗歌和类型的对应关系*/
 			
 			return new Result(41,"修改成功",null,null);
 			

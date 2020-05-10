@@ -21,14 +21,12 @@ import po.ErrorInfo;
 import po.NormalUser;
 import po.Poem;
 import po.Poem_Ext;
-import po.Poem_Type;
 import service.AuthorService;
 import service.CollectionService;
 import service.ErrorInfoService;
 import service.NormalUserService;
 import service.PoemService;
 import service.Poem_ExtService;
-import service.Poem_TypeService;
 import utils.JWTUtil;
 
 //用户诗歌鉴赏controller
@@ -42,8 +40,6 @@ public class PoemController {
 	private ErrorInfoService errorInfoService;
 	@Autowired
 	private CollectionService collectionService;
-	@Autowired
-	private Poem_TypeService poem_typeService;
 	@Autowired
 	private AuthorService authorService;
 	@Autowired
