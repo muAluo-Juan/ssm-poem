@@ -469,7 +469,7 @@ public class PoemManageController {
 	}
 	
 	/*
-	 * 添加诗歌
+	 * 添加诗歌（音频采用网络音频，直接上传url）
 	 */
 	@CrossOrigin
 	@AdminToken
@@ -553,9 +553,6 @@ public class PoemManageController {
 			Poem poem = poemService.getPoemByPoemId(poemId);
 			if(poem == null)
 				return new Result(38,"该诗歌不存在",null,null);
-			//删除诗歌的附加信息
-			if(poem_extService.getPoem_ExtByPoemuid(poem.getUid())!=null)
-				poem_extService.deletePoem_Ext(poem.getUid());
 			//删除诗歌
 			poemService.deletePoem(poemId);
 			return new Result(39,"删除成功！",null,null);

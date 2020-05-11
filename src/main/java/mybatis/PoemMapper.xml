@@ -20,12 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<update id="update" parameterType="Poem">
 		update t_poems_poem
-		set name=#{name},dynastyid=#{dynastyid},typeid=#{typeid},authoruid=#{authoruid},content=#{content},annotation=#{annotation},translation=#{translation},workintro=#{workintro},richtext=#{richtext},memo=#{memo}
+		set name=#{name},dynastyid=#{dynastyid},typeid=#{typeid},authoruid=#{authoruid},content=#{content},annotation=#{annotation},translation=#{translation},workintro=#{workintro},richtext=#{richtext},memo=#{memo},audio=#{audio}
 		where id=#{id} 
 	</update>
 	<insert id="add" parameterType="Poem" useGeneratedKeys="true" keyProperty="id">
 		insert into t_poems_poem(id,uid,name,dynastyid,typeid,authoruid,content,annotation,translation,workintro,richtext,memo)
-		values(null,null,#{name},#{dynastyid},#{typeid},#{authoruid},#{content},#{annotation},#{translation},#{workintro},#{richtext},#{memo})
+		values(null,null,#{name},#{dynastyid},#{typeid},#{authoruid},#{content},#{annotation},#{translation},#{workintro},#{richtext},#{memo},#{audio})
 	</insert>
 	<delete id="delete">
 		delete from t_poems_poem where id=#{id}

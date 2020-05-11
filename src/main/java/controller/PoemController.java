@@ -79,12 +79,12 @@ public class PoemController {
 	 * 语音听诗（用网上的音频文件http://XXXX，不使用自己的本地文件）
 	 */
 	@CrossOrigin
-	@GetMapping("/poem/user_getaudio/{poemUId}")
-	public Result doGetPoemAudio(@PathVariable("poemUId") String poemUId) {
+	@GetMapping("/poem/user_getaudio/{poemId}")
+	public Result doGetPoemAudio(@PathVariable("poemId") long poemId) {
 		try {
-			Poem_Ext poem_ext = poem_extService.getPoem_ExtByPoemuid(poemUId);
-			if(poem_ext.getAudio()!=null && !(poem_ext.getAudio()).equals(""))
-				return new Result(8,"该诗歌对应音频文件路径",poem_ext.getAudio(),null);
+			Poem poem = poemService.getPoemByPoemId(poemId);
+			if(poem.getAudio()!=null && !(poem.getAudio()).equals(""))
+				return new Result(8,"该诗歌对应音频文件路径",poem.getAudio(),null);
 			else
 				return new Result(9,"该音频暂未收录",null,null);
 		}catch(Exception e) {

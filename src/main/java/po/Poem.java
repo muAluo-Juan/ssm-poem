@@ -14,6 +14,7 @@ public class Poem {
 	private String workintro;
 	private String richtext;
 	private String memo;
+	private String audio;//音频
 	public Poem() {
 		super();
 	}
@@ -100,5 +101,11 @@ public class Poem {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getAudio() {
+		return audio;
+	}
+	public void setAudio(String audio) {
+		this.audio = audio;
 	}
 }
