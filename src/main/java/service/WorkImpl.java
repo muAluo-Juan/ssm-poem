@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.WorkDao;
+import model.WorkResult;
 import po.Work;
 import utils.DynamicDataSourceHolder;
 
@@ -29,7 +30,7 @@ public class WorkImpl implements WorkService{
 	}
 
 	@Override
-	public List<Work> getAllWorks() {
+	public List<WorkResult> getAllWorks() {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return workDao.getAll();
 	}

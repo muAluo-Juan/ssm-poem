@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import model.WorkResult;
 import po.Work;
 
 @Repository
@@ -13,7 +14,7 @@ import po.Work;
 public interface WorkDao {
 	public Integer add(Work work);
 	public Integer delete(@Param("workId") int workId);
-	public List<Work> getAll();
+	public List<WorkResult> getAll();
 	public List<Work> getByUserId(@Param("userId") int userId);
 	public Work getByWorkId(@Param("workId") int workId);
 	public Integer update(Work work);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import annotation.AdminToken;
 import model.Result;
+import model.WorkResult;
 import po.Comment;
 import po.Work;
 import service.CommentService;
@@ -31,7 +32,7 @@ public class CommunityManageController {
 	@GetMapping("/community/getworklist")
 	public Result doGetWorkList() {
 		try {
-			List<Work> workList = workService.getAllWorks();
+			List<WorkResult> workList = workService.getAllWorks();
 			return new Result(1,"作品列表",workList,null);
 		}catch(Exception e)
 		{
