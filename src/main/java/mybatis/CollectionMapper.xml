@@ -24,4 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_collection
 		where userId=#{userId} and poemId=#{poemId}
 	</delete>
+	<select id="getByUserIdAndPoemId" resultType="po.Collection">
+		select * from t_collection where userId=#{userId} and poemId=#{poemId}
+	</select>
 </mapper>

@@ -136,7 +136,8 @@ public class PoemController {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			Poem poem = poemService.getPoemByPoemId(poemId);
-			if(poem != null && user != null)
+			
+			if(poem != null && user != null && collectionService.getByUserIdAndPoemId(user.getUserId(), poemId) == null)
 			{
 				Collection collection = new Collection();
 				collection.setPoemId(poem.getId());
@@ -169,6 +170,28 @@ public class PoemController {
 			}else {
 				return new Result(0,"出现未知错误",null,null);
 			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
+	/*
+	 * 判断是否已经收藏
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping("/poem/user_iscollect/{poemId}")
+	public Result doGetCollection(@PathVariable("poemId") long poemId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			Collection collection = collectionService.getByUserIdAndPoemId(user.getUserId(), poemId);
+			if(collection == null)
+				return new Result(17,"没有被收藏",false,null);
+			else
+				return new Result(18,"被收藏了",true,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);

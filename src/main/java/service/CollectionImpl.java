@@ -55,5 +55,11 @@ public class CollectionImpl implements CollectionService{
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		collectionDao.deleteRefer(userId,poemId);
 	}
+
+	@Override
+	public Collection getByUserIdAndPoemId(int userId, long poemId) {
+		// TODO Auto-generated method stub
+		return collectionDao.getByUserIdAndPoemId(userId, poemId);
+	}
 	
 }
