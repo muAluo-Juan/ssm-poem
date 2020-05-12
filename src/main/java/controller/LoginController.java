@@ -67,10 +67,7 @@ public class LoginController {
 		normalUser.setUserName(requestRegisterUser.getUserName());
 		normalUser.setPenName(requestRegisterUser.getPenName());
 		normalUser.setPassword(requestRegisterUser.getPassword());
-		if(requestRegisterUser.getSex() == 0)
-			normalUser.setHeadPicPath("girl.jpg");
-		else
-			normalUser.setHeadPicPath("boy.jpg");
+		normalUser.setHeadPicPath("https://gitee.com/muAluo/rainyNightPoemsVue/raw/master/img/w3.jpg");
 		normalUser.setPersonalizedSig("这个家伙很懒，没有留下签名");
 		normalUser.setSex(requestRegisterUser.getSex());
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
