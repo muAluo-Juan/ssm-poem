@@ -15,6 +15,7 @@ public class WorkResult {
 	private String penName;
 	private String headPicPath;
 	private String personalizedSig;
+	private boolean isAuthorBeAttented;
 	public int getWorkId() {
 		return workId;
 	}
@@ -86,5 +87,11 @@ public class WorkResult {
 	}
 	public void setPersonalizedSig(String personalizedSig) {
 		this.personalizedSig = personalizedSig;
+	}
+	public boolean isAuthorBeAttented() {
+		return isAuthorBeAttented;
+	}
+	public void setAuthorBeAttented(boolean isAuthorBeAttented) {
+		this.isAuthorBeAttented = isAuthorBeAttented;
 	}
 }

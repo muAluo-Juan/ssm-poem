@@ -40,5 +40,11 @@ public class AttentionImpl implements AttentionService{
 		// TODO Auto-generated method stub
 		attentionDao.delete(userId, beAttentedId);
 	}
+
+	@Override
+	public Attention getAttentionByUserIdAndAttentedId(int beAttentedId, int userId) {
+		// TODO Auto-generated method stub
+		return attentionDao.getByUserIdAndAttentedId(beAttentedId, userId);
+	}
 	
 }

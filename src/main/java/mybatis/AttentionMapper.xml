@@ -19,4 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByBeAttentedId" resultType="Attention">
 		select * from t_attention where beAttentedId=#{beAttentedId}
 	</select>
+	
+	<select id="getByUserIdAndAttentedId" resultType="Attention">
+		select * from t_attention where beAttentedId=#{beAttentedId} and userId=#{userId}
+	</select>
 </mapper>

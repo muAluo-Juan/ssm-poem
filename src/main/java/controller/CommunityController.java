@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import annotation.NormalToken;
 import model.Result;
 import po.Attention;
+import po.Collection;
 import po.Comment;
 import po.Draft;
 import po.Like;
@@ -248,6 +249,31 @@ public class CommunityController {
 			return new Result(0,"发生未知错误",null,"");
 		}
 	}
+	
+	/*
+	 * 查看用户是否被关注
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping(value="/community/isAttented/{userId}")
+	public Result isAttented(@PathVariable("userId") int userId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			if(user.getUserId() == userId)
+				return new Result(19,"我自己",2,null);
+			Attention attention = attentionService.getAttentionByUserIdAndAttentedId(userId, user.getUserId());
+			if(attention == null)
+				return new Result(17,"没有被关注",0,null);
+			else
+				return new Result(18,"被关注了",1,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
 	
 	/*
 	 * 关注用户
