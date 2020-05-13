@@ -1,13 +1,13 @@
 package po;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 //点赞
 public class Like {
 	private long likeId;
 	private int userId;
 	private int workId;
-	private Date inputTime;
+	private Timestamp inputTime;
 	public long getLikeId() {
 		return likeId;
 	}
@@ -26,10 +26,10 @@ public class Like {
 	public void setWorkId(int workId) {
 		this.workId = workId;
 	}
-	public Date getInputTime() {
+	public Timestamp getInputTime() {
 		return inputTime;
 	}
-	public void setInputTime(Date inputTime) {
+	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
 	}
 }

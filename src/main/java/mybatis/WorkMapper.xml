@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_work where workId=#{workId}
 	</delete>
 	<select id="getAll" resultType="WorkResult">
-		select workId,title,t_work.userId,text,imgPath,likeNum,isEssay,inputTime,userName,penName,headPicPath,personalizedSig
+		select workId,title,t_work.userId,text,imgPath,likeNum,isEssay,inputTime,commentNum,userName,penName,headPicPath,personalizedSig
 		from t_work inner join t_normaluser on t_work.userId = t_normaluser.userId
 		order by inputTime desc
 	</select>

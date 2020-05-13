@@ -202,8 +202,8 @@ public class CommunityController {
 			Like like = new Like();
 			like.setUserId(user.getUserId());
 			like.setWorkId(workId);
-			java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-			like.setInputTime(inputTime);
+			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
+			//like.setInputTime(inputTime);
 			likeService.addLike(like);
 			return new Result(5,"点赞成功",likeService.getLike(user.getUserId(), workId),null);
 		}catch(Exception e) {
@@ -306,7 +306,7 @@ public class CommunityController {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			attentionService.deleteAttention(user.getUserId(), beAttentedId);
-			return new Result(8,"已取消关注",attentionService.getAttentions(user.getUserId()),null);
+			return new Result(8,"已取消关注",null,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");

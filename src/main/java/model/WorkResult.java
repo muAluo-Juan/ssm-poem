@@ -10,6 +10,7 @@ public class WorkResult {
 	private String imgPath;
 	private int likeNum;
 	private int isEssay;
+	private int commentNum;
 	private Timestamp inputTime;
 	private String userName;
 	private String penName;
@@ -93,5 +94,11 @@ public class WorkResult {
 	}
 	public void setAuthorBeAttented(boolean isAuthorBeAttented) {
 		this.isAuthorBeAttented = isAuthorBeAttented;
+	}
+	public int getCommentNum() {
+		return commentNum;
+	}
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
 	}
 }
