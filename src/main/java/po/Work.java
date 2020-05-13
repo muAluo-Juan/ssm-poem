@@ -11,6 +11,7 @@ public class Work {
 	private int likeNum;
 	private int isEssay;
 	private Timestamp inputTime;
+	private int commentNum;
 	public int getWorkId() {
 		return workId;
 	}
@@ -58,5 +59,11 @@ public class Work {
 	}
 	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
+	}
+	public int getCommentNum() {
+		return commentNum;
+	}
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
 	}
 }

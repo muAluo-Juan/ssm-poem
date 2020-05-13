@@ -19,4 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByUserId" resultType="Like">
 		select * from t_like where userId=#{userId}
 	</select>
+	
+	<select id="getByUserIdAndWorkId" resultType="Like">
+		select * from t_like where userId=#{userId} and workId=#{workId}
+	</select>
 </mapper>

@@ -39,5 +39,11 @@ public class LikeImpl implements LikeService{
 		// TODO Auto-generated method stub
 		return likeDao.getByUserId(userId);
 	}
+
+	@Override
+	public Like getLikeByUserIdAndWorkId(int userId, int workId) {
+		// TODO Auto-generated method stub
+		return likeDao.getByUserIdAndWorkId(userId, workId);
+	}
 	
 }

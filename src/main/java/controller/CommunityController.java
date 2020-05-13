@@ -83,7 +83,7 @@ public class CommunityController {
 		if(work != null && user != null) {
 			try {
 				work.setUserId(user.getUserId());
-				work.setLikeNum(0);
+				//work.setLikeNum(0);
 				//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
 				//work.setInputTime(inputTime);
 				workService.addWork(work);
@@ -187,6 +187,27 @@ public class CommunityController {
 		}
 	}
 	
+	/*
+	 * 判断是否点过赞
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping(value="/community/islike/{workId}")
+	public Result isLike(@PathVariable("workId") int workId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			Like like = likeService.getLikeByUserIdAndWorkId(user.getUserId(), workId);
+			if(like == null)
+				return new Result(14,"没有点过它赞",false,null);
+			else
+				return new Result(15,"给它点过赞",true,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
 	
 	/*
 	 * 点赞
@@ -205,7 +226,7 @@ public class CommunityController {
 			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
 			//like.setInputTime(inputTime);
 			likeService.addLike(like);
-			return new Result(5,"点赞成功",likeService.getLike(user.getUserId(), workId),null);
+			return new Result(5,"点赞成功",workService.getWorkByWrokId(workId).getCommentNum(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");
@@ -224,7 +245,7 @@ public class CommunityController {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			likeService.deleteLike(user.getUserId(), workId);
-			return new Result(6,"删除成功",likeService.getLikesByUserId(user.getUserId()),null);
+			return new Result(6,"删除成功",workService.getWorkByWrokId(workId).getCommentNum(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");

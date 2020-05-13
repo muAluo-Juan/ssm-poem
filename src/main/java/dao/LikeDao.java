@@ -15,4 +15,5 @@ public interface LikeDao {
 	public Integer delete(@Param("userId") int userId,@Param("workId") int workId);
 	public Like get(@Param("userId") int userId,@Param("workId") int workId);
 	public List<Like> getByUserId(@Param("userId") int userId);
+	public Like getByUserIdAndWorkId(@Param("userId") int userId,@Param("workId") int workId);
 }
