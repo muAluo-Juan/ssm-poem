@@ -226,7 +226,7 @@ public class CommunityController {
 			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
 			//like.setInputTime(inputTime);
 			likeService.addLike(like);
-			return new Result(5,"点赞成功",workService.getWorkByWrokId(workId).getCommentNum(),null);
+			return new Result(5,"点赞成功",workService.getWorkByWrokId(workId).getLikeNum(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");
@@ -245,7 +245,7 @@ public class CommunityController {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			likeService.deleteLike(user.getUserId(), workId);
-			return new Result(6,"删除成功",workService.getWorkByWrokId(workId).getCommentNum(),null);
+			return new Result(6,"删除成功",workService.getWorkByWrokId(workId).getLikeNum(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");
@@ -282,6 +282,7 @@ public class CommunityController {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			System.out.println("是"+user.getUserId());
 			if(user.getUserId() == userId)
 				return new Result(19,"我自己",2,null);
 			Attention attention = attentionService.getAttentionByUserIdAndAttentedId(userId, user.getUserId());

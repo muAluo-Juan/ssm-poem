@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.LikeDao">
 	<insert	id="add" parameterType="Like">
-		insert into t_ike(likeId,userId,workId,inputTime)
+		insert into t_like(likeId,userId,workId,inputTime)
 		values(null,#{userId},#{workId},null)
 	</insert>
 	
