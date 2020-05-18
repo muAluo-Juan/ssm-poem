@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.ErrorInfo" alias="ErrorInfo"/>
 		<typeAlias type="po.Poem_Ext" alias="Poem_Ext"/>
 		<typeAlias type="model.WorkResult" alias="WorkResult"/>
+		<typeAlias type="model.CommentResult" alias="CommentResult"/>
 	</typeAliases>
 
     <!-- 告诉 MyBatis到哪里去找映射文件 -->

@@ -169,6 +169,22 @@ public class CommunityController {
 	}
 	
 	/*
+	 * 删除草稿
+	 */
+	@CrossOrigin
+	@NormalToken
+	@DeleteMapping("/community/user_deletedraft/{draftId}")
+	public Result deleteDraft(@PathVariable("draftId") int draftId) {
+		try {
+			draftService.deleteDraft(draftId);
+			return new Result(20,"删除成功",null,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
+	
+	/*
 	 * 获取用户所有点赞的列表（进入社区可以看到哪些作品是用户点赞了的）
 	 */
 	@CrossOrigin
@@ -367,18 +383,17 @@ public class CommunityController {
 	 */
 	@CrossOrigin
 	@NormalToken
-	@PostMapping(value="/community/user_comment/{workId}")
-	public Result comment(@PathVariable("workId") int workId,@RequestBody Comment comment,HttpServletRequest request) {
+	@PostMapping(value="/community/user_comment")
+	public Result comment(@RequestBody Comment comment,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			comment.setUserId(user.getUserId());
-			comment.setWorkId(workId);
 			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
 			//comment.setInputTime(inputTime);
 			commentService.addComment(comment);
-			return new Result(10,"发表成功",commentService.getCommentByWorkId(workId),null);
+			return new Result(10,"发表成功",commentService.getCommentByWorkId(comment.getWorkId()),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"发生未知错误",null,"");

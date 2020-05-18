@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.CommentDao;
+import model.CommentResult;
 import po.Comment;
 
 @Service
@@ -29,7 +30,7 @@ public class CommentImpl implements CommentService{
 	}
 
 	@Override
-	public List<Comment> getCommentByWorkId(int workId) {
+	public List<CommentResult> getCommentByWorkId(int workId) {
 		// TODO Auto-generated method stub
 		return commentDao.getByWorkId(workId);
 	}

@@ -10,8 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into t_comment(commentId,commentText,inputTime,userId,workId)
 		values(null,#{commentText},null,#{userId},#{workId})
 	</insert>
-	<select id="getByWorkId" resultType="Comment">
-		select * from t_comment where workId=#{workId} order by inputTime desc
+	<select id="getByWorkId" resultType="CommentResult">
+		select commentId,commentText,inputTime,t_comment.userId,workId,penName,headPicPath
+		from t_comment inner join t_normaluser on t_comment.userId = t_normaluser.userId
+		where workId=#{workId} order by inputTime desc
 	</select>
 	<select id="getByCommentId" resultType="Comment">
 		select * from t_comment where commentId=#{commentId}

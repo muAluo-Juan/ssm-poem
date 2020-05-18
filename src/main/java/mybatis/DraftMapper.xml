@@ -5,6 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dao.DraftDao">
 	<select id="getAll" resultType="Draft">
 		select * from t_draft where userId=#{userId}
+		order by inputTime desc
 	</select>
 	
 	<select	id="getById" resultType="Draft">

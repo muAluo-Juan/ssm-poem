@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import annotation.AdminToken;
+import model.CommentResult;
 import model.Result;
 import model.WorkResult;
 import po.Comment;
@@ -95,7 +96,7 @@ public class CommunityManageController {
 	@GetMapping("/community/admin_getworkcomments/{workId}")
 	public Result doGetWorkComments(@PathVariable("workId") int workId) {
 		try {
-			List<Comment> comments = commentService.getCommentByWorkId(workId);
+			List<CommentResult> comments = commentService.getCommentByWorkId(workId);
 			return new Result(5,"该作品的评论列表",comments,null);
 		}catch(Exception e) {
 			e.printStackTrace();

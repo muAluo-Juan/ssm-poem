@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import model.CommentResult;
 import po.Comment;
 
 @Repository
@@ -13,6 +14,6 @@ import po.Comment;
 public interface CommentDao {
 	public Integer delete(@Param("commentId") int commentId);
 	public Integer add(Comment comment);
-	public List<Comment> getByWorkId(@Param("workId") int workId);
+	public List<CommentResult> getByWorkId(@Param("workId") int workId);
 	public Comment getByCommentId(@Param("commentId") int commentId);
 }
