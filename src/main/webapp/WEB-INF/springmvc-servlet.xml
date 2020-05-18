@@ -42,6 +42,13 @@
       </list>
     </property>
   </bean>
+  <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+   <!-- 注入sqlSessionFactory -->
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+   <!-- 扫描所有的dao接口的实现，加入到Ioc容器中，也是单元测试的条件 -->
+    <property name="basePackage" value="dao" />
+  </bean>
   <!--配置拦截器, 多个拦截器,顺序执行 -->
     <mvc:interceptors>
         <mvc:interceptor>
