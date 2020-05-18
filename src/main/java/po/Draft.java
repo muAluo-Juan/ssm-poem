@@ -1,5 +1,7 @@
 package po;
 
+import java.sql.Timestamp;
+
 public class Draft {
 	private int draftId;
 	private String title;
@@ -7,6 +9,13 @@ public class Draft {
 	private String text;
 	private String imgPath;
 	private int isEssay;
+	private Timestamp inputTime;
+	public Timestamp getInputTime() {
+		return inputTime;
+	}
+	public void setInputTime(Timestamp inputTime) {
+		this.inputTime = inputTime;
+	}
 	public int getDraftId() {
 		return draftId;
 	}

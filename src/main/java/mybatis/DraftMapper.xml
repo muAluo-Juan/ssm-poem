@@ -12,8 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="add" parameterType="Draft">
-		insert into t_draft(draftId,title,userId,text,imgPath,isEssay)
-		values(null,#{title},#{userId},#{text},#{imgPath},#{isEssay})
+		insert into t_draft(draftId,title,userId,text,imgPath,isEssay,inputTime)
+		values(null,#{title},#{userId},#{text},#{imgPath},#{isEssay},null)
 	</insert>
 	
 	<delete id="delete">
