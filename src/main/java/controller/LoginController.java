@@ -153,8 +153,12 @@ public class LoginController {
 				//给管理员token
 				String token = JWTUtil.generateToken(admin.getUserName(), "admin");
 				System.out.println("管理员token为"+token);
+				admin.setPassword(null);
+				ArrayList<Object> list=new ArrayList<>();
+				list.add(token);
+				list.add(admin);
 				//session.removeAttribute("loginCode");
-				return new Result(8,"登录成功",token,null);
+				return new Result(8,"登录成功",list,null);
 			}
 			else {
 				return new Result(7,"用户名或密码错误",requestLoginUser,null);
