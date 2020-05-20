@@ -9,7 +9,7 @@ public interface WorkService {
 	public void addWork(Work work);
 	public void deleteWork(int workId);
 	public List<WorkResult> getAllWorks();
-	public List<Work> getWorksByUserId(int userId);
+	public List<WorkResult> getWorksByUserId(int userId);
 	public Work getWorkByWrokId(int workId);
 	public void updateWork(Work work);
 }

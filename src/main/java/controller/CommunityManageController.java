@@ -50,7 +50,7 @@ public class CommunityManageController {
 	@GetMapping("/community/admin_getworklist/{userId}")
 	public Result doGetUserWorkList(@PathVariable("userId") int userId) {
 		try {
-			List<Work> workList = workService.getWorksByUserId(userId);
+			List<WorkResult> workList = workService.getWorksByUserId(userId);
 			return new Result(2,"该用户作品列表",workList,null);
 		}catch(Exception e) {
 			e.printStackTrace();

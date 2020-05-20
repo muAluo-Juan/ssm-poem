@@ -15,7 +15,7 @@ public interface WorkDao {
 	public Integer add(Work work);
 	public Integer delete(@Param("workId") int workId);
 	public List<WorkResult> getAll();
-	public List<Work> getByUserId(@Param("userId") int userId);
+	public List<WorkResult> getByUserId(@Param("userId") int userId);
 	public Work getByWorkId(@Param("workId") int workId);
 	public Integer update(Work work);
 }

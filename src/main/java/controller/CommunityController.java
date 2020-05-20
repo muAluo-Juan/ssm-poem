@@ -356,16 +356,13 @@ public class CommunityController {
 	 */
 	@CrossOrigin
 	@NormalToken
-	@PostMapping(value="/community/user_report/{beReportedUserId}")
-	public Result report(@PathVariable("beReportedUserId") int beReportedUserId,@RequestBody ReportInfo reportInfo,HttpServletRequest request) {
+	@PostMapping(value="/community/user_report")
+	public Result report(@RequestBody ReportInfo reportInfo,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			reportInfo.setUserId(user.getUserId());
-			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-			//reportInfo.setInputTime(inputTime);
-			reportInfo.setBeReportedUserId(beReportedUserId);
 			reportService.addReportInfo(reportInfo);
 			return new Result(9,"已发送举报信息至管理员",reportService.getAllReportInfo(),null);
 		}catch(Exception e) {

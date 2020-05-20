@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import annotation.NormalToken;
 import model.Result;
+import model.WorkResult;
 import po.Attention;
 import po.Collection;
 import po.Draft;
@@ -282,7 +283,7 @@ public class NormalUserContronller {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser User = normalUserService.getNormalUserByUserName(userName);
 			if (User != null) {
-				List<Work> workList = workService.getWorksByUserId(User.getUserId());
+				List<WorkResult> workList = workService.getWorksByUserId(User.getUserId());
 				return new Result(12, "获取个人作品列表", workList, null);
 			} else {
 				return new Result(0, "用户不存在", null, null);

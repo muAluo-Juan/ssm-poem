@@ -36,7 +36,7 @@ public class WorkImpl implements WorkService{
 	}
 
 	@Override
-	public List<Work> getWorksByUserId(int userId) {
+	public List<WorkResult> getWorksByUserId(int userId) {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return workDao.getByUserId(userId);
 	}
