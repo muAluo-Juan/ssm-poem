@@ -13,3 +13,4 @@ public interface WorkService {
 	public Work getWorkByWrokId(int workId);
 	public void updateWork(Work work);
 }
+

@@ -58,6 +58,7 @@ public class CommunityManageController {
 		}
 	}
 	
+	
 	/*
 	 * 查询某个作品
 	 */

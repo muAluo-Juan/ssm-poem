@@ -19,3 +19,4 @@ public interface WorkDao {
 	public Work getByWorkId(@Param("workId") int workId);
 	public Integer update(Work work);
 }
+

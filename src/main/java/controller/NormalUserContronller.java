@@ -288,7 +288,6 @@ public class NormalUserContronller {
 			} else {
 				return new Result(0, "用户不存在", null, null);
 			}
-
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new Result(0, "出现未知错误", null, null);

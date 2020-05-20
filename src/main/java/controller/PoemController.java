@@ -103,7 +103,7 @@ public class PoemController {
 	 */
 	@CrossOrigin
 	@NormalToken
-	@PostMapping("/poem/user_adderrorinfo")  
+	@PostMapping("/poem/user_adderrorinfo") 
 	public Result doAddErrorInfo(@RequestBody ErrorInfo errorInfo,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
