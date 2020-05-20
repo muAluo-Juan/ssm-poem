@@ -89,6 +89,20 @@ public class CommunityManageController {
 			return new Result(0,"出现未知错误",null,null);
 		}
 	}
+	/*
+	 * 获取评论列表
+	 */
+	@CrossOrigin
+	@GetMapping("/community/admin_getworkcomments")
+	public Result doGetWorkComments() {
+		try {
+			List<CommentResult> comments = commentService.getAllComment();
+			return new Result(5,"该作品的评论列表",comments,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
 	
 	/*
 	 * 获取作品的评论列表

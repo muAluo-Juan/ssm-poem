@@ -16,4 +16,5 @@ public interface CommentDao {
 	public Integer add(Comment comment);
 	public List<CommentResult> getByWorkId(@Param("workId") int workId);
 	public Comment getByCommentId(@Param("commentId") int commentId);
+	public List<CommentResult> getAll();
 }

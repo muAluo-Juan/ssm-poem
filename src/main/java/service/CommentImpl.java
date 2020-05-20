@@ -40,5 +40,11 @@ public class CommentImpl implements CommentService{
 		// TODO Auto-generated method stub
 		return commentDao.getByCommentId(commentId);
 	}
+
+	@Override
+	public List<CommentResult> getAllComment() {
+		// TODO Auto-generated method stub
+		return commentDao.getAll();
+	}
 	
 }

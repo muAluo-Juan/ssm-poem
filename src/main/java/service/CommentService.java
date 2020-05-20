@@ -6,6 +6,7 @@ import model.CommentResult;
 import po.Comment;
 
 public interface CommentService {
+	public List<CommentResult> getAllComment();
 	public void deleteComment(int commentId);
 	public void addComment(Comment comment);
 	public List<CommentResult> getCommentByWorkId(int workId);

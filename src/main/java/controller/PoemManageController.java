@@ -442,11 +442,11 @@ public class PoemManageController {
 	 * 查看诗歌列表
 	 */
 	@CrossOrigin
-	@GetMapping("/poem/getpoemlist")
-	public Result doGetPoemList() {
+	@GetMapping("/poem/getpoemlist/{pages}/{limit}")
+	public Result doGetPoemList(@PathVariable("pages") int pages,@PathVariable("limit") int limit) {
 		try {
 			List<Poem> poemList = poemService.getAllPoems();
-			return new Result(35,"诗歌列表",poemList,null);
+			return new Result(poemList.size(),"诗歌列表",poemList.subList((pages-1)*limit, pages*limit),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);

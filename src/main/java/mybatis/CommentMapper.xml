@@ -18,4 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByCommentId" resultType="Comment">
 		select * from t_comment where commentId=#{commentId}
 	</select>
+	<select id="getAll" resultType="Comment">
+		select * from t_comment
+	</select>
 </mapper>
