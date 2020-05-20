@@ -54,7 +54,7 @@ public class NormalUserContronller {
 	@CrossOrigin
 	@NormalToken
 	@GetMapping("/user/getuserinfomation")
-	public Result getNormalUserInformation(@PathVariable("uid") long uid,HttpServletRequest request) {
+	public Result getNormalUserInformation(HttpServletRequest request) {
 		try {
 			//从Token中获取用户名
 			String token = request.getHeader("token");
@@ -284,11 +284,11 @@ public class NormalUserContronller {
 			NormalUser User = normalUserService.getNormalUserByUserName(userName);
 			if (User != null) {
 				List<WorkResult> workList = workService.getWorksByUserId(User.getUserId());
-				System.out.println("？？？");
 				return new Result(12, "获取个人作品列表", workList, null);
 			} else {
 				return new Result(0, "用户不存在", null, null);
 			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new Result(0, "出现未知错误", null, null);
@@ -335,7 +335,6 @@ public class NormalUserContronller {
 	 *
 	 */ 
 	@CrossOrigin
-	
 	@NormalToken
 	@GetMapping("/user/getattentionlist")
 	public Result getAttentionList(HttpServletRequest request) {
@@ -347,6 +346,29 @@ public class NormalUserContronller {
 			if (User != null) {
 				List<Attention> attentionList = attentionService.getAttentions(User.getUserId());
 				return new Result(12, "获取个人作品列表", attentionList, null);
+			} else {
+				return new Result(0, "用户不存在", null, null);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new Result(0, "出现未知错误", null, null);
+		}
+	}
+	/* 
+	  * 根据id获取用户 
+	 */
+	@CrossOrigin
+	@NormalToken
+	@GetMapping("/user/getuserbyid/{userId}")
+	public Result getUserByid(@PathVariable("userId") int userId) {
+
+		try {
+			
+			NormalUser user = normalUserService.getNormalUserByUid(userId);
+			if (user != null) {
+				
+				return new Result(12, "获取关注信息", user, null);
 			} else {
 				return new Result(0, "用户不存在", null, null);
 			}
