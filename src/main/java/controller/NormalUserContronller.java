@@ -284,6 +284,7 @@ public class NormalUserContronller {
 			NormalUser User = normalUserService.getNormalUserByUserName(userName);
 			if (User != null) {
 				List<WorkResult> workList = workService.getWorksByUserId(User.getUserId());
+				System.out.println("？？？");
 				return new Result(12, "获取个人作品列表", workList, null);
 			} else {
 				return new Result(0, "用户不存在", null, null);

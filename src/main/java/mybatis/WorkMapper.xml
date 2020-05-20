@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByUserId" resultType="WorkResult">
 		select workId,title,t_work.userId,text,imgPath,likeNum,isEssay,inputTime,commentNum,userName,penName,headPicPath,personalizedSig
 		from t_work inner join t_normaluser on t_work.userId = t_normaluser.userId
-		where userId=#{userId}
+		where t_work.userId=#{userId}
 		order by inputTime desc
 	</select>
 	<select id="getByWorkId" resultType="Work">
