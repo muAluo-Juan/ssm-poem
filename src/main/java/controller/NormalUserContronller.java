@@ -27,6 +27,7 @@ import service.DraftService;
 import service.NormalUserService;
 import service.WorkService;
 import utils.JWTUtil;
+import utils.SHA256Util;
 
 @RestController
 public class NormalUserContronller {
@@ -89,6 +90,29 @@ public class NormalUserContronller {
 			return new Result(0, "出现未知错误", null, null);
 		}
 	}
+	
+	/*
+	 * 修改密码之判断用户输入的旧密码是否正确
+	 */
+	@CrossOrigin
+	@NormalToken
+	@PostMapping("/user/isOldRight/{password}")
+	public Result isOldPwdRight(HttpServletRequest request, @PathVariable("password") String password) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			String oldPwd = user.getPassword();
+			//给用户输入的密码进行加密然后比对
+			String userPwd = SHA256Util.getSHA256Str(user.getUserName()+password);
+			if(!oldPwd.equals(userPwd))
+				return new Result(15,"密码错误，拒绝密码修改",false,null);
+			else
+				return new Result(16,"密码正确，可继续修改",true,null);
+		}catch(Exception e) {
+			return new Result(0, "出现未知错误", null, null);
+		}
+	}
 
 	/*
 	 * 修改个人密码
@@ -106,7 +130,9 @@ public class NormalUserContronller {
 			String userName = JWTUtil.getUsername(token);
 			NormalUser User = normalUserService.getNormalUserByUserName(userName);
 			if(password != ""&& User != null) {
-				User.setPassword(password);
+				//密码加密
+				String pwdNew = SHA256Util.getSHA256Str(User.getUserName()+password);
+				User.setPassword(pwdNew);
 				normalUserService.modifyNormalUserInfo(User);
 				return new Result(3, "修改密码成功", null, null);
 			}else {
