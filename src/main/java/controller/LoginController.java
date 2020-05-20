@@ -39,6 +39,7 @@ import service.NormalUserService;
 import utils.CodeImage;
 import utils.JWTUtil;
 import utils.PhoneCode;
+import utils.SHA256Util;
 
 //登录模块controller
 @RestController
@@ -66,7 +67,9 @@ public class LoginController {
 		NormalUser normalUser = new NormalUser();
 		normalUser.setUserName(requestRegisterUser.getUserName());
 		normalUser.setPenName(requestRegisterUser.getPenName());
-		normalUser.setPassword(requestRegisterUser.getPassword());
+		//将用户名和密码作为加密条件
+		String pwd1 = SHA256Util.getSHA256Str(requestRegisterUser.getUserName()+requestRegisterUser.getPassword());
+		normalUser.setPassword(pwd1);
 		normalUser.setHeadPicPath("https://gitee.com/muAluo/rainyNightPoemsVue/raw/master/img/w3.jpg");
 		normalUser.setPersonalizedSig("这个家伙很懒，没有留下签名");
 		normalUser.setSex(requestRegisterUser.getSex());
@@ -125,6 +128,9 @@ public class LoginController {
 		{
 			return new Result(5,"验证码错误",null,null);
 		}*/
+		//处理要登录用户的密码（将其输入的明文密码加密，再根据加密后的密码和用户名去查找用户）
+		String pwd = SHA256Util.getSHA256Str(requestLoginUser.getUserName()+requestLoginUser.getPassword());
+		requestLoginUser.setPassword(pwd);
 		//验证用户名和密码正确性
 		//普通用户
 		if(requestLoginUser.getRole().equals("普通用户"))
