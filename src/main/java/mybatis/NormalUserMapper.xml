@@ -11,10 +11,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_normaluser where userName=#{userName}
 	</select>
 	
-	
-	
-	
-
 	<insert id="add" parameterType="NormalUser">
 		insert into t_normaluser(userId,userName,penName,password,headPicPath,personalizedSig,sex,birth,disableTime,rewardPoints)
 		values(null,#{userName},#{penName},#{password},#{headPicPath},#{personalizedSig},#{sex},#{birth},#{disableTime},#{rewardPoints})

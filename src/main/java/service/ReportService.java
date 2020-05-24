@@ -9,4 +9,5 @@ public interface ReportService {
 	public void updateReportInfo(ReportInfo reportInfo);
 	public List<ReportInfo> getAllReportInfo();
 	public ReportInfo getReportInfo(int reportId);
+	public void deleteReportInfo(int reportId);
 }

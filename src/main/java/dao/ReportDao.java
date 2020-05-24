@@ -15,4 +15,5 @@ public interface ReportDao {
 	public Integer update(ReportInfo reportInfo);
 	public List<ReportInfo> getAll();
 	public ReportInfo getByReportId(@Param("reportId") int reportId);
+	public Integer delete(@Param("reportId") int reportId);
 } 

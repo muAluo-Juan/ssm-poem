@@ -35,5 +35,11 @@ public class ReportImpl implements ReportService{
 	public ReportInfo getReportInfo(int reportId) {
 		return reportDao.getByReportId(reportId);
 	}
+
+	@Override
+	public void deleteReportInfo(int reportId) {
+		// TODO Auto-generated method stub
+		reportDao.delete(reportId);
+	}
 	
 }

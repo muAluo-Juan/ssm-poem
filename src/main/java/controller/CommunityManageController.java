@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import annotation.AdminToken;
@@ -14,8 +15,10 @@ import model.CommentResult;
 import model.Result;
 import model.WorkResult;
 import po.Comment;
+import po.ReportInfo;
 import po.Work;
 import service.CommentService;
+import service.ReportService;
 import service.WorkService;
 
 //管理员社区管理模块controller
@@ -25,6 +28,56 @@ public class CommunityManageController {
 	private WorkService workService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private ReportService reportService;
+	
+	/*
+	 * 获取举报列表
+	 */
+	@CrossOrigin
+	@AdminToken
+	@GetMapping("/community/admin_getreportlist")
+	public Result doGetReportInfoList() {
+		try {
+			List<ReportInfo> reportList = reportService.getAllReportInfo();
+			return new Result(9,"举报信息列表",reportList,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
+	/*
+	 * 审核举报信息（置state为1）
+	 */
+	@CrossOrigin
+	@AdminToken
+	@PutMapping("/community/admin_confirmreportlist/{id}")
+	public Result doConfirmReportInfo(@PathVariable("id") int id) {
+		try {
+			ReportInfo reportInfo = reportService.getReportInfo(id);
+			reportInfo.setState(1);
+			reportService.updateReportInfo(reportInfo);
+			return new Result(10,"审核成功",reportService.getAllReportInfo(),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
+	//删除某条举报信息（即忽略某条举报信息）
+	@CrossOrigin
+	@AdminToken
+	@DeleteMapping("/community/admin_confirmreportlist/{id}")
+	public Result doDeleteReportInfo(@PathVariable("id") int id) {
+		try {
+			reportService.deleteReportInfo(id);
+			return new Result(11,"删除成功",reportService.getAllReportInfo(),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
 	
 	/*
 	 * 查看作品列表
@@ -112,7 +165,7 @@ public class CommunityManageController {
 	public Result doGetWorkComments(@PathVariable("workId") int workId) {
 		try {
 			List<CommentResult> comments = commentService.getCommentByWorkId(workId);
-			return new Result(5,"该作品的评论列表",comments,null);
+			return new Result(6,"该作品的评论列表",comments,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -128,7 +181,7 @@ public class CommunityManageController {
 	public Result doGetworkComment(@PathVariable("commentId") int commentId) {
 		try {
 			Comment comment = commentService.getCommentByCommentId(commentId);
-			return new Result(6,"获取评论",comment,null);
+			return new Result(7,"获取评论",comment,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -144,7 +197,7 @@ public class CommunityManageController {
 	public Result doDeleteWorkComment(@PathVariable("commentId") int commentId) {
 		try {
 			commentService.deleteComment(commentId);
-			return new Result(7,"删除评论成功",null,null);
+			return new Result(8,"删除评论成功",null,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);

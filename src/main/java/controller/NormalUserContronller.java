@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import annotation.NormalToken;
@@ -76,15 +78,16 @@ public class NormalUserContronller {
 
 	/*
 	 * 修改个人信息
-	 * 未测试
 	 */	
 	@CrossOrigin
 	@NormalToken
-	@PostMapping("/user/updateuserinfomation")
-	public Result updateNormalInformation(NormalUser user) {
+	@PutMapping("/user/updateuserinfomation")
+	public Result updateNormalInformation(@RequestBody NormalUser user,HttpServletRequest request) {
 		try {
+			System.out.println(user.getUserName());
 			normalUserService.modifyNormalUserInfo(user);
-			return new Result(2, "修改信息成功", null, null);
+			System.out.println(normalUserService.getNormalUserByUserName(user.getUserName()));
+			return new Result(2, "修改信息成功", normalUserService.getNormalUserByUserName(user.getUserName()), null);
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new Result(0, "出现未知错误", null, null);
@@ -106,7 +109,9 @@ public class NormalUserContronller {
 			//给用户输入的密码进行加密然后比对
 			String userPwd = SHA256Util.getSHA256Str(user.getUserName()+password);
 			if(!oldPwd.equals(userPwd))
+			{
 				return new Result(15,"密码错误，拒绝密码修改",false,null);
+			}
 			else
 				return new Result(16,"密码正确，可继续修改",true,null);
 		}catch(Exception e) {
@@ -120,7 +125,7 @@ public class NormalUserContronller {
 	 */
 	@CrossOrigin
 	@NormalToken
-	@PostMapping("/user/changepassword/{password}")
+	@PutMapping("/user/changepassword/{password}")
 	public Result changePassword(HttpServletRequest request, @PathVariable("password") String password) {
 		try {
  
@@ -134,7 +139,7 @@ public class NormalUserContronller {
 				String pwdNew = SHA256Util.getSHA256Str(User.getUserName()+password);
 				User.setPassword(pwdNew);
 				normalUserService.modifyNormalUserInfo(User);
-				return new Result(3, "修改密码成功", null, null);
+				return new Result(3, "修改密码成功", normalUserService.getNormalUserByUserName(userName), null);
 			}else {
 				return new Result(0, "出现未知错误", null, null);
 			}

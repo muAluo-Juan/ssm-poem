@@ -21,4 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set state=#{state}
 		where reportId=#{reportId}
 	</update>
+	
+	<delete id="delete">
+		delete from t_reportinfo
+		where reportId=#{reportId}
+	</delete>
 </mapper>
