@@ -146,11 +146,12 @@ public class CommunityManageController {
 	 * 获取评论列表
 	 */
 	@CrossOrigin
+	@AdminToken
 	@GetMapping("/community/admin_getworkcomments")
 	public Result doGetWorkComments() {
 		try {
 			List<CommentResult> comments = commentService.getAllComment();
-			return new Result(5,"该作品的评论列表",comments,null);
+			return new Result(5,"评论列表",comments,null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);
@@ -171,6 +172,7 @@ public class CommunityManageController {
 			return new Result(0,"出现未知错误",null,null);
 		}
 	}
+	
 	
 	/*
 	 * 获取某条评论

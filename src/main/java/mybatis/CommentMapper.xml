@@ -11,14 +11,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(null,#{commentText},null,#{userId},#{workId})
 	</insert>
 	<select id="getByWorkId" resultType="CommentResult">
-		select commentId,commentText,inputTime,t_comment.userId,workId,penName,headPicPath
+		select commentId,commentText,inputTime,t_comment.userId,workId,penName,headPicPath,userName
 		from t_comment inner join t_normaluser on t_comment.userId = t_normaluser.userId
 		where workId=#{workId} order by inputTime desc
 	</select>
 	<select id="getByCommentId" resultType="Comment">
 		select * from t_comment where commentId=#{commentId}
 	</select>
-	<select id="getAll" resultType="Comment">
-		select * from t_comment
+	<select id="getAll" resultType="CommentResult">
+		select commentId,commentText,inputTime,t_comment.userId,workId,penName,headPicPath,userName
+		from t_comment inner join t_normaluser on t_comment.userId = t_normaluser.userId
 	</select>
 </mapper>

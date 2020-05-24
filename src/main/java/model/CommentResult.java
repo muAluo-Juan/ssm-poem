@@ -10,6 +10,14 @@ public class CommentResult {
 	private int workId;
 	private String penName;
 	private String headPicPath;
+	private String userName;
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public int getCommentId() {
 		return commentId;
 	}
