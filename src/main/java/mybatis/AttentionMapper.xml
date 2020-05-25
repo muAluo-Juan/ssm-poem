@@ -4,8 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.AttentionDao">
 	<insert id="add">
-		insert into t_attention(attentionId,userId,beAttentedId)
-		values(null,#{userId},#{beAttentedId})
+		insert into t_attention(attentionId,userId,beAttentedId,attentedTime)
+		values(null,#{userId},#{beAttentedId},null)
 	</insert>
 	
 	<delete id="delete">
@@ -13,11 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="getByUserId" resultType="Attention">
-		select * from t_attention where userId=#{userId}
+		select * from t_attention where userId=#{userId} order by attentedTime desc
 	</select>
 	
 	<select id="getByBeAttentedId" resultType="Attention">
-		select * from t_attention where beAttentedId=#{beAttentedId}
+		select * from t_attention where beAttentedId=#{beAttentedId} order by attentedTime desc
 	</select>
 	
 	<select id="getByUserIdAndAttentedId" resultType="Attention">

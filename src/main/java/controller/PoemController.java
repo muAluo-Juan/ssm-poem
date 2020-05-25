@@ -122,6 +122,11 @@ public class PoemController {
 				collection.setPoemId(poem.getId());
 				collection.setUserId(user.getUserId());
 				collectionService.addCollection(collection);
+				//增加用户积分
+				long points = user.getRewardPoints();
+				points += 3;
+				user.setRewardPoints(points);
+				normalUserService.modifyNormalUserInfo(user);
 				return new Result(2,"收藏成功！",collection,null);
 			}
 			else

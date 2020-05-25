@@ -1,10 +1,20 @@
 package po;
 
+import java.sql.Timestamp;
+
 //关注
 public class Attention {
 	private int attentionId;
 	private int userId;
 	private int beAttentedId;
+	private Timestamp attentedTime;
+	
+	public Timestamp getAttentedTime() {
+		return attentedTime;
+	}
+	public void setAttentedTime(Timestamp attentedTime) {
+		this.attentedTime = attentedTime;
+	}
 	public int getAttentionId() {
 		return attentionId;
 	}

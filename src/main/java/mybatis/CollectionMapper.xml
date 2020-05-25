@@ -4,17 +4,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.CollectionDao">
 	<select id="getAllByUserId" resultType="po.Collection">
-		select * from t_collection where userId=#{userId}
+		select * from t_collection where userId=#{userId} order by collectTime desc
 	</select>
 	<select id="getById" resultType="po.Collection">
 		select * from t_collection where collectionId=#{collectionId}
 	</select>
 	<select id="getByPoemId" resultType="po.Collection">
-		select * from t_collection where poemId=#{poemId}
+		select * from t_collection where poemId=#{poemId} order by collectTime desc
 	</select>
 	<insert id="add" parameterType="po.Collection">
-		insert into t_collection(collectionId,userId,poemId)
-		values(null,#{userId},#{poemId})
+		insert into t_collection(collectionId,userId,poemId,collectTime)
+		values(null,#{userId},#{poemId},null)
 	</insert>
 	<delete id="delete">
 		delete from t_collection

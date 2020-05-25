@@ -89,7 +89,7 @@ public class CommunityController {
 				workService.addWork(work);
 				//增加用户积分
 				long points = user.getRewardPoints();
-				points ++;
+				points += 5;
 				user.setRewardPoints(points);
 				normalUserService.modifyNormalUserInfo(user);
 				return new Result(3,"发表成功！",null,null);
@@ -390,6 +390,11 @@ public class CommunityController {
 			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
 			//comment.setInputTime(inputTime);
 			commentService.addComment(comment);
+			//增加用户积分
+			long points = user.getRewardPoints();
+			points += 1;
+			user.setRewardPoints(points);
+			normalUserService.modifyNormalUserInfo(user);
 			return new Result(10,"发表成功",commentService.getCommentByWorkId(comment.getWorkId()),null);
 		}catch(Exception e) {
 			e.printStackTrace();
