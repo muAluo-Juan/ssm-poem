@@ -7,9 +7,7 @@ public class Work {
 	private String title;
 	private int userId;
 	private String text;
-	private String imgPath;
 	private int likeNum;
-	private int isEssay;
 	private Timestamp inputTime;
 	private int commentNum;
 	public int getWorkId() {
@@ -36,23 +34,11 @@ public class Work {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
 	public int getLikeNum() {
 		return likeNum;
 	}
 	public void setLikeNum(int likeNum) {
 		this.likeNum = likeNum;
-	}
-	public int getIsEssay() {
-		return isEssay;
-	}
-	public void setIsEssay(int isEssay) {
-		this.isEssay = isEssay;
 	}
 	public Timestamp getInputTime() {
 		return inputTime;

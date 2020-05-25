@@ -29,14 +29,12 @@ import po.Author;
 import po.Dynasty;
 import po.ErrorInfo;
 import po.Poem;
-import po.Poem_Ext;
 import po.Type;
 import service.AdministratorService;
 import service.AuthorService;
 import service.DynastyService;
 import service.ErrorInfoService;
 import service.PoemService;
-import service.Poem_ExtService;
 import service.TypeService;
 import utils.JWTUtil;
 
@@ -55,8 +53,6 @@ public class PoemManageController {
 	private DynastyService dynastyService;
 	@Autowired
 	private TypeService typeService;
-	@Autowired
-	private Poem_ExtService poem_extService;
 	//-----------------------------------勘误管理-----------------------------------
 	/*
 	 * 查看勘误信息列表

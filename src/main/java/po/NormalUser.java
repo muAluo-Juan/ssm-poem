@@ -14,7 +14,6 @@ public class NormalUser {
 	private String personalizedSig;
 	private int sex;
 	private Date birth;
-	private int disableTime;
 	private long rewardPoints;//用户积分
 	
 	public int getUserId() {
@@ -65,12 +64,6 @@ public class NormalUser {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	public int getDisableTime() {
-		return disableTime;
-	}
-	public void setDisableTime(int disableTime) {
-		this.disableTime = disableTime;
-	}
 	public long getRewardPoints() {
 		return rewardPoints;
 	}
@@ -80,6 +73,6 @@ public class NormalUser {
 	
 	public String get() {
 		return this.userId+" "+this.userName + " "+this.penName+" "+this.password + this.personalizedSig+
-				" "+this.headPicPath+" "+this.rewardPoints+this.sex+" "+this.disableTime + this.birth;
+				" "+this.headPicPath+" "+this.rewardPoints+this.sex+" " + this.birth;
 	}
 }

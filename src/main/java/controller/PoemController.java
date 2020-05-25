@@ -20,13 +20,11 @@ import po.Collection;
 import po.ErrorInfo;
 import po.NormalUser;
 import po.Poem;
-import po.Poem_Ext;
 import service.AuthorService;
 import service.CollectionService;
 import service.ErrorInfoService;
 import service.NormalUserService;
 import service.PoemService;
-import service.Poem_ExtService;
 import utils.JWTUtil;
 
 //用户诗歌鉴赏controller
@@ -42,29 +40,10 @@ public class PoemController {
 	private CollectionService collectionService;
 	@Autowired
 	private AuthorService authorService;
-	@Autowired
-	private Poem_ExtService poem_extService;
 	
 	/*
 	 * 获取诗歌类型列表（访问PoemManageController,游客即可，无权限控制）
 	 */
-	
-	
-	/*
-	 * ！！！根据诗歌的uid去poem_ext表中查找诗歌的附加信息（如诗歌赏析信息、诗歌音频文件路径）
-	 */
-	@CrossOrigin
-	@GetMapping("/poem/user_getpoem_ext/{poemUId}")
-	public Result getPoem_Ext(@PathVariable("poemUId") String poemUId) {
-		try {
-			return new Result(10,"该诗歌对应的附加信息",poem_extService.getPoem_ExtByPoemuid(poemUId),null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
-	
-	
 	
 	/*
 	 * 查看诗歌列表（前往PoemManageController的查看诗歌列表方法，该方法未设置管理员权限，只要是游客即可查看）
@@ -237,6 +216,7 @@ public class PoemController {
 	public Result doGetPoemsByAuthor(@PathVariable("authorUId") String authorUId) {
 		try {
 			List<Poem> poems = poemService.getPoemsByAuthorUId(authorUId);
+			System.out.println(poems.size());
 			return new Result(6,"该诗人的诗",poems,null);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="add" parameterType="Draft">
-		insert into t_draft(draftId,title,userId,text,imgPath,isEssay,inputTime)
-		values(null,#{title},#{userId},#{text},#{imgPath},#{isEssay},null)
+		insert into t_draft(draftId,title,userId,text,inputTime)
+		values(null,#{title},#{userId},#{text},null)
 	</insert>
 	
 	<delete id="delete">
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="update" parameterType="Draft">
 		update t_draft
-		set title=#{title},text=#{text},imgPath=#{imgPath},isEssay=#{isEssay}
+		set title=#{title},text=#{text}
 		where draftId=#{draftId}
 	</update>
 </mapper>

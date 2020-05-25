@@ -7,8 +7,6 @@ public class Draft {
 	private String title;
 	private int userId;
 	private String text;
-	private String imgPath;
-	private int isEssay;
 	private Timestamp inputTime;
 	public Timestamp getInputTime() {
 		return inputTime;
@@ -39,17 +37,5 @@ public class Draft {
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
-	public int getIsEssay() {
-		return isEssay;
-	}
-	public void setIsEssay(int isEssay) {
-		this.isEssay = isEssay;
 	}
 }

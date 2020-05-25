@@ -54,13 +54,6 @@ public class LoginController {
 	@CrossOrigin
 	@PostMapping("/register")
 	public Result register(HttpServletRequest request,@RequestBody RegisterForm requestRegisterUser) {
-		//先验证用户输入的手机验证
-		/*HttpSession session = request.getSession();
-		String phoneCode = (String)session.getAttribute("phoneCode");*/
-		/*if(!phoneCode.equals(requestRegisterUser.getVerifyCode()))
-		{
-			return new Result(14,"验证码错误",null,null);
-		}*/
 		if(normalUserService.getNormalUserByUserName(requestRegisterUser.getUserName())!=null || administratorService.getAdministratorByUserName(requestRegisterUser.getUserName()) != null)
 			return new Result(15,"用户已存在，注册失败",null,null);
 		//构建新对象添加用户
@@ -75,10 +68,8 @@ public class LoginController {
 		normalUser.setSex(requestRegisterUser.getSex());
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 		normalUser.setBirth(date);
-		normalUser.setDisableTime(0);
 		normalUser.setRewardPoints(0);
 		normalUserService.addNormalUser(normalUser);
-		/*session.removeAttribute("phoneCode");*/
 		return new Result(2,"欢迎成为夜雨时的一员！",null,null);
 	}
 	
@@ -238,8 +229,6 @@ public class LoginController {
 	@PostMapping("/login/loginout")
 	public Result loginOut(HttpServletRequest request) {
 		request.getSession().invalidate();
-		//token失效
-		
 		return new Result(13,"退出登录成功",null,null);
 	}
 }

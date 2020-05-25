@@ -12,13 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="add" parameterType="NormalUser">
-		insert into t_normaluser(userId,userName,penName,password,headPicPath,personalizedSig,sex,birth,disableTime,rewardPoints)
-		values(null,#{userName},#{penName},#{password},#{headPicPath},#{personalizedSig},#{sex},#{birth},#{disableTime},#{rewardPoints})
+		insert into t_normaluser(userId,userName,penName,password,headPicPath,personalizedSig,sex,birth,rewardPoints)
+		values(null,#{userName},#{penName},#{password},#{headPicPath},#{personalizedSig},#{sex},#{birth},#{rewardPoints})
 	</insert>
 	
 	<update id="update" parameterType="NormalUser">
 		update t_normaluser
-		set penName=#{penName},password=#{password},headPicPath=#{headPicPath},personalizedSig=#{personalizedSig},sex=#{sex},birth=#{birth},disableTime=#{disableTime},rewardPoints=${rewardPoints}
+		set penName=#{penName},password=#{password},headPicPath=#{headPicPath},personalizedSig=#{personalizedSig},sex=#{sex},birth=#{birth},rewardPoints=${rewardPoints}
 		where userId=#{userId}
 	</update>
 	
