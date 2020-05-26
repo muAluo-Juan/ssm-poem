@@ -184,40 +184,30 @@ public class LoginController {
 	 */
 	@CrossOrigin
 	@PostMapping("/login/findpassword")
-	public Result findPassword(HttpServletRequest request,@RequestBody FindPasswordForm findPasswordUser) {
-		//判断验证码正确性
-		HttpSession session = request.getSession();
-		String realCode = (String)session.getAttribute("phoneCode");
-		if(realCode == null)
-			return new Result(9,"未获取验证码",null,"");
-		if(!(findPasswordUser.getPhoneCode()).equals(realCode))
+	public Result findPassword(@RequestBody FindPasswordForm findPasswordUser) {
+		//根据用户名获取用户对象（管理员或普通用户）
+		Administrator admin = administratorService.getAdministratorByUserName(findPasswordUser.getUserName());
+		NormalUser normal = normalUserService.getNormalUserByUserName(findPasswordUser.getUserName());
+		if(admin != null)
 		{
-			return new Result(10,"验证码错误",null,null);
+			//密码加密
+			String pwd1 = SHA256Util.getSHA256Str(findPasswordUser.getUserName()+findPasswordUser.getPassword());
+			admin.setPassword(pwd1);
+			administratorService.modifyAdministratorInfo(admin);
+			//验证码正确，重置密码
+			return new Result(11,"密码重置成功",null,null);
 		}
-		else
-		{
-			//根据用户名获取用户对象（管理员或普通用户）
-			Administrator admin = administratorService.getAdministratorByUserName(findPasswordUser.getUserName());
-			NormalUser normal = normalUserService.getNormalUserByUserName(findPasswordUser.getUserName());
-			if(admin != null)
+		else {
+			if(normal != null)
 			{
-				admin.setPassword(findPasswordUser.getPassword());
-				administratorService.modifyAdministratorInfo(admin);
-				session.removeAttribute("phoneCode");
+				//密码加密
+				String pwd1 = SHA256Util.getSHA256Str(findPasswordUser.getUserName()+findPasswordUser.getPassword());
+				normal.setPassword(pwd1);
+				normalUserService.modifyNormalUserInfo(normal);
 				//验证码正确，重置密码
 				return new Result(11,"密码重置成功",null,null);
-			}
-			else {
-				if(normal != null)
-				{
-					normal.setPassword(findPasswordUser.getPassword());
-					normalUserService.modifyNormalUserInfo(normal);
-					session.removeAttribute("phoneCode");
-					//验证码正确，重置密码
-					return new Result(11,"密码重置成功",null,null);
-				}else {
-					return new Result(12,"密码重置失败",null,null);
-				}
+			}else {
+				return new Result(12,"密码重置失败",null,null);
 			}
 		}
 	}
