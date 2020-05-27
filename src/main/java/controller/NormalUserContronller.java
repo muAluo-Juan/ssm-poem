@@ -377,6 +377,22 @@ public class NormalUserContronller {
 			return new Result(0, "出现未知错误", null, null);
 		}
 	}
+	
+	/*
+	 * 根据id获取某个用户的关注列表
+	 */
+	@CrossOrigin
+	@GetMapping("/user/getattentionlistbyid/{id}")
+	public Result getAttentionListById(@PathVariable("id") int id) {
+		try {
+			List<Attention> attentionList = attentionService.getAttentions(id);
+			return new Result(14, "获取某个用户的个人作品列表", attentionList, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new Result(0, "出现未知错误", null, null);
+		}
+	}
+	
 	/*
 	 * 获取关注列表
 	 *
