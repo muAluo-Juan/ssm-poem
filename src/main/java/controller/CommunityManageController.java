@@ -99,7 +99,6 @@ public class CommunityManageController {
 	 * 获取某个用户的作品列表
 	 */
 	@CrossOrigin
-	@AdminToken
 	@GetMapping("/community/admin_getworklist/{userId}")
 	public Result doGetUserWorkList(@PathVariable("userId") int userId) {
 		try {

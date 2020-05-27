@@ -242,6 +242,22 @@ public class NormalUserContronller {
 			return new Result(0, "出现未知错误", null, null);
 		}
 	}
+	
+	/*
+	 * 通过id查询某个用户的收藏列表
+	 */
+	@CrossOrigin
+	@GetMapping("/user/getcollectionlistbyid/{id}")
+	public Result getCollectionListByUserId(@PathVariable("id") int id) {
+		try {
+			List<Collection> collectionList = collectionService.getCollectionsAllByUserId(id);
+			return new Result(13, "获取某个人的收藏列表", collectionList, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new Result(0, "出现未知错误", null, null);
+		}
+	}
+	
 
 	/*
 	 * 查询个人收藏列表
@@ -390,7 +406,6 @@ public class NormalUserContronller {
 	  * 根据id获取用户 
 	 */
 	@CrossOrigin
-	@NormalToken
 	@GetMapping("/user/getuserbyid/{userId}")
 	public Result getUserByid(@PathVariable("userId") int userId) {
 
@@ -399,7 +414,7 @@ public class NormalUserContronller {
 			NormalUser user = normalUserService.getNormalUserByUid(userId);
 			if (user != null) {
 				
-				return new Result(12, "获取关注信息", user, null);
+				return new Result(12, "获取用户信息", user, null);
 			} else {
 				return new Result(0, "用户不存在", null, null);
 			}
