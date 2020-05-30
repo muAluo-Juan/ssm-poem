@@ -31,4 +31,10 @@ public class AdministratorImpl implements AdministratorService{
 		// TODO Auto-generated method stub
 		adminDao.update(admin);
 	}
+
+	@Override
+	public Administrator getAdministratorById(int administratorId) {
+		// TODO Auto-generated method stub
+		return adminDao.getById(administratorId);
+	}
 }

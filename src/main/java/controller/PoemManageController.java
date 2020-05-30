@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -88,7 +90,7 @@ public class PoemManageController {
 	}
 	
 	/*
-	 * 审核勘误信息
+	 * 审核勘误信息（置state为1）
 	 */
 	@CrossOrigin
 	@AdminToken
@@ -97,8 +99,9 @@ public class PoemManageController {
 		try {
 			ErrorInfo errorInfo = errorInfoService.getErrorInfoById(errorId);
 			if(errorInfo != null) {
-				errorInfo.setState(1);//改变为已审核状态
-				
+				errorInfo.setState(1);//改变为审核通过状态
+				Timestamp time = new Timestamp(System.currentTimeMillis());
+				errorInfo.setVerifyTime(time);
 				String token = request.getHeader("token");
 				String userName = JWTUtil.getUsername(token);
 				Administrator admin = administratorService.getAdministratorByUserName(userName);
@@ -116,6 +119,39 @@ public class PoemManageController {
 			return new Result(0,"出现未知错误",null,null);
 		}
 	}
+	
+	
+	/*
+	 * 忽略勘误信息（置state为2）
+	 */
+	@CrossOrigin
+	@AdminToken
+	@PutMapping("/poem/admin_ignoreerrorinfo/{errorId}")
+	public Result doIgnoreErrorInfo(@PathVariable("errorId") int errorId,HttpServletRequest request) {
+		try {
+			ErrorInfo errorInfo = errorInfoService.getErrorInfoById(errorId);
+			if(errorInfo != null) {
+				errorInfo.setState(2);//改变为忽略状态
+				Timestamp time = new Timestamp(System.currentTimeMillis());
+				errorInfo.setVerifyTime(time);
+				String token = request.getHeader("token");
+				String userName = JWTUtil.getUsername(token);
+				Administrator admin = administratorService.getAdministratorByUserName(userName);
+				int adminId = admin.getAdministratorId();
+				
+				errorInfo.setVerifyAdministratorId(adminId);//填入审核管理员的id
+				
+				errorInfoService.updateErrorInfo(errorInfo);
+				return new Result(3,"审核成功",errorInfo,null);
+			}
+			else
+				return new Result(4,"勘误信息不存在",null,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
 	
 	/*
 	 * 删除勘误信息

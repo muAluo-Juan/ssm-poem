@@ -10,6 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getByUserName" resultType="Admin">
 		select * from t_administrator where userName=#{userName}
 	</select>
+	
+	<select id="getById" resultType="Admin">
+		select * from t_administrator where administratorId=#{administratorId}
+	</select>
 
 	<update id="update" parameterType="Admin">
 		update t_administrator

@@ -1,6 +1,9 @@
 package controller;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,12 +17,15 @@ import annotation.AdminToken;
 import model.CommentResult;
 import model.Result;
 import model.WorkResult;
+import po.Administrator;
 import po.Comment;
 import po.ReportInfo;
 import po.Work;
+import service.AdministratorService;
 import service.CommentService;
 import service.ReportService;
 import service.WorkService;
+import utils.JWTUtil;
 
 //管理员社区管理模块controller
 @RestController
@@ -30,6 +36,8 @@ public class CommunityManageController {
 	private CommentService commentService;
 	@Autowired
 	private ReportService reportService;
+	@Autowired
+	private AdministratorService administratorService;
 	
 	/*
 	 * 获取举报列表
@@ -53,12 +61,46 @@ public class CommunityManageController {
 	@CrossOrigin
 	@AdminToken
 	@PutMapping("/community/admin_confirmreportlist/{id}")
-	public Result doConfirmReportInfo(@PathVariable("id") int id) {
+	public Result doConfirmReportInfo(@PathVariable("id") int id,HttpServletRequest request) {
 		try {
 			ReportInfo reportInfo = reportService.getReportInfo(id);
 			reportInfo.setState(1);
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			reportInfo.setVerifyTime(time);
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			Administrator admin = administratorService.getAdministratorByUserName(userName);
+			int adminId = admin.getAdministratorId();
+			
+			reportInfo.setVerifyAdministratorId(adminId);//填入审核管理员的id
 			reportService.updateReportInfo(reportInfo);
 			return new Result(10,"审核成功",reportService.getAllReportInfo(),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"出现未知错误",null,null);
+		}
+	}
+	
+	/*
+	 * 忽略举报信息（置state为2）
+	 */
+	@CrossOrigin
+	@AdminToken
+	@PutMapping("/community/admin_ignorereportlist/{id}")
+	public Result doIgnoreReportInfo(@PathVariable("id") int id,HttpServletRequest request) {
+		try {
+			ReportInfo reportInfo = reportService.getReportInfo(id);
+			reportInfo.setState(2);
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			reportInfo.setVerifyTime(time);
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			Administrator admin = administratorService.getAdministratorByUserName(userName);
+			int adminId = admin.getAdministratorId();
+			
+			reportInfo.setVerifyAdministratorId(adminId);//填入审核管理员的id
+			reportService.updateReportInfo(reportInfo);
+			return new Result(12,"忽略成功",reportService.getAllReportInfo(),null);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new Result(0,"出现未知错误",null,null);

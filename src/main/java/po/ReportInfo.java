@@ -10,6 +10,21 @@ public class ReportInfo {
 	private String reportReason;
 	private int state;
 	private Timestamp inputTime;
+	private Timestamp verifyTime;
+	private int verifyAdministratorId;
+	
+	public Timestamp getVerifyTime() {
+		return verifyTime;
+	}
+	public void setVerifyTime(Timestamp verifyTime) {
+		this.verifyTime = verifyTime;
+	}
+	public int getVerifyAdministratorId() {
+		return verifyAdministratorId;
+	}
+	public void setVerifyAdministratorId(int verifyAdministratorId) {
+		this.verifyAdministratorId = verifyAdministratorId;
+	}
 	public int getReportId() {
 		return reportId;
 	}

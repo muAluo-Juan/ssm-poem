@@ -11,6 +11,14 @@ public class ErrorInfo {
 	private int verifyAdministratorId;//审核勘误的管理员
 	private int userId;//提交勘误的用户
 	private int poemId;//存在勘误的诗歌id
+	private Timestamp verifyTime;//勘误审核时间
+	
+	public Timestamp getVerifyTime() {
+		return verifyTime;
+	}
+	public void setVerifyTime(Timestamp verifyTime) {
+		this.verifyTime = verifyTime;
+	}
 	public int getErrorId() {
 		return errorId;
 	}

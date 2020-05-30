@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import annotation.AdminToken;
 import annotation.NormalToken;
 import model.Result;
 import model.WorkResult;
+import po.Administrator;
 import po.Attention;
 import po.Collection;
 import po.Draft;
 import po.NormalUser;
 import po.Work;
+import service.AdministratorService;
 import service.AttentionService;
 import service.CollectionService;
 import service.DraftService;
@@ -43,6 +46,8 @@ public class NormalUserContronller {
 	private WorkService workService;
 	@Autowired
 	private AttentionService attentionService;
+	@Autowired
+	private AdministratorService adminService;
 	
 	@CrossOrigin
 	@GetMapping("/user/getTest")
@@ -50,7 +55,38 @@ public class NormalUserContronller {
 		System.out.println("test");
 		return new Result(0, "出现未知错误", null, null);
 	}
-
+	
+	/*
+	 * 根据userName获取管理员信息
+	 */
+	@CrossOrigin
+	@AdminToken
+	@GetMapping("/admin/getadminbyusername/{userName}")
+	public Result getAdminByUserName(@PathVariable("userName") String userName) {
+		try {
+			Administrator admin = adminService.getAdministratorByUserName(userName);
+			return new Result(15,"该管理员的信息",admin,null);
+		}catch(Exception e) {
+			return new Result(0, "出现未知错误", null, null);
+		}
+	}
+	
+	/*
+	 * 根据id获取管理员信息
+	 */
+	@CrossOrigin
+	@AdminToken
+	@GetMapping("/admin/getadminbyid/{id}")
+	public Result getAdminById(@PathVariable("id") int id) {
+		try {
+			Administrator admin = adminService.getAdministratorById(id);
+			return new Result(17,"该管理员的信息",admin,null);
+		}catch(Exception e) {
+			return new Result(0, "出现未知错误", null, null);
+		}
+	}
+	
+	
 	/*
 	 * 获取当前登入用户的个人信息
 	 */
@@ -377,6 +413,7 @@ public class NormalUserContronller {
 			return new Result(0, "出现未知错误", null, null);
 		}
 	}
+	
 	
 	/*
 	 * 根据id获取某个用户的关注列表

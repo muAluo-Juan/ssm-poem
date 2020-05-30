@@ -12,5 +12,6 @@ import po.Administrator;
 public interface AdministratorDao {
 	public Administrator getByUserNameAndPwd(@Param("userName") String userName,@Param("password") String password);
 	public Administrator getByUserName(@Param("userName") String userName);
+	public Administrator getById(@Param("administratorId") int administratorId);
 	public void update(Administrator admin);
 }

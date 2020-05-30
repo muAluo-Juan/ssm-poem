@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_errorInfo where errorId=#{errorId}
 	</delete>
 	<insert id="add" parameterType="ErrorInfo">
-		insert into t_errorInfo(errorId,errorText,inputTime,state,verifyAdministratorId,userId,poemId)
-		values(null,#{errorText},null,0,null,#{userId},#{poemId})
+		insert into t_errorInfo(errorId,errorText,inputTime,state,verifyAdministratorId,userId,poemId，verifyTime)
+		values(null,#{errorText},null,0,null,#{userId},#{poemId},null)
 	</insert>
 	<update id="update" parameterType="ErrorInfo">
 		update t_errorInfo
-		set state=#{state},verifyAdministratorId=#{verifyAdministratorId}
+		set state=#{state},verifyAdministratorId=#{verifyAdministratorId},verifyTime=#{verifyTime}
 		where errorId=#{errorId}
 	</update>
 </mapper>

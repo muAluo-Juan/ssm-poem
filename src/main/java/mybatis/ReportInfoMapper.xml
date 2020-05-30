@@ -12,13 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="add" parameterType="ReportInfo">
-		insert into t_reportinfo(reportId,userId,beReportedUserId,reportReason,state,inputTime)
-		values(null,#{userId},#{beReportedUserId},#{reportReason},0,null)
+		insert into t_reportinfo(reportId,userId,beReportedUserId,reportReason,state,inputTime,verifyAdministratorId,verifyTime)
+		values(null,#{userId},#{beReportedUserId},#{reportReason},0,null,null,null)
 	</insert>
 	
 	<update id="update" parameterType="ReportInfo">
 		update t_reportinfo
-		set state=#{state}
+		set state=#{state},verifyAdministratorId=#{verifyAdministratorId},verifyTime=#{verifyTime}
 		where reportId=#{reportId}
 	</update>
 	
