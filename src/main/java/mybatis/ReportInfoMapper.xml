@@ -5,10 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dao.ReportDao">	
 	<select id="getAll" resultType="ReportInfo">
 		select * from t_reportInfo
+		order by inputTime desc
 	</select>
 	
 	<select id="getByReportId" resultType="ReportInfo">
 		select * from t_reportInfo where reportId=#{reportId}
+		order by inputTime desc
 	</select>
 	
 	<insert id="add" parameterType="ReportInfo">

@@ -6,9 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getById" resultType="ErrorInfo">
 		select * from t_errorInfo
 		where errorId=#{errorId}
+		order by inputTime desc
 	</select>
 	<select id="getAll" resultType="ErrorInfo">
-		select * from t_errorInfo
+		select * from t_errorInfo order by inputTime desc
 	</select>
 	<delete id="delete">
 		delete from t_errorInfo where errorId=#{errorId}

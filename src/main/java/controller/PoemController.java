@@ -123,7 +123,7 @@ public class PoemController {
 				collection.setUserId(user.getUserId());
 				collectionService.addCollection(collection);
 				//增加用户积分
-				long points = user.getRewardPoints();
+				int points = user.getRewardPoints();
 				points += 3;
 				user.setRewardPoints(points);
 				normalUserService.modifyNormalUserInfo(user);

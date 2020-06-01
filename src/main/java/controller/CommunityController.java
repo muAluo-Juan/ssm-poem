@@ -88,7 +88,7 @@ public class CommunityController {
 				//work.setInputTime(inputTime);
 				workService.addWork(work);
 				//增加用户积分
-				long points = user.getRewardPoints();
+				int points = user.getRewardPoints();
 				points += 5;
 				user.setRewardPoints(points);
 				normalUserService.modifyNormalUserInfo(user);
@@ -391,7 +391,7 @@ public class CommunityController {
 			//comment.setInputTime(inputTime);
 			commentService.addComment(comment);
 			//增加用户积分
-			long points = user.getRewardPoints();
+			int points = user.getRewardPoints();
 			points += 1;
 			user.setRewardPoints(points);
 			normalUserService.modifyNormalUserInfo(user);

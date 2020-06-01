@@ -14,7 +14,7 @@ public class NormalUser {
 	private String personalizedSig;
 	private int sex;
 	private Date birth;
-	private long rewardPoints;//用户积分
+	private int rewardPoints;//用户积分
 	
 	public int getUserId() {
 		return userId;
@@ -64,10 +64,10 @@ public class NormalUser {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	public long getRewardPoints() {
+	public int getRewardPoints() {
 		return rewardPoints;
 	}
-	public void setRewardPoints(long rewardPoints) {
+	public void setRewardPoints(int rewardPoints) {
 		this.rewardPoints = rewardPoints;
 	}
 	
