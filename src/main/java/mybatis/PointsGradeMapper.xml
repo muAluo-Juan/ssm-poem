@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PointsGradeDao">
+	<select id="getAll" resultType="PointsGrade">
+		select * from t_points_grade 
+		order by miniPoints
+	</select>
+	
+	<select id="getByPoints" resultType="PointsGrade">
+		select * from t_points_grade
+		where miniPoints=#{miniPoints}
+		order by miniPoints
+	</select>
+	
+	<select id="getByGrade" resultType="PointsGrade">
+		select * from t_points_grade
+		where gradeName=#{gradeName}
+		order by miniPoints
+	</select>
+	
+	<select id="getById" resultType="PointsGrade">
+		select * from t_points_grade
+		where gradeId=#{gradeId}
+	</select>
+	
+	<delete id="delete">
+		delete from t_points_grade
+		where gradeId=#{gradeId}
+	</delete>
+	
+	<insert id="add" parameterType="PointsGrade">
+		insert into t_points_grade(gradeId,miniPoints,gradeName)
+		values(null,#{miniPoints},#{gradeName})
+	</insert>
+	
+	<update id="update" parameterType="PointsGrade">
+		update t_points_grade
+		set miniPoints=#{miniPoints},gradeName=#{gradeName}
+		where gradeId=#{gradeId}
+	</update>
+</mapper>

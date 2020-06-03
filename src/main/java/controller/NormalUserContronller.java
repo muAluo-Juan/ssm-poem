@@ -24,12 +24,14 @@ import po.Attention;
 import po.Collection;
 import po.Draft;
 import po.NormalUser;
+import po.PointsGrade;
 import po.Work;
 import service.AdministratorService;
 import service.AttentionService;
 import service.CollectionService;
 import service.DraftService;
 import service.NormalUserService;
+import service.PointsGradeService;
 import service.WorkService;
 import utils.JWTUtil;
 import utils.SHA256Util;
@@ -48,12 +50,27 @@ public class NormalUserContronller {
 	private AttentionService attentionService;
 	@Autowired
 	private AdministratorService adminService;
+	@Autowired
+	private PointsGradeService pointsGradeService;
 	
+	/*
+	 * 根据积分返回用户的头衔
+	 */
 	@CrossOrigin
-	@GetMapping("/user/getTest")
-	public Result getTest() {
-		System.out.println("test");
-		return new Result(0, "出现未知错误", null, null);
+	@GetMapping("/user/getgrade/{points}")
+	public Result getGrade(@PathVariable("points") int points) {
+		try {
+			List<PointsGrade> pointsGrade = pointsGradeService.getAllPointsGrades();
+			int i;
+			for(i = 0 ; i < pointsGrade.size()-1 ; i ++) {
+				if(points >= pointsGrade.get(i).getMiniPoints() && points < pointsGrade.get(i+1).getMiniPoints())
+					return new Result(20,"头衔是",pointsGrade.get(i).getGradeName(),null);
+			}
+			return new Result(21,"头衔是",pointsGrade.get(pointsGrade.size()-1).getGradeName(),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0, "出现未知错误", null, null);			
+		}
 	}
 	
 	/*
@@ -247,7 +264,6 @@ public class NormalUserContronller {
 	/*
 	 * 用户编辑草稿
 	 * 更新草稿信息
-	 * 未测试
 	 */
 	@CrossOrigin
 	@NormalToken

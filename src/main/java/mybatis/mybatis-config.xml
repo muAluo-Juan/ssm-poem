@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.Author" alias="Author"/>
 		<typeAlias type="po.Poem" alias="Poem"/>
 		<typeAlias type="po.ErrorInfo" alias="ErrorInfo"/>
+		<typeAlias type="po.PointsGrade" alias="PointsGrade"/>
 		<typeAlias type="model.WorkResult" alias="WorkResult"/>
 		<typeAlias type="model.CommentResult" alias="CommentResult"/>
 	</typeAliases>
@@ -42,5 +43,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mybatis/PoemMapper.xml"/>
         <mapper resource="mybatis/ErrorInfoMapper.xml"/>
         <mapper resource="mybatis/CollectionMapper.xml"/>
+        <mapper resource="mybatis/PointsGradeMapper.xml"/>
  	</mappers>
 </configuration>
