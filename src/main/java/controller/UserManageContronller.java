@@ -109,8 +109,9 @@ public class UserManageContronller {
    @CrossOrigin
    @AdminToken
    @PostMapping("/addgradepoints")
-   public Result addGradePoints(PointsGrade pointsGrade) {
+   public Result addGradePoints(@RequestBody PointsGrade pointsGrade) {
 	   try {
+		  pointsGrade.setGradeId(0);
 		  pointsGradeService.addPointsGrade(pointsGrade);
 		  return new Result(15,"添加后的积分等级信息",pointsGradeService.getAllPointsGrades(),null);
 	   }catch(Exception e) {
@@ -124,10 +125,10 @@ public class UserManageContronller {
    @CrossOrigin
    @AdminToken
    @PutMapping("/updategradepoints")
-   public Result updateGradePoints(PointsGrade pointsGrade) {
+   public Result updateGradePoints(@RequestBody PointsGrade pointsGrade) {
 	   try {
 		  pointsGradeService.updatePointsGrade(pointsGrade);
-		  return new Result(16,"更新后的积分等级信息",pointsGradeService.getAllPointsGrades(),null);
+		  return new Result(16,"更新后的积分等级信息",null,null);
 	   }catch(Exception e) {
 		   return new Result(0, "出现未知错误", null, null);
 	   }
