@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -105,12 +107,14 @@ public class CommunityController {
 	 * 图片上传
 	 */
 	@CrossOrigin
-	@NormalToken
 	@PostMapping("/community/user_uploadpic")
-	public Result uploadPic(@RequestBody MultipartFile picture, HttpServletRequest request) {
+	public Result uploadPic(@RequestBody MultipartFile picture, HttpServletRequest request) throws FileNotFoundException {
 		//获取文件在服务器的存储位置
+//		String path = ResourceUtils.getURL("classpath:").getPath();
+//		File filePath = new File(path, "upload/community_pic/");
 		String path = request.getServletContext().getRealPath("/upload/community_pic");
 		File filePath = new File(path);
+		
 		System.out.println("文件的保存路径"+path);
 		if(!filePath.exists() && !filePath.isDirectory())
 		{
@@ -419,4 +423,20 @@ public class CommunityController {
 		}
 	}
 	
+	//删除作品（自己的）
+	@CrossOrigin
+	@NormalToken
+	@DeleteMapping(value="/community/user_deletework/{workId}")
+	public Result userDeleteWork(@PathVariable("workId") int workId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			workService.deleteWork(workId);
+			return new Result(12,"删除成功",workService.getWorksByUserId(user.getUserId()),null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(0,"发生未知错误",null,"");
+		}
+	}
 }

@@ -150,7 +150,7 @@ public class PoemController {
 			Poem poem = poemService.getPoemByPoemId(poemId);
 			if(poem != null && user != null) {
 				collectionService.deleteReferCollection(user.getUserId(), poemId);
-				return new Result(3,"删除成功！",null,null);
+				return new Result(3,"删除成功！",collectionService.getCollectionsAllByUserId(user.getUserId()),null);
 			}else {
 				return new Result(0,"出现未知错误",null,null);
 			}

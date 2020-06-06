@@ -77,4 +77,5 @@
      	<property name="basePackage" value="dao"/>
      	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
      </bean>
+     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>
