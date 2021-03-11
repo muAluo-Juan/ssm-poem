@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import annotation.NormalToken;
 import model.Result;
+import model.WorkResult;
 import po.Attention;
 import po.Collection;
 import po.Comment;
@@ -64,8 +65,36 @@ public class CommunityController {
 	private CommentService commentService;
 	
 	/*
-	 * 查看作品列表（访问CommunityManageController（是游客即可查看））
+	 * 查看作品列表（最新）
 	 */
+	@CrossOrigin
+	@GetMapping("/works/new")
+	public Result doGetNewWorkList() {
+		try {
+			List<WorkResult> workList = workService.getAllWorksOrderByTime();
+			return new Result(200,"最新作品",workList,null);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return new Result(500,"出现未知错误",null,null);
+		}
+	}
+	
+	/*
+	 * 查看作品列表（最热）
+	 */
+	@CrossOrigin
+	@GetMapping("/works/hot")
+	public Result doGetHotWorkList() {
+		try {
+			List<WorkResult> workList = workService.getAllWorksOrderByLike();
+			return new Result(200,"最热作品",workList,null);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return new Result(500,"出现未知错误",null,null);
+		}
+	}
 	
 	/*
 	 * 获取某个作品的详细信息（访问CommunityManageController（是游客即可查看））

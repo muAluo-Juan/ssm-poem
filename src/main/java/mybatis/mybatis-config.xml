@@ -25,6 +25,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.PointsGrade" alias="PointsGrade"/>
 		<typeAlias type="model.WorkResult" alias="WorkResult"/>
 		<typeAlias type="model.CommentResult" alias="CommentResult"/>
+		<typeAlias type="model.PoemResult" alias="PoemResult"/>
+		<typeAlias type="model.AuthorResult" alias="AuthorResult"/>
 	</typeAliases>
 
     <!-- 告诉 MyBatis到哪里去找映射文件 -->

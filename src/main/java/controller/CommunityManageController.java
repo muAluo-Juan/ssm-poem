@@ -121,21 +121,7 @@ public class CommunityManageController {
 		}
 	}
 	
-	/*
-	 * 查看作品列表
-	 */
-	@CrossOrigin
-	@GetMapping("/community/getworklist")
-	public Result doGetWorkList() {
-		try {
-			List<WorkResult> workList = workService.getAllWorks();
-			return new Result(1,"作品列表",workList,null);
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+	
 	
 	/*
 	 * 获取某个用户的作品列表

@@ -7,16 +7,16 @@ public class WorkResult {
 	private String title;
 	private int userId;
 	private String text;
-	private String imgPath;
 	private int likeNum;
-	private int isEssay;
-	private int commentNum;
 	private Timestamp inputTime;
-	private String userName;
+	private int commentNum;
+	private int collectNum;
+	private Timestamp modifyTime;
+	private int isDraft;
+	private int isRecover;
 	private String penName;
 	private String headPicPath;
 	private String personalizedSig;
-	private boolean isAuthorBeAttented;
 	public int getWorkId() {
 		return workId;
 	}
@@ -41,35 +41,17 @@ public class WorkResult {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
 	public int getLikeNum() {
 		return likeNum;
 	}
 	public void setLikeNum(int likeNum) {
 		this.likeNum = likeNum;
 	}
-	public int getIsEssay() {
-		return isEssay;
-	}
-	public void setIsEssay(int isEssay) {
-		this.isEssay = isEssay;
-	}
 	public Timestamp getInputTime() {
 		return inputTime;
 	}
 	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public String getPenName() {
 		return penName;
@@ -89,16 +71,34 @@ public class WorkResult {
 	public void setPersonalizedSig(String personalizedSig) {
 		this.personalizedSig = personalizedSig;
 	}
-	public boolean isAuthorBeAttented() {
-		return isAuthorBeAttented;
-	}
-	public void setAuthorBeAttented(boolean isAuthorBeAttented) {
-		this.isAuthorBeAttented = isAuthorBeAttented;
-	}
 	public int getCommentNum() {
 		return commentNum;
 	}
 	public void setCommentNum(int commentNum) {
 		this.commentNum = commentNum;
+	}
+	public int getCollectNum() {
+		return collectNum;
+	}
+	public void setCollectNum(int collectNum) {
+		this.collectNum = collectNum;
+	}
+	public Timestamp getModifyTime() {
+		return modifyTime;
+	}
+	public void setModifyTime(Timestamp modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+	public int getIsDraft() {
+		return isDraft;
+	}
+	public void setIsDraft(int isDraft) {
+		this.isDraft = isDraft;
+	}
+	public int getIsRecover() {
+		return isRecover;
+	}
+	public void setIsRecover(int isRecover) {
+		this.isRecover = isRecover;
 	}
 }

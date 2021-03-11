@@ -13,6 +13,7 @@ public class Author {
 	private int dynastyid;
 	private String intro;
 	private String masterwork;
+	private String avatar;
 	public int getId() {
 		return id;
 	}
@@ -78,5 +79,11 @@ public class Author {
 	}
 	public void setMasterwork(String masterwork) {
 		this.masterwork = masterwork;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 }

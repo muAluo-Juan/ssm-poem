@@ -67,5 +67,4 @@ class CommunityControllerTest {
 		Result result = communityController.doAddWork(work, request);
 		assertEquals(result.getCode(), 3);
 	}
-
 }

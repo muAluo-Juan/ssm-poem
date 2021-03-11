@@ -66,25 +66,25 @@ class PoemManageControllerTest {
 	}
 	
 	//测试添加朝代
-	@Test
-	void testDoAddDynasty() {
-		Dynasty dynasty = new Dynasty();
-		dynasty.setName("人工智能时代");
-		dynasty.setStart("20世纪");
-		dynasty.setEnd("未知");
-		dynasty.setIntro("一个智慧的时代");
-		List a = (List) poemanageController.doGetDynastyList().getData();
-		poemanageController.doAddDynasty(dynasty);
-		List b = (List) poemanageController.doGetDynastyList().getData();
-		assertTrue(a.size()+1 == b.size(), () -> "测试插入成功");
-	}
+//	@Test
+//	void testDoAddDynasty() {
+//		Dynasty dynasty = new Dynasty();
+//		dynasty.setName("人工智能时代");
+//		dynasty.setStart("20世纪");
+//		dynasty.setEnd("未知");
+//		dynasty.setIntro("一个智慧的时代");
+//		List a = (List) poemanageController.doGetDynastyList().getData();
+//		poemanageController.doAddDynasty(dynasty);
+//		List b = (List) poemanageController.doGetDynastyList().getData();
+//		assertTrue(a.size()+1 == b.size(), () -> "测试插入成功");
+//	}
 	
 	//测试删除诗歌类型
-	@Test
-	void testDoDeleteType() {
-		List a = (List) poemanageController.doGetTypeList().getData();
-		poemanageController.doDeleteType(1);
-		List b = (List) poemanageController.doGetTypeList().getData();
-		assertTrue(a.size()-1 == b.size(), () -> "诗歌类型删除成功");
-	}
+//	@Test
+//	void testDoDeleteType() {
+//		List a = (List) poemanageController.doGetTypeList().getData();
+//		poemanageController.doDeleteType(1);
+//		List b = (List) poemanageController.doGetTypeList().getData();
+//		assertTrue(a.size()-1 == b.size(), () -> "诗歌类型删除成功");
+//	}
 }

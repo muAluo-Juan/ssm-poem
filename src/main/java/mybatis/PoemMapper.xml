@@ -3,17 +3,22 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.PoemDao">
-	<select id="getAll" resultType="Poem">
-		select * from t_poems_poem
+	<select id="getAll" resultType="PoemResult">
+		select t_poems_poem.id as id,t_poems_poem.uid as uid,t_poems_dynasty.name as dynasty,t_poems_poem.name as name,t_poems_poet.name as author,content,annotation,translation,audio,t_poems_poem.dynastyid as dynastyid,typeid,authoruid
+		from (t_poems_poem left join t_poems_dynasty on t_poems_poem.dynastyid=t_poems_dynasty.id) left join t_poems_poet on t_poems_poem.authoruid=t_poems_poet.uid
 	</select>
-	<select id="getByPoemId" resultType="Poem">
-		select * from t_poems_poem where id=#{id}
+	<select id="getByPoemId" resultType="PoemResult">
+		select t_poems_poem.id as id,t_poems_poem.uid as uid,t_poems_dynasty.name as dynasty,t_poems_poem.name as name,t_poems_poet.name as author,content,annotation,translation,audio,t_poems_poem.dynastyid as dynastyid,typeid,authoruid
+		from (t_poems_poem left join t_poems_dynasty on t_poems_poem.dynastyid=t_poems_dynasty.id) left join t_poems_poet on t_poems_poem.authoruid=t_poems_poet.uid
+		where t_poems_poem.id=#{id}
 	</select>
 	<select id="getByName" resultType="Poem">
 		select * from t_poems_poem where name like concat('%',#{name},'%')
 	</select>
-	<select id="getByAuthorUId" resultType="Poem">
-		select * from t_poems_poem where authoruid=#{authoruid}
+	<select id="getByAuthorUId" resultType="PoemResult">
+		select t_poems_poem.id as id,t_poems_poem.uid as uid,t_poems_dynasty.name as dynasty,t_poems_poem.name as name,t_poems_poet.name as author,content,annotation,translation,audio,t_poems_poem.dynastyid as dynastyid,typeid,authoruid
+		from (t_poems_poem left join t_poems_dynasty on t_poems_poem.dynastyid=t_poems_dynasty.id) left join t_poems_poet on t_poems_poem.authoruid=t_poems_poet.uid
+		where authoruid=#{authoruid}
 	</select>
 	<select id="getByTypeId" resultType="Poem">
 		select * from t_poems_poem where typeid=#{typeid}

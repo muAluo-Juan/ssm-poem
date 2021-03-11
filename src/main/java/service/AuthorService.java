@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import model.AuthorResult;
 import po.Author;
 
 public interface AuthorService {

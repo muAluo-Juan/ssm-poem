@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.AuthorDao;
+import model.AuthorResult;
 import po.Author;
 import utils.DynamicDataSourceHolder;
 

@@ -53,5 +53,19 @@ public class WorkImpl implements WorkService{
 		// TODO Auto-generated method stub
 		workDao.update(work);
 	}
+
+	@Override
+	public List<WorkResult> getAllWorksOrderByTime() {
+		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
+		return workDao.getAllOrderByTime();
+	}
+
+	@Override
+	public List<WorkResult> getAllWorksOrderByLike() {
+		// TODO Auto-generated method stub
+		DynamicDataSourceHolder.setDataSource("firstdataSource");
+		return workDao.getAllOrderByLike();
+	}
 	
 }

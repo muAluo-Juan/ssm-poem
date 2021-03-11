@@ -10,6 +10,34 @@ public class Work {
 	private int likeNum;
 	private Timestamp inputTime;
 	private int commentNum;
+	private int collectNum;
+	private Timestamp modifyTime;
+	private int isDraft;
+	private int isRecover;
+	public int getCollectNum() {
+		return collectNum;
+	}
+	public void setCollectNum(int collectNum) {
+		this.collectNum = collectNum;
+	}
+	public Timestamp getModifyTime() {
+		return modifyTime;
+	}
+	public void setModifyTime(Timestamp modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+	public int getIsDraft() {
+		return isDraft;
+	}
+	public void setIsDraft(int isDraft) {
+		this.isDraft = isDraft;
+	}
+	public int getIsRecover() {
+		return isRecover;
+	}
+	public void setIsRecover(int isRecover) {
+		this.isRecover = isRecover;
+	}
 	public int getWorkId() {
 		return workId;
 	}

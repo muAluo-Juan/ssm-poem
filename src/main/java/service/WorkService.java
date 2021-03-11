@@ -12,5 +12,7 @@ public interface WorkService {
 	public List<WorkResult> getWorksByUserId(int userId);
 	public Work getWorkByWrokId(int workId);
 	public void updateWork(Work work);
+	public List<WorkResult> getAllWorksOrderByTime();
+	public List<WorkResult> getAllWorksOrderByLike();
 }
 

@@ -3,8 +3,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.WorkDao">
 	<insert id="add" parameterType="Work">
-		insert into t_work(workId,title,userId,text,likeNum,inputTime,commentNum)
-		values(null,#{title},#{userId},#{text},0,null,0)
+		insert into t_work(workId,title,userId,text,likeNum,inputTime,commentNum,collectNum,modifyTime,isDraft,isRecover)
+		values(null,#{title},#{userId},#{text},0,null,0,0,null,0,0)
 	</insert>
 	<delete id="delete">
 		delete from t_work where workId=#{workId}
@@ -13,6 +13,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select workId,title,t_work.userId,text,likeNum,inputTime,commentNum,userName,penName,headPicPath,personalizedSig
 		from t_work inner join t_normaluser on t_work.userId = t_normaluser.userId
 		order by inputTime desc
+	</select>
+	<select id="getAllOrderByTime" resultType="WorkResult">
+		select workId,title,t_work.userId,text,likeNum,inputTime,commentNum,collectNum,modifyTime,isDraft,isRecover,penName,headPicPath,personalizedSig
+		from t_work inner join t_normaluser on t_work.userId = t_normaluser.userId
+		where isDraft=0 and isRecover=0
+		order by inputTime desc
+	</select>
+	<select id="getAllOrderByLike" resultType="WorkResult">
+		select workId,title,t_work.userId,text,likeNum,inputTime,commentNum,collectNum,modifyTime,isDraft,isRecover,penName,headPicPath,personalizedSig
+		from t_work inner join t_normaluser on t_work.userId = t_normaluser.userId
+		where isDraft=0 and isRecover=0
+		order by likeNum desc
 	</select>
 	<select id="getByUserId" resultType="WorkResult">
 		select workId,title,t_work.userId,text,likeNum,inputTime,commentNum,userName,penName,headPicPath,personalizedSig

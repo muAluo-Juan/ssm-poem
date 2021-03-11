@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.PoemDao;
+import model.PoemResult;
 import po.Poem;
 import utils.DynamicDataSourceHolder;
 
@@ -18,13 +19,13 @@ public class PoemImpl implements PoemService{
 	private PoemDao poemDao;
 
 	@Override
-	public List<Poem> getAllPoems() {
+	public List<PoemResult> getAllPoems() {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getAll();
 	}
 
 	@Override
-	public Poem getPoemByPoemId(long id) {
+	public PoemResult getPoemByPoemId(long id) {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getByPoemId(id);
 	}
@@ -36,7 +37,7 @@ public class PoemImpl implements PoemService{
 	}
 
 	@Override
-	public List<Poem> getPoemsByAuthorUId(String authoruid) {
+	public List<PoemResult> getPoemsByAuthorUId(String authoruid) {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return poemDao.getByAuthorUId(authoruid);
 	}

@@ -15,10 +15,10 @@ public class PoemTest extends BaseTest{
 	@Autowired
 	private PoemDao poemDao;
 	
-	@Test
-	void testGetAllPoems() {
-		assertTimeout(ofSeconds(1),()->{
-			List<Poem> poems = poemDao.getAll();
-		});
-	}
+//	@Test
+//	void testGetAllPoems() {
+//		assertTimeout(ofSeconds(1),()->{
+//			List<Poem> poems = poemDao.getAll();
+//		});
+//	}
 }

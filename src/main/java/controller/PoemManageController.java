@@ -179,17 +179,17 @@ public class PoemManageController {
 	/*
 	 * 查看诗人列表
 	 */
-	@CrossOrigin
-	@GetMapping("/poets")
-	public Result doGetAuthorList() {
-		try {
-			List<Author> authorList = authorService.getAllAuthors();
-			return new Result(7,"诗人列表",authorList,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+//	@CrossOrigin
+//	@GetMapping("/poets")
+//	public Result doGetAuthorList() {
+//		try {
+//			List<Author> authorList = authorService.getAllAuthors();
+//			return new Result(7,"诗人列表",authorList,null);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return new Result(0,"出现未知错误",null,null);
+//		}
+//	}
 	
 	/*
 	 * 查看某个诗人的具体信息
@@ -274,6 +274,7 @@ public class PoemManageController {
 				return new Result(15,"该诗人不存在",null,null);
 			if(poemService.getPoemsByAuthorUId(author.getUid()).size() > 0)
 				return new Result(16,"删除失败，该诗人已被引用！",poemService.getPoemsByAuthorUId(author.getUid()),null);
+			System.out.println("正在执行删除诗人操作"+authorId);
 			authorService.deleteAuthor(authorId);
 			return new Result(17,"删除成功",authorService.getAllAuthors(),null);
 		}catch(Exception e) {
@@ -355,17 +356,17 @@ public class PoemManageController {
 	/*
 	 * 查看所有朝代
 	 */
-	@CrossOrigin
-	@GetMapping("/poem/admin_getdyanstylist")
-	public Result doGetDynastyList() {
-		try {
-			List<Dynasty> dynasties = dynastyService.getAllDynastys();
-			return new Result(25,"朝代列表",dynasties,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+//	@CrossOrigin
+//	@GetMapping("/poem/admin_getdyanstylist")
+//	public Result doGetDynastyList() {
+//		try {
+//			List<Dynasty> dynasties = dynastyService.getAllDynastys();
+//			return new Result(25,"朝代列表",dynasties,null);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return new Result(0,"出现未知错误",null,null);
+//		}
+//	}
 	
 	/*
 	 * 查看某个朝代的具体信息（根据朝代id）
@@ -440,17 +441,17 @@ public class PoemManageController {
 	/*
 	 * 查看所有类型
 	 */
-	@CrossOrigin
-	@GetMapping("/poem/gettypelist")
-	public Result doGetTypeList() {
-		try {
-			List<Type> typies = typeService.getAllTypes();
-			return new Result(33,"类型列表",typies,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+//	@CrossOrigin
+//	@GetMapping("/poem/gettypelist")
+//	public Result doGetTypeList() {
+//		try {
+//			List<Type> typies = typeService.getAllTypes();
+//			return new Result(33,"类型列表",typies,null);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return new Result(0,"出现未知错误",null,null);
+//		}
+//	}
 	
 	/*
 	 * 查看某个类型的具体信息
@@ -473,32 +474,19 @@ public class PoemManageController {
 	/*
 	 * 查看诗歌列表
 	 */
-	@CrossOrigin
-	@GetMapping("/poem/getpoemlist/{pages}/{limit}")
-	public Result doGetPoemList(@PathVariable("pages") int pages,@PathVariable("limit") int limit) {
-		try {
-			List<Poem> poemList = poemService.getAllPoems();
-			return new Result(poemList.size(),"诗歌列表",poemList.subList((pages-1)*limit, pages*limit),null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+//	@CrossOrigin
+//	@GetMapping("/poem/getpoemlist/{pages}/{limit}")
+//	public Result doGetPoemList(@PathVariable("pages") int pages,@PathVariable("limit") int limit) {
+//		try {
+//			List<Poem> poemList = poemService.getAllPoems();
+//			return new Result(poemList.size(),"诗歌列表",poemList.subList((pages-1)*limit, pages*limit),null);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return new Result(0,"出现未知错误",null,null);
+//		}
+//	}
 	
-	/*
-	 * 查看某一首诗歌
-	 */
-	@CrossOrigin
-	@GetMapping("/poem/getpoem/{poemId}")
-	public Result doGetPoem(@PathVariable("poemId") long poemId) {
-		try {
-			Poem poem = poemService.getPoemByPoemId(poemId);
-			return new Result(36,"该诗歌内容",poem,null);
-		}catch(Exception e) { 
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+	
 	
 	/*
 	 * 添加诗歌（音频采用网络音频，直接上传url）
@@ -577,22 +565,22 @@ public class PoemManageController {
 	/*
 	 * 删除诗歌
 	 */
-	@CrossOrigin
-	@AdminToken
-	@DeleteMapping("/poem/admin_deletepoem/{poemId}")
-	public Result doDeletePoem(@PathVariable("poemId") long poemId) {
-		try {
-			Poem poem = poemService.getPoemByPoemId(poemId);
-			if(poem == null)
-				return new Result(38,"该诗歌不存在",null,null);
-			//删除诗歌
-			poemService.deletePoem(poemId);
-			return new Result(39,"删除成功！",null,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
+//	@CrossOrigin
+//	@AdminToken
+//	@DeleteMapping("/poem/admin_deletepoem/{poemId}")
+//	public Result doDeletePoem(@PathVariable("poemId") long poemId) {
+//		try {
+//			Poem poem = poemService.getPoemByPoemId(poemId);
+//			if(poem == null)
+//				return new Result(38,"该诗歌不存在",null,null);
+//			//删除诗歌
+//			poemService.deletePoem(poemId);
+//			return new Result(39,"删除成功！",null,null);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return new Result(0,"出现未知错误",null,null);
+//		}
+//	}
 	
 	/*
 	 * 修改诗歌
