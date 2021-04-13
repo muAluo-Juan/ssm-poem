@@ -56,7 +56,7 @@ public  class NormalUserImpl implements NormalUserService{
 	}
     
 	//用户个人
-	public NormalUser getNormalUserByUid(long userId) {
+	public NormalUser getNormalUserByUid(int userId) {
 		// TODO Auto-generated method stub
 		System.out.println("impl");
 		return normalUserDao.getByUid(userId);

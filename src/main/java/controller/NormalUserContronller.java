@@ -403,7 +403,7 @@ public class NormalUserContronller {
 	@GetMapping("/user/getwork/{wId}")
 	public Result getWork(@PathVariable("wId") int wId) {
 		try {
-			Work work = workService.getWorkByWrokId(wId);
+			WorkResult work = workService.getWorkByWrokId(wId);
 			return new Result(13, "删除收藏成功", work, null);
 		} catch (Exception e) {
 			// TODO: handle exception

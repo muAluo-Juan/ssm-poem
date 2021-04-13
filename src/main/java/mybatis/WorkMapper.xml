@@ -32,8 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where t_work.userId=#{userId}
 		order by inputTime desc
 	</select>
-	<select id="getByWorkId" resultType="Work">
-		select * from t_work where workId=#{workId}
+	<select id="getByWorkId" resultType="WorkResult">
+		select workId,title,t_work.userId,text,likeNum,inputTime,commentNum,userName,penName,headPicPath,personalizedSig
+		from t_work inner join t_normaluser on t_work.userId = t_normaluser.userId 
+		where workId=#{workId}
 	</select>
 	<update id="update" parameterType="Work">
 		update t_work

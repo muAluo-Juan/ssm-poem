@@ -138,22 +138,6 @@ public class CommunityManageController {
 		}
 	}
 	
-	
-	/*
-	 * 查询某个作品
-	 */
-	@CrossOrigin
-	@GetMapping("/community/getwork/{workId}")
-	public Result doGetWork(@PathVariable("workId") int workId) {
-		try {
-			Work work = workService.getWorkByWrokId(workId);
-			return new Result(3,"该作品信息",work,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
-	
 	/*
 	 * 删除作品
 	 */
@@ -185,20 +169,6 @@ public class CommunityManageController {
 		}
 	}
 	
-	/*
-	 * 获取作品的评论列表
-	 */
-	@CrossOrigin
-	@GetMapping("/community/admin_getworkcomments/{workId}")
-	public Result doGetWorkComments(@PathVariable("workId") int workId) {
-		try {
-			List<CommentResult> comments = commentService.getCommentByWorkId(workId);
-			return new Result(6,"该作品的评论列表",comments,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"出现未知错误",null,null);
-		}
-	}
 	
 	
 	/*

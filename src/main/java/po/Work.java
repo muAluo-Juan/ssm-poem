@@ -8,12 +8,12 @@ public class Work {
 	private int userId;
 	private String text;
 	private int likeNum;
-	private Timestamp inputTime;
+	private Timestamp inputTime;//删除
 	private int commentNum;
 	private int collectNum;
 	private Timestamp modifyTime;
 	private int isDraft;
-	private int isRecover;
+	private int isRecover;//删除
 	public int getCollectNum() {
 		return collectNum;
 	}

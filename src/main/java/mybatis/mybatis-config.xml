@@ -23,10 +23,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="po.Poem" alias="Poem"/>
 		<typeAlias type="po.ErrorInfo" alias="ErrorInfo"/>
 		<typeAlias type="po.PointsGrade" alias="PointsGrade"/>
+		<typeAlias type="po.Question" alias="Question"/>
+		<typeAlias type="po.Answer" alias="Answer"/>
 		<typeAlias type="model.WorkResult" alias="WorkResult"/>
 		<typeAlias type="model.CommentResult" alias="CommentResult"/>
 		<typeAlias type="model.PoemResult" alias="PoemResult"/>
 		<typeAlias type="model.AuthorResult" alias="AuthorResult"/>
+		<typeAlias type="model.QuestionResult" alias="QuestionResult"/>
+		<typeAlias type="model.AnswerResult" alias="AnswerResult"/>
 	</typeAliases>
 
     <!-- 告诉 MyBatis到哪里去找映射文件 -->
@@ -46,5 +50,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mybatis/ErrorInfoMapper.xml"/>
         <mapper resource="mybatis/CollectionMapper.xml"/>
         <mapper resource="mybatis/PointsGradeMapper.xml"/>
+        <mapper resource="mybatis/QuestionMapper.xml"/>
+        <mapper resource="mybatis/AnswerMapper.xml"/>
  	</mappers>
 </configuration>

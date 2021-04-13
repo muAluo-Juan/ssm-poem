@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import annotation.NormalToken;
+import model.CommentResult;
 import model.Result;
 import model.WorkResult;
 import po.Attention;
@@ -54,7 +55,7 @@ public class CommunityController {
 	@Autowired
 	private NormalUserService normalUserService;
 	@Autowired
-	private DraftService draftService;
+	private DraftService draftService;//
 	@Autowired
 	private LikeService likeService;
 	@Autowired
@@ -97,8 +98,36 @@ public class CommunityController {
 	}
 	
 	/*
-	 * 获取某个作品的详细信息（访问CommunityManageController（是游客即可查看））
+	 * 查询某个作品
 	 */
+	@CrossOrigin
+	@GetMapping("works/{workId}")
+	public Result doGetWorkById(@PathVariable("workId") int workId) {
+		try {
+			WorkResult work = workService.getWorkByWrokId(workId);
+			return new Result(200,"该作品信息",work,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(500,"出现未知错误",null,null);
+		}
+	}
+	
+	/*
+	 * 获取作品的评论列表
+	 */
+	@CrossOrigin
+	@GetMapping("/comments/{workId}")
+	public Result doGetWorkComments(@PathVariable("workId") int workId) {
+		try {
+			List<CommentResult> comments = commentService.getCommentByWorkId(workId);
+			return new Result(500,"该作品的评论列表",comments,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(200,"出现未知错误",null,null);
+		}
+	}
+	
+	
 	
 	/*
 	 * 发布作品
@@ -187,7 +216,7 @@ public class CommunityController {
 	@CrossOrigin
 	@NormalToken
 	@PostMapping("/community/user_adddraft")
-	public Result addDraft(@RequestBody Draft draft,HttpServletRequest request) {
+	public Result doAddDraft(@RequestBody Draft draft,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
@@ -223,7 +252,7 @@ public class CommunityController {
 	@CrossOrigin
 	@NormalToken
 	@GetMapping(value="/community/user_getalllikes")
-	public Result getAllLikes(HttpServletRequest request) {
+	public Result doGetAllLikes(HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
@@ -288,7 +317,7 @@ public class CommunityController {
 	@CrossOrigin
 	@NormalToken
 	@DeleteMapping(value="/community/user_deletelike/{workId}")
-	public Result deleteLike(@PathVariable("workId") int workId,HttpServletRequest request) {
+	public Result doDeleteLike(@PathVariable("workId") int workId,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
@@ -371,7 +400,7 @@ public class CommunityController {
 	@CrossOrigin
 	@NormalToken
 	@DeleteMapping(value="/community/user_deleteattention/{beAttentedId}")
-	public Result deleteAttention(@PathVariable("beAttentedId") int beAttentedId,HttpServletRequest request) {
+	public Result doDeleteAttention(@PathVariable("beAttentedId") int beAttentedId,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);

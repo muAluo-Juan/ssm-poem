@@ -28,5 +28,5 @@ public interface NormalUserDao {
 	/*
 	 * 用户个人模块
 	 */
-	public NormalUser getByUid(@Param("userId") long userId);
+	public NormalUser getByUid(@Param("userId") int userId);
 }

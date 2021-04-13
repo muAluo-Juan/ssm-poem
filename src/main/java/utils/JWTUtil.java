@@ -13,7 +13,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import po.NormalUser;
 
 public class JWTUtil {
-	private static final long EXPIRE_TIME = 24 * 60 * 30 * 1000;
+	private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
 	private static final String secret="adfdsfjewafiojdsakfjsd";
 	
 	//author 是权限{admin,normal}

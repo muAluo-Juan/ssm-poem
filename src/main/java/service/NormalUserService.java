@@ -15,7 +15,7 @@ public interface NormalUserService {
 	public List<NormalUser> getAllNormalUser();
 	
 	//用户个人
-	public NormalUser getNormalUserByUid(long userId);
+	public NormalUser getNormalUserByUid(int userId);
 
 	
 	

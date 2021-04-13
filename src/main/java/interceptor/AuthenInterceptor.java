@@ -22,15 +22,15 @@ public class AuthenInterceptor implements HandlerInterceptor {
 	 
 	@Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-        String token = httpServletRequest.getHeader("token");// 浠� http 璇锋眰澶翠腑鍙栧嚭 token
-        System.out.println("澶勭悊");
+        String token = httpServletRequest.getHeader("token");
+        System.out.println("权限拦截");
         if(!(object instanceof HandlerMethod)){
             return true;
         }
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Method method=handlerMethod.getMethod();
         
-        //妫�鏌ユ湁娌℃湁闇�瑕佺敤鎴锋潈闄愮殑娉ㄨВ
+        //拦截权限为登录用户
         if (method.isAnnotationPresent(NormalToken.class)) {
         	if(token==null) {
         		httpServletResponse.setStatus(401);
@@ -39,8 +39,8 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	String username;
         	String author;
         	try {
-            username = JWTUtil.getUsername(token);
-            author=JWTUtil.getAuthor(token);
+        		username = JWTUtil.getUsername(token);
+        		author=JWTUtil.getAuthor(token);
         	}
         	catch (Exception e) {
         		e.printStackTrace();
@@ -57,7 +57,7 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	}
             
         }
-      //妫�鏌ユ湁娌℃湁闇�瑕佺敤鎴锋潈闄愮殑娉ㄨВ
+      //拦截权限为管理员
         if (method.isAnnotationPresent(AdminToken.class)) {
         	if(token==null) {
         		httpServletResponse.setStatus(401);
@@ -72,7 +72,6 @@ public class AuthenInterceptor implements HandlerInterceptor {
         	}
         	catch (Exception e) {
         		e.printStackTrace();
-        		System.out.println("鏈惡甯oken杩斿洖鐧诲綍");
         		httpServletResponse.setStatus(401);
         		return false;
         	}

@@ -42,7 +42,7 @@ public class WorkImpl implements WorkService{
 	}
 
 	@Override
-	public Work getWorkByWrokId(int workId) {
+	public WorkResult getWorkByWrokId(int workId) {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return workDao.getByWorkId(workId);
 	}

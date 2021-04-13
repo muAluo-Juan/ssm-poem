@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.QuestionDao">
+	<select id="getAll" resultType="Question">
+		select * from t_question
+		order by inputTime desc
+	</select>
+	<select id="getAllHot" resultType="Question">
+		select * from t_question
+		order by answerNum desc, inputTime desc
+	</select>
+	<select id="getAllNoSolved" resultType="Question">
+		select * from t_question
+		where isSolved = 0
+		order by inputTime desc
+	</select>
+	<select id="getAllSolved" resultType="Question">
+		select * from t_question
+		where isSolved != 0
+		order by inputTime desc
+	</select>
+	<select id="getById" resultType="Question">
+		select * from t_question
+		where questionId=#{questionId}
+	</select>
+</mapper>

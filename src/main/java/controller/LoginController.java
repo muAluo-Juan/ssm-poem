@@ -48,6 +48,39 @@ public class LoginController {
 	private AdministratorService administratorService;
 	@Autowired
 	private NormalUserService normalUserService;
+	
+	/*
+	 * 登录
+	 */
+	@CrossOrigin
+	@PostMapping("/login")
+	public Result doLogin(HttpServletRequest request,@RequestBody LoginForm requestLoginUser) {
+		System.out.println(requestLoginUser.getUserName());
+		System.out.println(requestLoginUser.getPassword());
+		String pwd = SHA256Util.getSHA256Str(requestLoginUser.getUserName()+requestLoginUser.getPassword());
+		requestLoginUser.setPassword(pwd);
+		try {
+			if(normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
+				NormalUser normalUser = normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
+				//给用户token
+				String token = JWTUtil.generateToken(normalUser.getUserName(), "normal");
+				System.out.println("用户token为"+token);
+				ArrayList<Object> list=new ArrayList<>();
+				normalUser.setPassword(null);
+				list.add(normalUser);
+				list.add(token);
+				return new Result(200,"登录成功",list,null);
+			}
+			else {
+				return new Result(201,"用户名或密码错误",requestLoginUser,null);
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return new Result(500,"出现未知错误",null,null);
+		}
+	}
+	
 	/*
 	 * 注册
 	 */
@@ -108,60 +141,60 @@ public class LoginController {
 	/*
 	 * 登录
 	 */
-	@CrossOrigin
-	@PostMapping(value="/login")
-	public Result login(HttpServletRequest request,@RequestBody LoginForm requestLoginUser) {
-		//检验登录验证码的正确性
-       /* HttpSession session = request.getSession();
-		String realCode = requestLoginUser.getCode();
-		System.out.println(realCode);
-		if(!realCode.equals(requestLoginUser.getVerifyCode()))
-		{
-			return new Result(5,"验证码错误",null,null);
-		}*/
-		//处理要登录用户的密码（将其输入的明文密码加密，再根据加密后的密码和用户名去查找用户）
-		String pwd = SHA256Util.getSHA256Str(requestLoginUser.getUserName()+requestLoginUser.getPassword());
-		requestLoginUser.setPassword(pwd);
-		//验证用户名和密码正确性
-		//普通用户
-		if(requestLoginUser.getRole().equals("普通用户"))
-		{
-			if(normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
-				NormalUser normalUser = normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
-				//给用户token
-				String token = JWTUtil.generateToken(normalUser.getUserName(), "normal");
-				System.out.println("用户token为"+token);
-				//session.removeAttribute("loginCode");
-				ArrayList<Object> list=new ArrayList<>();
-				normalUser.setPassword(null);
-				list.add(normalUser);
-				list.add(token);
-				list.add(normalUser.getPenName());
-				return new Result(6,"登录成功",list,null);
-			}
-			else {
-				return new Result(7,"用户名或密码错误",requestLoginUser,null);
-			}
-		}
-		//管理员
-		else {
-			if(administratorService.getAdministratorByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
-				Administrator admin = administratorService.getAdministratorByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
-				//给管理员token
-				String token = JWTUtil.generateToken(admin.getUserName(), "admin");
-				System.out.println("管理员token为"+token);
-				admin.setPassword(null);
-				ArrayList<Object> list=new ArrayList<>();
-				list.add(token);
-				list.add(admin);
-				//session.removeAttribute("loginCode");
-				return new Result(8,"登录成功",list,null);
-			}
-			else {
-				return new Result(7,"用户名或密码错误",requestLoginUser,null);
-			} 
-		}
-	}
+//	@CrossOrigin
+//	@PostMapping(value="/loginnone")
+//	public Result login(HttpServletRequest request,@RequestBody LoginForm requestLoginUser) {
+//		//检验登录验证码的正确性
+//       /* HttpSession session = request.getSession();
+//		String realCode = requestLoginUser.getCode();
+//		System.out.println(realCode);
+//		if(!realCode.equals(requestLoginUser.getVerifyCode()))
+//		{
+//			return new Result(5,"验证码错误",null,null);
+//		}*/
+//		//处理要登录用户的密码（将其输入的明文密码加密，再根据加密后的密码和用户名去查找用户）
+//		String pwd = SHA256Util.getSHA256Str(requestLoginUser.getUserName()+requestLoginUser.getPassword());
+//		requestLoginUser.setPassword(pwd);
+//		//验证用户名和密码正确性
+//		//普通用户
+//		if(requestLoginUser.getRole().equals("普通用户"))
+//		{
+//			if(normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
+//				NormalUser normalUser = normalUserService.getNormalUserByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
+//				//给用户token
+//				String token = JWTUtil.generateToken(normalUser.getUserName(), "normal");
+//				System.out.println("用户token为"+token);
+//				//session.removeAttribute("loginCode");
+//				ArrayList<Object> list=new ArrayList<>();
+//				normalUser.setPassword(null);
+//				list.add(normalUser);
+//				list.add(token);
+//				list.add(normalUser.getPenName());
+//				return new Result(6,"登录成功",list,null);
+//			}
+//			else {
+//				return new Result(7,"用户名或密码错误",requestLoginUser,null);
+//			}
+//		}
+//		//管理员
+//		else {
+//			if(administratorService.getAdministratorByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword())!=null) {
+//				Administrator admin = administratorService.getAdministratorByUserNameAndPwd(requestLoginUser.getUserName(), requestLoginUser.getPassword());
+//				//给管理员token
+//				String token = JWTUtil.generateToken(admin.getUserName(), "admin");
+//				System.out.println("管理员token为"+token);
+//				admin.setPassword(null);
+//				ArrayList<Object> list=new ArrayList<>();
+//				list.add(token);
+//				list.add(admin);
+//				//session.removeAttribute("loginCode");
+//				return new Result(8,"登录成功",list,null);
+//			}
+//			else {
+//				return new Result(7,"用户名或密码错误",requestLoginUser,null);
+//			} 
+//		}
+//	}
 	
 	/*
 	 * 判断用户是否存在

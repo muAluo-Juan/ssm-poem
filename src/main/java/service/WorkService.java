@@ -10,7 +10,7 @@ public interface WorkService {
 	public void deleteWork(int workId);
 	public List<WorkResult> getAllWorks();
 	public List<WorkResult> getWorksByUserId(int userId);
-	public Work getWorkByWrokId(int workId);
+	public WorkResult getWorkByWrokId(int workId);
 	public void updateWork(Work work);
 	public List<WorkResult> getAllWorksOrderByTime();
 	public List<WorkResult> getAllWorksOrderByLike();
