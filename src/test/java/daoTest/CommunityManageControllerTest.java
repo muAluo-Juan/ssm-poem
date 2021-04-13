@@ -44,10 +44,10 @@ class CommunityManageControllerTest {
     	LoginForm requestLoginUser = new LoginForm();
     	requestLoginUser.setUserName("15979510879");
     	requestLoginUser.setPassword("111111");
-    	requestLoginUser.setRole("管理员");
-    	Result result = loginController.login(request, requestLoginUser);
-    	System.out.println(result.getData());
-    	token = (String) result.getData();
+//    	requestLoginUser.setRole("管理员");
+//    	Result result = loginController.login(request, requestLoginUser);
+//    	System.out.println(result.getData());
+//    	token = (String) result.getData();
     }
     
     @BeforeEach
