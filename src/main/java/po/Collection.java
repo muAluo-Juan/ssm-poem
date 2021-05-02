@@ -6,9 +6,16 @@ import java.sql.Timestamp;
 public class Collection {
 	private int collectionId;
 	private int userId;
-	private long poemId;
+	private long beCollectedId;
 	private Timestamp collectTime;
+	private int type;
 	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	public Timestamp getCollectTime() {
 		return collectTime;
 	}
@@ -27,10 +34,10 @@ public class Collection {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public long getPoemId() {
-		return poemId;
+	public long getBeCollectedId() {
+		return beCollectedId;
 	}
-	public void setPoemId(long poemId) {
-		this.poemId = poemId;
+	public void setBeCollectedId(long beCollectedId) {
+		this.beCollectedId = beCollectedId;
 	}
 }

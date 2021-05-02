@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import annotation.AdminToken;
 import annotation.NormalToken;
+import model.PoemResult;
+import model.QuestionResult;
 import model.Result;
+import model.UserResult;
 import model.WorkResult;
 import po.Administrator;
 import po.Attention;
@@ -25,13 +29,16 @@ import po.Collection;
 import po.Draft;
 import po.NormalUser;
 import po.PointsGrade;
+import po.Question;
 import po.Work;
 import service.AdministratorService;
 import service.AttentionService;
 import service.CollectionService;
 import service.DraftService;
 import service.NormalUserService;
+import service.PoemService;
 import service.PointsGradeService;
+import service.QuestionService;
 import service.WorkService;
 import utils.JWTUtil;
 import utils.SHA256Util;
@@ -52,6 +59,10 @@ public class NormalUserContronller {
 	private AdministratorService adminService;
 	@Autowired
 	private PointsGradeService pointsGradeService;
+	@Autowired
+	private PoemService poemService;
+	@Autowired
+	private QuestionService questionService;
 	
 	/*
 	 * 根据积分返回用户的头衔
@@ -105,26 +116,39 @@ public class NormalUserContronller {
 	
 	
 	/*
-	 * 获取当前登入用户的个人信息
+	 * 获取当前用户的个人信息
 	 */
 	@CrossOrigin
-	@NormalToken
-	@GetMapping("/user/getuserinfomation")
-	public Result getNormalUserInformation(HttpServletRequest request) {
+	@GetMapping("/user/{userName}")
+	public Result getNormalUserInformation(@PathVariable("userName") String userName,HttpServletRequest request) {
 		try {
-			//从Token中获取用户名
-			String token = request.getHeader("token");
-//			System.out.print("token:");
-//			System.out.println(token);
-			String userName = JWTUtil.getUsername(token);
-			NormalUser User = normalUserService.getNormalUserByUserName(userName);
-			System.out.println("222"+User.getUserName());
-
-   
-			return new Result(1, "获取个人信息", normalUserService.getNormalUserByUid(User.getUserId()), null);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			
+			UserResult userResult = new UserResult();
+			userResult.setNormaluser(user);
+			
+			List<PointsGrade> pg = pointsGradeService.getAllPointsGrades();
+			for(PointsGrade ppg: pg) {
+				if(user.getRewardPoints() < ppg.getMiniPoints()) {
+					userResult.setGrade(ppg.getGradeName());
+					break;
+				}
+			}
+			
+			List<Attention> fans = attentionService.getFans(user.getUserId());
+			userResult.setFans(fans.size());
+			
+			List<WorkResult> works = workService.getWorksByUserId(user.getUserId());
+			
+			userResult.setWorkNum(works.size());
+			
+			System.out.println(userResult.getFans());
+			System.out.println(userResult.getWorkNum());
+			System.out.println(userResult.getGrade());
+			
+			return new Result(200, "用户信息获取成功", userResult, null);
 		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
+			return new Result(201, "出现未知错误", null, null);
 		}
 		
 	}
@@ -296,59 +320,35 @@ public class NormalUserContronller {
 	}
 	
 	/*
-	 * 通过id查询某个用户的收藏列表
+	 * 获取用户的所有收藏（作品收藏和诗词收藏）
 	 */
 	@CrossOrigin
-	@GetMapping("/user/getcollectionlistbyid/{id}")
-	public Result getCollectionListByUserId(@PathVariable("id") int id) {
+	@GetMapping("/user/collections/{userName}")
+	public Result getCollectionListByUserId(@PathVariable("userName") String userName) {
 		try {
-			List<Collection> collectionList = collectionService.getCollectionsAllByUserId(id);
-			return new Result(13, "获取某个人的收藏列表", collectionList, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
-		}
-	}
-	
-
-	/*
-	 * 查询个人收藏列表
-	 */
-	@CrossOrigin
-	@NormalToken
-	@GetMapping("/user/getcollectionlist")
-	public Result getCollectionList(HttpServletRequest request) {
-
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser User = normalUserService.getNormalUserByUserName(userName);
-			if (User != null) {
-				List<Collection> collectionList = collectionService.getCollectionsAllByUserId(User.getUserId());
-				return new Result(9, "获取个人收藏列表", collectionList, null);
-			} else {
-				return new Result(0, "用户不存在", null, null);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			List<Collection> collectionList = collectionService.getCollectionsAllByUserId(user.getUserId());
+			List<PoemResult> poemList = new ArrayList<PoemResult>();
+			List<WorkResult> workList = new ArrayList<WorkResult>();
+			
+			for(Collection c: collectionList) {
+				if(c.getType() == 0) {//诗歌
+					PoemResult poem = poemService.getPoemByPoemId(c.getBeCollectedId());
+					poemList.add(poem);
+				}else if(c.getType() == 1) {//作品
+					WorkResult work = workService.getWorkByWrokId(c.getBeCollectedId());
+					workList.add(work);
+				}else;
 			}
-
+			
+			List<Object> result = new ArrayList<Object>();
+			result.add(poemList);
+			result.add(workList);
+			
+			return new Result(200, "获取某个人的收藏列表", result, null);
 		} catch (Exception e) {
 			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
-		}
-	}
-
-	/*
-	 * 删除收藏
-	 */
-	@CrossOrigin
-	@NormalToken
-	@DeleteMapping("/user/deletecollection/{cId}")
-	public Result deleteCollection(@PathVariable("cId") int cId) {
-		try {
-			collectionService.deleteCollection(cId);
-			return new Result(10, "删除收藏成功", null, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
+			return new Result(201, "出现未知错误", null, null);
 		}
 	}
 
@@ -369,108 +369,63 @@ public class NormalUserContronller {
 	}
 
 	/*
-	 * 获取作品列表
+	 * 获取作品列表（用户）
 	 *
 	 */ 
 	@CrossOrigin
-	@NormalToken
-	@GetMapping("/user/getworklist")
-	public Result getWorkList(HttpServletRequest request) {
+	@GetMapping("/user/works/{userName}")
+	public Result getWorkList(@PathVariable("userName") String userName) {
 
 		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
 			NormalUser User = normalUserService.getNormalUserByUserName(userName);
-			if (User != null) {
-				List<WorkResult> workList = workService.getWorksByUserId(User.getUserId());
-				return new Result(12, "获取个人作品列表", workList, null);
-			} else {
-				return new Result(0, "用户不存在", null, null);
-			}
-
+			List<WorkResult> workList = workService.getWorksByUserId(User.getUserId());
+			return new Result(200, "用户的个人作品", workList, null);
 		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
+			return new Result(201, "出现未知错误", null, null);
 		}
 	}
-	 
-	/* 
-	  * 查询作品
-	 * 
-	 */
-	@CrossOrigin
-	@NormalToken
-	@GetMapping("/user/getwork/{wId}")
-	public Result getWork(@PathVariable("wId") int wId) {
-		try {
-			WorkResult work = workService.getWorkByWrokId(wId);
-			return new Result(13, "删除收藏成功", work, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
-		}
-	}
-	/*
-	  *  删除关注 
-	 */
-	@CrossOrigin
-	@NormalToken
-	@DeleteMapping("/user/deleteattention/{aId}")
-	public Result deleteAttention(@PathVariable("aId") int aId,HttpServletRequest request) {
-		try {
-			//获取token
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			attentionService.deleteAttention(user.getUserId(), aId);
-			return new Result(14, "删除关注成功", null, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
-		}
-	}
-	
 	
 	/*
 	 * 根据id获取某个用户的关注列表
 	 */
 	@CrossOrigin
-	@GetMapping("/user/getattentionlistbyid/{id}")
-	public Result getAttentionListById(@PathVariable("id") int id) {
+	@GetMapping("/user/attentions/{userName}")
+	public Result getAttentionList(@PathVariable("userName") String userName) {
 		try {
-			List<Attention> attentionList = attentionService.getAttentions(id);
-			return new Result(14, "获取某个用户的个人作品列表", attentionList, null);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			List<Attention> attentionList = attentionService.getAttentions(user.getUserId());
+			List<NormalUser> userList = new ArrayList<NormalUser>();//关注的用户
+			List<Question> questionList = new ArrayList<Question>(); 
+			
+			List<Attention> fansAttention = attentionService.getFans(user.getUserId());
+			List<NormalUser> fanList = new ArrayList<NormalUser>();//粉丝
+			
+			
+			for(Attention a: attentionList) {
+				if(a.getType() == 0) {
+					NormalUser user2 = normalUserService.getNormalUserByUid(a.getBeAttentedId());
+					userList.add(user2);
+				}else if(a.getType() == 1) {
+					Question quesion = questionService.getQuestionById(a.getBeAttentedId());
+					questionList.add(quesion);
+				}
+			}
+			for(Attention aa: fansAttention) {
+				NormalUser user3 = normalUserService.getNormalUserByUid(aa.getUserId());
+				fanList.add(user3);
+			}
+			List<Object> result = new ArrayList<Object>();
+			result.add(userList);
+			result.add(fanList);
+			result.add(questionList);
+			
+			return new Result(200, "获取某个用户的个人关注列表", result, null);
 		} catch (Exception e) {
 			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
+			return new Result(201, "出现未知错误", null, null);
 		}
 	}
 	
-	/*
-	 * 获取关注列表
-	 *
-	 */ 
-	@CrossOrigin
-	@NormalToken
-	@GetMapping("/user/getattentionlist")
-	public Result getAttentionList(HttpServletRequest request) {
-
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser User = normalUserService.getNormalUserByUserName(userName);
-			if (User != null) {
-				List<Attention> attentionList = attentionService.getAttentions(User.getUserId());
-				return new Result(12, "获取个人作品列表", attentionList, null);
-			} else {
-				return new Result(0, "用户不存在", null, null);
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(0, "出现未知错误", null, null);
-		}
-	}
 	/* 
 	  * 根据id获取用户 
 	 */

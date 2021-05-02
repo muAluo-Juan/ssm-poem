@@ -8,15 +8,11 @@ public class Work {
 	private int userId;
 	private String text;
 	private int likeNum;
-	private Timestamp inputTime;//删除
 	private int commentNum;
 	private int collectNum;
 	private Timestamp modifyTime;
-	private int isDraft;
-	private int isRecover;//删除
-	public int getCollectNum() {
-		return collectNum;
-	}
+	private int state;
+
 	public void setCollectNum(int collectNum) {
 		this.collectNum = collectNum;
 	}
@@ -25,18 +21,6 @@ public class Work {
 	}
 	public void setModifyTime(Timestamp modifyTime) {
 		this.modifyTime = modifyTime;
-	}
-	public int getIsDraft() {
-		return isDraft;
-	}
-	public void setIsDraft(int isDraft) {
-		this.isDraft = isDraft;
-	}
-	public int getIsRecover() {
-		return isRecover;
-	}
-	public void setIsRecover(int isRecover) {
-		this.isRecover = isRecover;
 	}
 	public int getWorkId() {
 		return workId;
@@ -68,16 +52,19 @@ public class Work {
 	public void setLikeNum(int likeNum) {
 		this.likeNum = likeNum;
 	}
-	public Timestamp getInputTime() {
-		return inputTime;
-	}
-	public void setInputTime(Timestamp inputTime) {
-		this.inputTime = inputTime;
-	}
 	public int getCommentNum() {
 		return commentNum;
 	}
 	public void setCommentNum(int commentNum) {
 		this.commentNum = commentNum;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public int getCollectNum() {
+		return collectNum;
 	}
 }

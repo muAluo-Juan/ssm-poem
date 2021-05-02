@@ -4,12 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.LikeDao">
 	<insert	id="add" parameterType="Like">
-		insert into t_like(likeId,userId,workId,inputTime)
-		values(null,#{userId},#{workId},null)
+		insert into t_like(likeId,userId,beLikedId,likeTime,type)
+		values(null,#{userId},#{beLikedId},#{likeTime},#{type})
 	</insert>
 	
 	<delete id="delete">
-		delete from t_like where userId=#{userId} and workId=#{workId}
+		delete from t_like where userId=#{userId} and beLikedId=#{beLikedId} and type=#{type}
 	</delete>
 	
 	<select id="get" resultType="Like">
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_like where userId=#{userId}
 	</select>
 	
-	<select id="getByUserIdAndWorkId" resultType="Like">
-		select * from t_like where userId=#{userId} and workId=#{workId}
+	<select id="getByUserIdAndBeLikedId" resultType="Like">
+		select * from t_like where userId=#{userId} and beLikedId=#{beLikedId} and type=#{type}
 	</select>
 </mapper>

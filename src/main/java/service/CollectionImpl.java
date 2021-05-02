@@ -50,16 +50,15 @@ public class CollectionImpl implements CollectionService{
 	}
 
 	@Override
-	public void deleteReferCollection(int userId, long poemId) {
+	public void deleteReferCollection(int userId,long beCollectedId, int type) {
 		// TODO Auto-generated method stub
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
-		collectionDao.deleteRefer(userId,poemId);
+		collectionDao.deleteRefer(userId, beCollectedId,type);
 	}
 
 	@Override
-	public Collection getByUserIdAndPoemId(int userId, long poemId) {
+	public Collection getByUserIdAndBeCollectedId(int userId, long beCollectedId,int type) {
 		// TODO Auto-generated method stub
-		return collectionDao.getByUserIdAndPoemId(userId, poemId);
+		return collectionDao.getByUserIdAndBeCollectedId(userId, beCollectedId, type);
 	}
-	
 }

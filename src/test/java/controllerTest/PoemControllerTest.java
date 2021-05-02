@@ -59,16 +59,10 @@ class PoemControllerTest {
         response = new MockHttpServletResponse(); 
 	}
 	
-    //测试用户语音听诗
-	@Test
-	void testDoGetPoemAudio() {
-		assertNotNull(poemController.doGetPoemAudio(434).getData());
-	}
-	
 	//断言测试用户收藏诗歌
-	@Test
-	void testDoAddCollection() {
-		request.addHeader("token", token);
-		assertEquals(2,poemController.doAddCollection(434, request).getCode());
-	}
+//	@Test
+//	void testDoAddCollection() {
+//		request.addHeader("token", token);
+//		assertEquals(2,poemController.doAddCollection(434, request).getCode());
+//	}
 }

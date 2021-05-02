@@ -3,6 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.QuestionDao">
+	<insert	id="add" parameterType="Question">
+		insert into t_question(questionId,text,description,userId,likeNum,attentionNum,answerNum,inputTime,isSolved)
+		values(null,#{text},#{description},#{userId},0,0,0,#{inputTime},0)
+	</insert>
 	<select id="getAll" resultType="Question">
 		select * from t_question
 		order by inputTime desc
@@ -24,5 +28,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getById" resultType="Question">
 		select * from t_question
 		where questionId=#{questionId}
+	</select>
+	
+	<update id="update" parameterType="Question">
+		update t_question
+		set isSolved=#{isSolved}
+		where questionId=#{questionId}
+	</update>
+	<select id="getSearch" resultType="Question">
+		select * from t_question
+		where text like concat('%',#{text},'%')
+		order by inputTime desc
 	</select>
 </mapper>

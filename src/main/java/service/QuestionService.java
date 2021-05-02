@@ -16,4 +16,10 @@ public interface QuestionService {
 	public List<Question> getSolvedQuestions();
 	//根据id获取问题
 	public Question getQuestionById(int questionId);
+	//提问
+	public Integer addQuestion(Question question);
+	//采纳回答
+	public void adoptAnswer(Question question);
+	//搜索问题
+	public List<Question> getSearchQuestions(String text);
 } 

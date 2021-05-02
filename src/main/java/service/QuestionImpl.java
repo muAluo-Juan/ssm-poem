@@ -47,4 +47,22 @@ public class QuestionImpl implements QuestionService{
 		// TODO Auto-generated method stub
 		return questionDao.getById(questionId);
 	}
+
+	@Override
+	public Integer addQuestion(Question question) {
+		// TODO Auto-generated method stub
+		return questionDao.add(question);
+	}
+
+	@Override
+	public void adoptAnswer(Question question) {
+		// TODO Auto-generated method stub
+		questionDao.update(question);
+	}
+
+	@Override
+	public List<Question> getSearchQuestions(String text) {
+		// TODO Auto-generated method stub
+		return questionDao.getSearch(text);
+	}
 }

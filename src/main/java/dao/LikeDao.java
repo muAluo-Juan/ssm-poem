@@ -12,8 +12,8 @@ import po.Like;
 @Mapper
 public interface LikeDao {
 	public Integer add(Like like);
-	public Integer delete(@Param("userId") int userId,@Param("workId") int workId);
+	public Integer delete(@Param("userId") int userId,@Param("beLikedId") int beLikedId,@Param("type") int type);
 	public Like get(@Param("userId") int userId,@Param("workId") int workId);
 	public List<Like> getByUserId(@Param("userId") int userId);
-	public Like getByUserIdAndWorkId(@Param("userId") int userId,@Param("workId") int workId);
+	public Like getByUserIdAndBeLikedId(@Param("userId") int userId,@Param("beLikedId") int beLikedId, @Param("type") int type);
 }

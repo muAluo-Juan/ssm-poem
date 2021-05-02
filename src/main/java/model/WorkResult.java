@@ -8,15 +8,30 @@ public class WorkResult {
 	private int userId;
 	private String text;
 	private int likeNum;
-	private Timestamp inputTime;
 	private int commentNum;
 	private int collectNum;
 	private Timestamp modifyTime;
-	private int isDraft;
-	private int isRecover;
 	private String penName;
 	private String headPicPath;
 	private String personalizedSig;
+	private String userName;
+	private boolean isCollectByLoginer;
+	private boolean isLikedByLoginer;
+	private int attendAuthor; //作品的作者是否被用户关注
+	
+	
+	public int getAttendAuthor() {
+		return attendAuthor;
+	}
+	public void setAttendAuthor(int attendAuthor) {
+		this.attendAuthor = attendAuthor;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public int getWorkId() {
 		return workId;
 	}
@@ -46,12 +61,6 @@ public class WorkResult {
 	}
 	public void setLikeNum(int likeNum) {
 		this.likeNum = likeNum;
-	}
-	public Timestamp getInputTime() {
-		return inputTime;
-	}
-	public void setInputTime(Timestamp inputTime) {
-		this.inputTime = inputTime;
 	}
 	public String getPenName() {
 		return penName;
@@ -89,16 +98,16 @@ public class WorkResult {
 	public void setModifyTime(Timestamp modifyTime) {
 		this.modifyTime = modifyTime;
 	}
-	public int getIsDraft() {
-		return isDraft;
+	public boolean isCollectByLoginer() {
+		return isCollectByLoginer;
 	}
-	public void setIsDraft(int isDraft) {
-		this.isDraft = isDraft;
+	public void setCollectByLoginer(boolean isCollectByLoginer) {
+		this.isCollectByLoginer = isCollectByLoginer;
 	}
-	public int getIsRecover() {
-		return isRecover;
+	public boolean isLikedByLoginer() {
+		return isLikedByLoginer;
 	}
-	public void setIsRecover(int isRecover) {
-		this.isRecover = isRecover;
+	public void setLikedByLoginer(boolean isLikedByLoginer) {
+		this.isLikedByLoginer = isLikedByLoginer;
 	}
 }

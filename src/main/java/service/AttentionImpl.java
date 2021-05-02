@@ -30,21 +30,21 @@ public class AttentionImpl implements AttentionService{
 	}
 
 	@Override
-	public void addAttention(int userId, int beAttentedId) {
+	public void addAttention(Attention attention) {
 		// TODO Auto-generated method stub
-		attentionDao.add(userId, beAttentedId);
+		attentionDao.add(attention);
 	}
 
 	@Override
-	public void deleteAttention(int userId, int beAttentedId) {
+	public void deleteAttention(int userId, int beAttentedId,int type) {
 		// TODO Auto-generated method stub
-		attentionDao.delete(userId, beAttentedId);
+		attentionDao.delete(userId, beAttentedId,type);
 	}
 
 	@Override
-	public Attention getAttentionByUserIdAndAttentedId(int beAttentedId, int userId) {
+	public Attention getAttentionByUserIdAndAttentedId(int beAttentedId, int userId,int type) {
 		// TODO Auto-generated method stub
-		return attentionDao.getByUserIdAndAttentedId(beAttentedId, userId);
+		return attentionDao.getByUserIdAndAttentedId(beAttentedId, userId, type);
 	}
 	
 }

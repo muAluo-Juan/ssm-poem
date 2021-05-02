@@ -17,7 +17,7 @@ public interface CollectionService {
 	//删除收藏
 	public void deleteCollection(int collectionId);
 	//删除某个用户的某个收藏
-	public void deleteReferCollection(int userId,long poemId);
+	public void deleteReferCollection(int userId,long beCollectedId, int type);
 	//获取某个用户的某个收藏
-	public Collection getByUserIdAndPoemId(int userId,long poemId);
+	public Collection getByUserIdAndBeCollectedId(int userId,long beCollectedId, int type);
 }

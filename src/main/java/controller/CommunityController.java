@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,7 @@ import po.NormalUser;
 import po.ReportInfo;
 import po.Work;
 import service.AttentionService;
+import service.CollectionService;
 import service.CommentService;
 import service.DraftService;
 import service.LikeService;
@@ -64,6 +66,8 @@ public class CommunityController {
 	private ReportService reportService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private CollectionService collectionService;
 	
 	/*
 	 * 查看作品列表（最新）
@@ -102,9 +106,37 @@ public class CommunityController {
 	 */
 	@CrossOrigin
 	@GetMapping("works/{workId}")
-	public Result doGetWorkById(@PathVariable("workId") int workId) {
+	public Result doGetWorkById(@PathVariable("workId") int workId,HttpServletRequest request) {
 		try {
 			WorkResult work = workService.getWorkByWrokId(workId);
+			String token = request.getHeader("token");
+			if(token.equals("undefined")) {
+				work.setCollectByLoginer(false);
+				work.setLikedByLoginer(false);
+			}else {
+				String userName = JWTUtil.getUsername(token);
+				NormalUser user = normalUserService.getNormalUserByUserName(userName);
+				//判断该作品是否被登录用户收藏和点赞
+				if(collectionService.getByUserIdAndBeCollectedId(user.getUserId(), workId, 1) == null)
+					work.setCollectByLoginer(false);
+				else
+					work.setCollectByLoginer(true);
+				if(likeService.getLikeByUserIdAndBeLikedId(user.getUserId(), workId, 0) == null)
+					work.setLikedByLoginer(false);
+				else
+					work.setLikedByLoginer(true);
+			
+				//判断作品用户是否被用户关注
+				if(work.getUserId() == user.getUserId())
+					work.setAttendAuthor(2);//作者是登录用户
+				else {
+					if(attentionService.getAttentionByUserIdAndAttentedId(work.getUserId(), user.getUserId(), 0) == null)
+						work.setAttendAuthor(0); //未关注
+					else
+						work.setAttendAuthor(1);  //已关注
+				}
+			}
+			
 			return new Result(200,"该作品信息",work,null);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -127,7 +159,94 @@ public class CommunityController {
 		}
 	}
 	
+	/*
+	 * 点赞/取消点赞
+	 */
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/like/work/{workId}")
+	public Result addLike(@PathVariable("workId") int workId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			Like lk = likeService.getLikeByUserIdAndBeLikedId(user.getUserId(), workId, 0);
+			if(lk != null) {//取消点赞
+				likeService.deleteLike(user.getUserId(), workId, 0);
+			}else {//点赞
+				Like like = new Like();
+				like.setUserId(user.getUserId());
+				like.setBeLikedId(workId);
+				like.setType(0);
+				Timestamp d = new Timestamp(System.currentTimeMillis());
+				like.setLikeTime(d);
+				likeService.addLike(like);
+			}
+			return new Result(200,"点赞成功",null,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(201,"发生未知错误",null,"");
+		}
+	}
 	
+	/*
+	 * 收藏/取消收藏
+	 */
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/collection/work/{workId}")
+	public Result addCollection(@PathVariable("workId") int workId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			Collection c = collectionService.getByUserIdAndBeCollectedId(user.getUserId(), workId, 1);
+			if(c != null) {//取消收藏
+				collectionService.deleteCollection(c.getCollectionId());
+			}else {//收藏
+				Collection collection = new Collection();
+				collection.setBeCollectedId(workId);
+				collection.setType(1);
+				Timestamp d = new Timestamp(System.currentTimeMillis());
+				collection.setCollectTime(d);
+				collection.setUserId(user.getUserId());
+				collectionService.addCollection(collection);
+			}
+			return new Result(200,"收藏成功",null,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(201,"发生未知错误",null,"");
+		}
+	}
+	
+	/*
+	 * 关注/取消用户
+	 */
+	@CrossOrigin
+	@NormalToken
+	@PostMapping(value="/attention/user/{userId}")
+	public Result addAttention(@PathVariable("userId") int userId,HttpServletRequest request) {
+		try {
+			String token = request.getHeader("token");
+			String userName = JWTUtil.getUsername(token);
+			NormalUser user = normalUserService.getNormalUserByUserName(userName);
+			if(attentionService.getAttentionByUserIdAndAttentedId(userId, user.getUserId(), 0) == null) {//关注
+				Attention attention = new Attention();
+				Timestamp s = new Timestamp(System.currentTimeMillis());
+				attention.setAttentionTime(s);
+				attention.setBeAttentedId(userId);
+				attention.setType(0);
+				attention.setUserId(user.getUserId());
+				attentionService.addAttention(attention);
+			}else {//取消关注
+				attentionService.deleteAttention(user.getUserId(), userId, 0);
+			}
+			return new Result(200,"操作成功",null,null);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new Result(201,"发生未知错误",null,"");
+		}
+	}
 	
 	/*
 	 * 发布作品
@@ -246,89 +365,8 @@ public class CommunityController {
 		}
 	}
 	
-	/*
-	 * 获取用户所有点赞的列表（进入社区可以看到哪些作品是用户点赞了的）
-	 */
-	@CrossOrigin
-	@NormalToken
-	@GetMapping(value="/community/user_getalllikes")
-	public Result doGetAllLikes(HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			List<Like> likes = likeService.getLikesByUserId(user.getUserId());
-			return new Result(12,"所有该用户点赞的信息",likes,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
 	
-	/*
-	 * 判断是否点过赞
-	 */
-	@CrossOrigin
-	@NormalToken
-	@GetMapping(value="/community/islike/{workId}")
-	public Result isLike(@PathVariable("workId") int workId,HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			Like like = likeService.getLikeByUserIdAndWorkId(user.getUserId(), workId);
-			if(like == null)
-				return new Result(14,"没有点过它赞",false,null);
-			else
-				return new Result(15,"给它点过赞",true,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
 	
-	/*
-	 * 点赞
-	 */
-	@CrossOrigin
-	@NormalToken
-	@PostMapping(value="/community/user_addlike/{workId}")
-	public Result addLike(@PathVariable("workId") int workId,HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			Like like = new Like();
-			like.setUserId(user.getUserId());
-			like.setWorkId(workId);
-			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-			//like.setInputTime(inputTime);
-			likeService.addLike(like);
-			return new Result(5,"点赞成功",workService.getWorkByWrokId(workId).getLikeNum(),null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
-	
-	/*
-	 * 取消点赞
-	 */
-	@CrossOrigin
-	@NormalToken
-	@DeleteMapping(value="/community/user_deletelike/{workId}")
-	public Result doDeleteLike(@PathVariable("workId") int workId,HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			likeService.deleteLike(user.getUserId(), workId);
-			return new Result(6,"删除成功",workService.getWorkByWrokId(workId).getLikeNum(),null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
 	
 	/*
 	 * 获取关注对象的列表（一进入社区模块就知道哪些人被自己关注了）
@@ -363,7 +401,7 @@ public class CommunityController {
 			System.out.println("是"+user.getUserId());
 			if(user.getUserId() == userId)
 				return new Result(19,"我自己",2,null);
-			Attention attention = attentionService.getAttentionByUserIdAndAttentedId(userId, user.getUserId());
+			Attention attention = attentionService.getAttentionByUserIdAndAttentedId(userId, user.getUserId(),0);
 			if(attention == null)
 				return new Result(17,"没有被关注",0,null);
 			else
@@ -374,93 +412,25 @@ public class CommunityController {
 		}
 	}
 	
-	
-	/*
-	 * 关注用户
-	 */
-	@CrossOrigin
-	@NormalToken
-	@PostMapping(value="/community/user_addattention/{beAttentedId}")
-	public Result addAttention(@PathVariable("beAttentedId") int beAttentedId,HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			attentionService.addAttention(user.getUserId(),beAttentedId);
-			return new Result(7,"关注成功",attentionService.getAttentions(user.getUserId()),null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
-	
-	/*
-	 * 取消关注
-	 */
-	@CrossOrigin
-	@NormalToken
-	@DeleteMapping(value="/community/user_deleteattention/{beAttentedId}")
-	public Result doDeleteAttention(@PathVariable("beAttentedId") int beAttentedId,HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			attentionService.deleteAttention(user.getUserId(), beAttentedId);
-			return new Result(8,"已取消关注",null,null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
-	
-	/*
-	 * 举报用户
-	 */
-	@CrossOrigin
-	@NormalToken
-	@PostMapping(value="/community/user_report")
-	public Result report(@RequestBody ReportInfo reportInfo,HttpServletRequest request) {
-		try {
-			String token = request.getHeader("token");
-			String userName = JWTUtil.getUsername(token);
-			NormalUser user = normalUserService.getNormalUserByUserName(userName);
-			reportInfo.setUserId(user.getUserId());
-			reportService.addReportInfo(reportInfo);
-			return new Result(9,"已发送举报信息至管理员",reportService.getAllReportInfo(),null);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
-		}
-	}
-	
-	/*
-	 * 查看某个作品的所有评论（前往CommunityManageController,是游客即可查看）
-	 */
-	
 	/*
 	 * 发表评论
 	 */
 	@CrossOrigin
 	@NormalToken
-	@PostMapping(value="/community/user_comment")
+	@PostMapping(value="/comment/work")
 	public Result comment(@RequestBody Comment comment,HttpServletRequest request) {
 		try {
 			String token = request.getHeader("token");
 			String userName = JWTUtil.getUsername(token);
 			NormalUser user = normalUserService.getNormalUserByUserName(userName);
 			comment.setUserId(user.getUserId());
-			//java.sql.Date inputTime = new java.sql.Date(System.currentTimeMillis());
-			//comment.setInputTime(inputTime);
+			Timestamp s = new Timestamp(System.currentTimeMillis());
+			comment.setInputTime(s);;
 			commentService.addComment(comment);
-			//增加用户积分
-			int points = user.getRewardPoints();
-			points += 1;
-			user.setRewardPoints(points);
-			normalUserService.modifyNormalUserInfo(user);
-			return new Result(10,"发表成功",commentService.getCommentByWorkId(comment.getWorkId()),null);
+			return new Result(200,"发表成功",null,null);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new Result(0,"发生未知错误",null,"");
+			return new Result(201,"发生未知错误",null,"");
 		}
 	}
 	

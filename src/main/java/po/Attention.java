@@ -7,13 +7,20 @@ public class Attention {
 	private int attentionId;
 	private int userId;
 	private int beAttentedId;
-	private Timestamp attentedTime;
+	private Timestamp attentionTime;
+	private int type;
 	
-	public Timestamp getAttentedTime() {
-		return attentedTime;
+	public Timestamp getAttentionTime() {
+		return attentionTime;
 	}
-	public void setAttentedTime(Timestamp attentedTime) {
-		this.attentedTime = attentedTime;
+	public void setAttentionTime(Timestamp attentionTime) {
+		this.attentionTime = attentionTime;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	public int getAttentionId() {
 		return attentionId;

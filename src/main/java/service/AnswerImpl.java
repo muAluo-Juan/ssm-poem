@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dao.AnswerDao;
 import model.AnswerResult;
+import po.Answer;
 import utils.DynamicDataSourceHolder;
 
 @Service
@@ -21,6 +22,11 @@ public class AnswerImpl implements AnswerService{
 		// TODO Auto-generated method stub
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return answerDao.getAllByQuestionId(questionId);
+	}
+
+	@Override
+	public Integer addAnswer(Answer answer) {
+		return answerDao.add(answer);
 	}
 	
 }

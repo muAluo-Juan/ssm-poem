@@ -18,4 +18,7 @@ public interface QuestionDao {
 	public List<Question> getAllNoSolved();
 	public List<Question> getAllSolved();
 	public Question getById(@Param("questionId") int questionId);
+	public Integer add(Question question);
+	public void update(Question question);
+	public List<Question> getSearch(@Param("text") String text);
 }

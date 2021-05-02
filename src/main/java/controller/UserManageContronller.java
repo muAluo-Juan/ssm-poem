@@ -139,19 +139,19 @@ public class UserManageContronller {
    /*
 	 * 通过用户名获取用户
 	 */
-	@CrossOrigin
-	@NormalToken
-	@GetMapping("/user/{userName}")
-	public Result getUserByUserName(@PathVariable("userName") String username) {
-		try {
-			NormalUser user= normalUserService.getNormalUserByUserName(username);
-			user.setPassword(null);
-			return new Result(200, "用户信息",user, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return new Result(-1,"error",e,null);
-		}
-	}
+//	@CrossOrigin
+//	@NormalToken
+//	@GetMapping("/user/{userName}")
+//	public Result getUserByUserName(@PathVariable("userName") String username) {
+//		try {
+//			NormalUser user= normalUserService.getNormalUserByUserName(username);
+//			user.setPassword(null);
+//			return new Result(200, "用户信息",user, null);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			return new Result(-1,"error",e,null);
+//		}
+//	}
 
  
 	/*

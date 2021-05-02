@@ -25,10 +25,10 @@ public class LikeImpl implements LikeService{
 	}
 
 	@Override
-	public void deleteLike(int userId, int workId) {
+	public void deleteLike(int userId, int beLikedId,int type) {
 		// TODO Auto-generated method stub
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
-		likeDao.delete(userId, workId);
+		likeDao.delete(userId,beLikedId, type);
 	}
 
 	@Override
@@ -39,17 +39,15 @@ public class LikeImpl implements LikeService{
 	}
 
 	@Override
-	public List<Like> getLikesByUserId(int userId) {
+	public List<Like> getWorkBeLiked(int userId) {
 		// TODO Auto-generated method stub
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
 		return likeDao.getByUserId(userId);
 	}
 
 	@Override
-	public Like getLikeByUserIdAndWorkId(int userId, int workId) {
-		// TODO Auto-generated method stub
+	public Like getLikeByUserIdAndBeLikedId(int userId, int beLikedId, int type) {
 		DynamicDataSourceHolder.setDataSource("firstdataSource");
-		return likeDao.getByUserIdAndWorkId(userId, workId);
+		return likeDao.getByUserIdAndBeLikedId(userId, beLikedId, type);
 	}
-	
 }

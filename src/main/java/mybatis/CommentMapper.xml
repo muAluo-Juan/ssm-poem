@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<insert id="add" parameterType="Comment">
 		insert into t_comment(commentId,commentText,inputTime,userId,workId)
-		values(null,#{commentText},null,#{userId},#{workId})
+		values(null,#{commentText},#{inputTime},#{userId},#{workId})
 	</insert>
 	<select id="getByWorkId" resultType="CommentResult">
 		select commentId,commentText,inputTime,t_comment.userId,workId,penName,headPicPath,userName

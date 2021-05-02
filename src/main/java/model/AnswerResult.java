@@ -11,6 +11,21 @@ public class AnswerResult {
 	private String penName;
 	private String headPicPath;
 	private Timestamp inputTime;
+	private boolean likedByLoginer;
+	private boolean showAdoptBtn;
+	
+	public boolean isShowAdoptBtn() {
+		return showAdoptBtn;
+	}
+	public void setShowAdoptBtn(boolean showAdoptBtn) {
+		this.showAdoptBtn = showAdoptBtn;
+	}
+	public boolean isLikedByLoginer() {
+		return likedByLoginer;
+	}
+	public void setLikedByLoginer(boolean likedByLoginer) {
+		this.likedByLoginer = likedByLoginer;
+	}
 	public int getAnswerId() {
 		return answerId;
 	}

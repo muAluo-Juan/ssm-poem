@@ -17,6 +17,20 @@ public class QuestionResult {
 	private int userId;
 	private String penName;
 	private String headPicPath;
+	private boolean likedByLoginer;
+	private boolean attendByLoginer;
+	public boolean isLikedByLoginer() {
+		return likedByLoginer;
+	}
+	public void setLikedByLoginer(boolean likedByLoginer) {
+		this.likedByLoginer = likedByLoginer;
+	}
+	public boolean isAttendByLoginer() {
+		return attendByLoginer;
+	}
+	public void setAttendByLoginer(boolean attendByLoginer) {
+		this.attendByLoginer = attendByLoginer;
+	}
 	private List<AnswerResult> answers;
 	public int getQuestionId() {
 		return questionId;

@@ -13,6 +13,13 @@ public class PoemResult {
 	private int dynastyid;
 	private int typeid;
 	private String authoruid;
+	private boolean collect;
+	public boolean isCollect() {
+		return collect;
+	}
+	public void setCollect(boolean collect) {
+		this.collect = collect;
+	}
 	public long getId() {
 		return id;
 	}

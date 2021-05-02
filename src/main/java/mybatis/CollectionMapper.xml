@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_collection where poemId=#{poemId} order by collectTime desc
 	</select>
 	<insert id="add" parameterType="po.Collection">
-		insert into t_collection(collectionId,userId,poemId,collectTime)
-		values(null,#{userId},#{poemId},null)
+		insert into t_collection(collectionId,userId,beCollectedId,collectTime,type)
+		values(null,#{userId},#{beCollectedId},#{collectTime},#{type})
 	</insert>
 	<delete id="delete">
 		delete from t_collection
@@ -22,9 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<delete id="deleteRefer">
 		delete from t_collection
-		where userId=#{userId} and poemId=#{poemId}
+		where userId=#{userId} and beCollectedId=#{beCollectedId} and type=#{type}
 	</delete>
-	<select id="getByUserIdAndPoemId" resultType="po.Collection">
-		select * from t_collection where userId=#{userId} and poemId=#{poemId}
+	<select id="getByUserIdAndBeCollectedId" resultType="po.Collection">
+		select * from t_collection where userId=#{userId} and type=#{type} and beCollectedId=#{beCollectedId}
 	</select>
 </mapper>

@@ -4,9 +4,7 @@ public class RegisterForm {
 	private String userName;
 	private String penName;
 	private String password;
-	private String verifyCode;
 	private String confirmPassword;
-	private int sex;
 	
 	public String getConfirmPassword() {
 		return confirmPassword;
@@ -31,17 +29,5 @@ public class RegisterForm {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getVerifyCode() {
-		return verifyCode;
-	}
-	public void setVerifyCode(String verifyCode) {
-		this.verifyCode = verifyCode;
-	}
-	public int getSex() {
-		return sex;
-	}
-	public void setSex(int sex) {
-		this.sex = sex;
 	}
 }

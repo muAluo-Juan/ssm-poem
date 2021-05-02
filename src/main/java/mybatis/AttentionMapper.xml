@@ -3,24 +3,26 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.AttentionDao">
-	<insert id="add">
-		insert into t_attention(attentionId,userId,beAttentedId,attentedTime)
-		values(null,#{userId},#{beAttentedId},null)
+	<insert id="add" parameterType="Attention">
+		insert into t_attention(attentionId,userId,beAttentedId,attentionTime,type)
+		values(null,#{userId},#{beAttentedId},#{attentionTime},#{type})
 	</insert>
 	
 	<delete id="delete">
-		delete from t_attention where userId=#{userId} and beAttentedId=#{beAttentedId}
+		delete from t_attention where userId=#{userId} and beAttentedId=#{beAttentedId} and type=#{type}
 	</delete>
 	
 	<select id="getByUserId" resultType="Attention">
-		select * from t_attention where userId=#{userId} order by attentedTime desc
+		select * from t_attention where userId=#{userId} order by attentionTime desc
 	</select>
 	
 	<select id="getByBeAttentedId" resultType="Attention">
-		select * from t_attention where beAttentedId=#{beAttentedId} order by attentedTime desc
+		select * from t_attention 
+		where beAttentedId=#{beAttentedId} and type=0
+		order by attentionTime desc
 	</select>
 	
 	<select id="getByUserIdAndAttentedId" resultType="Attention">
-		select * from t_attention where beAttentedId=#{beAttentedId} and userId=#{userId}
+		select * from t_attention where beAttentedId=#{beAttentedId} and userId=#{userId} and type=#{type}
 	</select>
 </mapper>

@@ -16,7 +16,7 @@ public interface WorkDao {
 	public Integer delete(@Param("workId") int workId);
 	public List<WorkResult> getAll();
 	public List<WorkResult> getByUserId(@Param("userId") int userId);
-	public WorkResult getByWorkId(@Param("workId") int workId);
+	public WorkResult getByWorkId(@Param("workId") long workId);
 	public Integer update(Work work);
 	public List<WorkResult> getAllOrderByTime();
 	public List<WorkResult> getAllOrderByLike();

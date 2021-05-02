@@ -13,8 +13,9 @@ public class Interceptor extends HandlerInterceptorAdapter{
 	        response.setContentType("application/json; charset=utf-8");
 	        response.setHeader("Access-Control-Allow-Origin", url);
 	        response.addHeader("Access-Control-Allow-Credentials", "true");//session传值
-	        response.addHeader("Access-Control-Allow-Headers","Content-Type");//跨域设置
+	        response.addHeader("Access-Control-Allow-Headers","Content-Type,token");//跨域设置
 	        response.addHeader("Access-Control-Max-Age", "3600");
+	        response.addHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
 	        return true;
 	}
 }

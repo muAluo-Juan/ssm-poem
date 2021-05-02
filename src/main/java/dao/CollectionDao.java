@@ -22,7 +22,7 @@ public interface CollectionDao {
 	//删除收藏
 	public Integer delete(@Param("collectionId") int collectionId);
 	//删除某个用户的某个收藏
-	public Integer deleteRefer(@Param("userId") int userId,@Param("poemId") long poemId);
+	public Integer deleteRefer(@Param("userId") int userId,@Param("beCollectedId") long beCollectedId, @Param("type") int type);
 	//获取某个用户的某个收藏
-	public Collection getByUserIdAndPoemId(@Param("userId") int userId,@Param("poemId") long poemId);
+	public Collection getByUserIdAndBeCollectedId(@Param("userId") int userId,@Param("beCollectedId") long beCollectedId, @Param("type") int type);
 }

@@ -33,10 +33,10 @@
 	</bean>
 	<!-- 配置第二个数据源 -->
 	<bean id="seconddataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-			<property name="driverClassName" value="${seconddb.driverClassName}" />
-			<property name="url" value="${seconddb.url}" />
-			<property name="username" value="${seconddb.username}" />
-			<property name="password" value="${seconddb.password}" />
+			<property name="driverClassName" value="${db.driverClassName}" />
+			<property name="url" value="${db.url}" />
+			<property name="username" value="${db.username}" />
+			<property name="password" value="${db.password}" />
 			<!-- 最大连接数 -->
 			<property name="maxTotal" value="${maxTotal}"/>
 			<!-- 最大空闲连接数 -->
